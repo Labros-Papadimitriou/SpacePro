@@ -58,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bodies\Planet.cs" />
+    <Compile Include="BroadClasses\Article.cs" />
+    <Compile Include="BroadClasses\Event.cs" />
+    <Compile Include="BroadClasses\Image.cs" />
     <Compile Include="IdentityUsers\ApplicationUser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
