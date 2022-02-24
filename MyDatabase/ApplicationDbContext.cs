@@ -16,8 +16,8 @@ namespace MyDatabase
     {
         public ApplicationDbContext() : base("Sindesmos", throwIfV1Schema: false)
         {
-            Database.SetInitializer<ApplicationDbContext>(new MockupDbInitializer());
-            Database.Initialize(false);
+            //Database.SetInitializer<ApplicationDbContext>(new MockupDbInitializer());
+            //Database.Initialize(false);
         }
 
         public static ApplicationDbContext Create()

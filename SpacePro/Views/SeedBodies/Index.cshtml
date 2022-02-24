@@ -1,0 +1,257 @@
+﻿@{
+    Layout = null;
+}
+
+<h5>WARNING!!! PRESS ONLY ONCE!</h5>
+<button id="seed-planet" class="btn btn-primary" disabled>SEED PLANETS</button>
+<br />
+<br />
+<br />
+<h5>WARNING!!! PRESS ONLY ONCE!</h5>
+<button id="seed-comet" class="btn btn-primary" disabled>SEED COMETS</button>
+<br />
+<br />
+<br />
+<h5>WARNING!!! PRESS ONLY ONCE!</h5>
+<button id="seed-moon" class="btn btn-primary" disabled>SEED MOONS</button>
+<br />
+<br />
+<br />
+<h5>WARNING!!! PRESS ONLY ONCE!</h5>
+<button id="seed-asteroid" class="btn btn-primary" disabled>SEED ASTEROIDS</button>
+<br />
+<br />
+<br />
+<h5>WARNING!!! PRESS ONLY ONCE!</h5>
+<button id="seed-star" class="btn btn-primary" disabled>SEED STARS</button>
+
+
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script>
+
+    $("#seed-planet").click(function () {
+        $.ajax({
+            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2CbodyType%2CisPlanet%2Cdimension%2CdiscoveredBy%2CdiscoveryDate&rowData=false",
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+
+                var planets = data.bodies.filter(x => x.isPlanet == true);
+
+                var planetsList = [];
+
+                for (var i = 0; i < planets.length; i++) {
+
+                    var name = planets[i].name;
+                    var mass = planets[i].mass.massValue;
+                    var vol = planets[i].vol.volValue;
+                    var dimension = planets[i].dimension;
+                    var discoveredBy = planets[i].discoveredBy;
+                    var discoveryDate = planets[i].discoveryDate;
+
+                    var obj = {
+                        Name: name,
+                        MassValue: mass,
+                        VolValue: vol,
+                        Dimension: dimension,
+                        DiscoveredBy: discoveredBy,
+                        DiscoveryDate: discoveryDate
+                    }
+
+                    planetsList.push(obj);
+                }
+
+                $.ajax({
+                    url: "/SeedBodies/CreatePlanets",
+                    type: "POST",
+                    data: JSON.stringify(planetsList),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                    }
+                });
+            }
+        })
+    })
+
+    $("#seed-moon").click(function () {
+        $.ajax({
+            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2CbodyType%2CisPlanet%2Cdimension%2CdiscoveredBy%2CdiscoveryDate&rowData=false",
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+
+                var moons = data.bodies.filter(x => x.bodyType == "Moon");
+
+                var moonsList = [];
+
+                for (var i = 0; i < moons.length; i++) {
+
+                    var name = moons[i].name;
+                    var mass = moons[i].mass ? moons[i].mass.massValue : null;
+                    var vol = moons[i].vol ? moons[i].vol.volValue : null;
+                    var dimension = moons[i].dimension;
+                    var discoveredBy = moons[i].discoveredBy;
+                    var discoveryDate = +moons[i].discoveryDate.split("/")[2] < 1753 ? "01/01/1753" : moons[i].discoveryDate;
+
+                    var obj = {
+                        Name: name,
+                        MassValue: mass,
+                        VolValue: null ? 0 : vol,
+                        Dimension: dimension,
+                        DiscoveredBy: discoveredBy,
+                        DiscoveryDate: discoveryDate
+                    }
+
+                    moonsList.push(obj);
+                }
+
+                $.ajax({
+                    url: "/SeedBodies/CreateMoons",
+                    type: "POST",
+                    data: JSON.stringify(moonsList),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                    }
+                });
+            }
+        })
+    })
+
+    $("#seed-comet").click(function () {
+        $.ajax({
+            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2CbodyType%2CisPlanet%2Cdimension%2CdiscoveredBy%2CdiscoveryDate&rowData=false",
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+
+                var comets = data.bodies.filter(x => x.bodyType == "Comet");
+
+                var cometsList = [];
+
+                for (var i = 0; i < comets.length; i++) {
+
+                    var name = comets[i].name;
+                    var mass = comets[i].mass ? comets[i].mass.massValue : null;
+                    var vol = comets[i].vol ? comets[i].vol.volValue : null;
+                    var dimension = comets[i].dimension;
+                    var discoveredBy = comets[i].discoveredBy;
+                    var discoveryDate = +comets[i].discoveryDate.split("/")[2] < 1753 ? "01/01/1753" : comets[i].discoveryDate;
+
+                    var obj = {
+                        Name: name,
+                        MassValue: mass,
+                        VolValue: null ? 0 : vol,
+                        Dimension: dimension,
+                        DiscoveredBy: discoveredBy,
+                        DiscoveryDate: discoveryDate
+                    }
+
+                    cometsList.push(obj);
+                }
+
+                $.ajax({
+                    url: "/SeedBodies/CreateComets",
+                    type: "POST",
+                    data: JSON.stringify(cometsList),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                    }
+                });
+            }
+        })
+    })
+
+    $("#seed-asteroid").click(function () {
+        $.ajax({
+            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2CbodyType%2CisPlanet%2Cdimension%2CdiscoveredBy%2CdiscoveryDate&rowData=false",
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+
+                var asteroids = data.bodies.filter(x => x.bodyType == "Asteroid");
+
+                var asteroidsList = [];
+
+                for (var i = 0; i < asteroids.length; i++) {
+
+                    var name = asteroids[i].name;
+                    var mass = asteroids[i].mass ? asteroids[i].mass.massValue : null;
+                    var vol = asteroids[i].vol ? asteroids[i].vol.volValue : null;
+                    var dimension = asteroids[i].dimension;
+                    var discoveredBy = asteroids[i].discoveredBy;
+                    var discoveryDate = +asteroids[i].discoveryDate.split("/")[2] < 1753 ? "01/01/1753" : asteroids[i].discoveryDate;
+
+                    var obj = {
+                        Name: name,
+                        MassValue: mass,
+                        VolValue: null ? 0 : vol,
+                        Dimension: dimension,
+                        DiscoveredBy: discoveredBy,
+                        DiscoveryDate: discoveryDate
+                    }
+
+                    asteroidsList.push(obj);
+                }
+
+                $.ajax({
+                    url: "/SeedBodies/CreateAsteroids",
+                    type: "POST",
+                    data: JSON.stringify(asteroidsList),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                    }
+                });
+            }
+        })
+    })
+
+    $("#seed-star").click(function () {
+        $.ajax({
+            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2CbodyType%2CisPlanet%2Cdimension%2CdiscoveredBy%2CdiscoveryDate&rowData=false",
+            dataType: 'json',
+            type: 'get',
+            success: function (data) {
+
+                var stars = data.bodies.filter(x => x.bodyType == "Star");
+
+                var starsList = [];
+
+                for (var i = 0; i < stars.length; i++) {
+
+                    var name = stars[i].name;
+                    var mass = stars[i].mass ? stars[i].mass.massValue : null;
+                    var vol = stars[i].vol ? stars[i].vol.volValue : null;
+                    var dimension = stars[i].dimension;
+                    var discoveredBy = stars[i].discoveredBy;
+                    var discoveryDate = +stars[i].discoveryDate.split("/")[2] < 1753 ? "01/01/1753" : stars[i].discoveryDate;
+
+                    var obj = {
+                        Name: name,
+                        MassValue: mass,
+                        VolValue: null ? 0 : vol,
+                        Dimension: dimension,
+                        DiscoveredBy: discoveredBy,
+                        DiscoveryDate: discoveryDate
+                    }
+
+                    starsList.push(obj);
+                }
+
+                $.ajax({
+                    url: "/SeedBodies/CreateStars",
+                    type: "POST",
+                    data: JSON.stringify(starsList),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function () {
+                    }
+                });
+            }
+        })
+    })
+
+</script>
