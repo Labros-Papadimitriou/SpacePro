@@ -11,7 +11,7 @@ namespace Entities.Bodies
     {
         public int MoonId { get; set; }
         public string Name { get; set; }
-        public decimal? Mass { get; set; }
+        public decimal Mass { get; set; }
         [Display(Name = "Mass")]
         public decimal? MassValue { get; set; }
         [Display(Name = "Volume")]
