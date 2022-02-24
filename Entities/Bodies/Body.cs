@@ -11,9 +11,9 @@ namespace Entities.Bodies
     {
         public string Name { get; set; }
         [Display(Name = "Mass")]
-        public decimal MassValue { get; set; }
+        public decimal? MassValue { get; set; }
         [Display(Name = "Volume")]
-        public decimal VolValue { get; set; }
+        public decimal? VolValue { get; set; }
         public string Dimension { get; set; }
 
         public string DiscoveredBy { get; set; }
