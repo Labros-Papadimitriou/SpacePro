@@ -57,7 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bodies\Asteroid.cs" />
+    <Compile Include="Bodies\Body.cs" />
+    <Compile Include="Bodies\Comet.cs" />
+    <Compile Include="Bodies\Moon.cs" />
     <Compile Include="Bodies\Planet.cs" />
+    <Compile Include="Bodies\Star.cs" />
     <Compile Include="BroadClasses\Article.cs" />
     <Compile Include="BroadClasses\ArticleCategory.cs" />
     <Compile Include="BroadClasses\Event.cs" />

@@ -37,6 +37,10 @@ namespace MyDatabase
         //}
 
         public DbSet<Planet> Planets { get; set; }
+        public DbSet<Comet> Comets { get; set; }
+        public DbSet<Star> Stars { get; set; }
+        public DbSet<Asteroid> Asteroids { get; set; }
+        public DbSet<Moon> Moons  { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
