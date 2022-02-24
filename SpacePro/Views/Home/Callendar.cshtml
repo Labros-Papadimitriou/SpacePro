@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Callendar";
+    Layout = "~/Views/Shared/_LayoutSpace.cshtml";
+}
+<div class="row ">
+    <div class="col-md-12">
+        <div class="card-header">
+            <h3 class="card-title">Calender</h3>
+        </div>
+        <div class="card-body rounded-3">
+            <div class="row">
+                <div class="col-md-12 col-xl-3">
+                    <div id="external-events">
+                        <h4>Draggable Events</h4>
+                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-warning" data-class="bg-warning">
+                            <div class="fc-event-main">Sub of the month</div>
+                        </div>
+                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-danger" data-class="bg-danger">
+                            <div class="fc-event-main">Discord Event</div>
+                        </div>
+                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-danger" data-class="bg-danger">
+                            <div class="fc-event-main">Author of the month</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-10 col-xl-9" style="background-color:#383838d9">
+                    <div id='calendar2'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
