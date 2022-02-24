@@ -14,6 +14,10 @@ namespace MyDatabase.Initializers
         {
             SeedingService service = new SeedingService(context);
             service.SeedPlanets();
+            service.SeedEvents();
+            service.SeedArticles();
+            service.SeedArticleCategories();
+            service.SeedImages();
 
             base.Seed(context);
         }
