@@ -24,8 +24,40 @@ namespace MyDatabase.Seeding
             Planet p2 = new Planet() { Name = "Venus" };
             Planet p3 = new Planet() { Name = "Earth" };
             IList<Planet> planets = new List<Planet> { p1, p2, p3 };
-
             db.Planets.AddRange(planets);
+        }
+        public void SeedMoons()
+        {
+            Moon p4 = new Moon() { Name = "Phobos" };
+            Moon p5 = new Moon() { Name = "La Lune" };
+            Moon p6 = new Moon() { Name = "Deimos" };
+            IList<Moon> moons = new List<Moon> { p4, p5, p6 };
+            db.Moons.AddRange(moons);
+            db.SaveChanges();
+
+        }
+        public void SeedComets()
+        {
+            Comet c1 = new Comet() { Name = "Phobos" };
+            Comet c2 = new Comet() { Name = "La Lune" };
+            Comet c3 = new Comet() { Name = "Deimos" };
+            IList<Comet> comets = new List<Comet> { c1, c2, c3 };
+            db.Comets.AddRange(comets);
+            db.SaveChanges();
+        }
+        public void SeedAsteroids()
+        {
+            Asteroid a1 = new Asteroid() { Name = "Ceres" };
+            Asteroid a2 = new Asteroid() { Name = "Hebe" };
+            Asteroid a3 = new Asteroid() { Name = "Lempo" };
+            IList<Asteroid> asteroids = new List<Asteroid> { a1, a2, a3 };
+            db.Asteroids.AddRange(asteroids);
+            db.SaveChanges();
+        }
+        public void SeedStar()
+        {
+            Star star = new Star() { Name = "Sun" };
+            db.Stars.Add(star);
             db.SaveChanges();
         }
         #endregion
