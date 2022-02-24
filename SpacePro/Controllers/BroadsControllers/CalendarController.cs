@@ -4,11 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SpacePro.Controllers
+namespace SpacePro.Controllers.BroadsControllers
 {
-    public class HomeController : Controller
+    public class CalendarController : Controller
     {
-        public ActionResult Index()
+        public ActionResult ShowCalendar()
         {
             return View();
         }

@@ -4,11 +4,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace SpacePro.Controllers
+namespace SpacePro.Controllers.BodiesControllers
 {
-    public class HomeController : Controller
+    public class BodiesController : Controller
     {
-        public ActionResult Index()
+        // GET: Bodies
+        public ActionResult BodiesTable()
         {
             return View();
         }

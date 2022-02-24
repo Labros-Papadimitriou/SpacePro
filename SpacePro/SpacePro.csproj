@@ -182,6 +182,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AppUsersContollers\AppUserController.cs" />
+    <Compile Include="Controllers\BodiesControllers\BodiesController.cs" />
+    <Compile Include="Controllers\BroadsControllers\CalendarController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SeedBodiesController.cs" />
@@ -1773,15 +1776,18 @@
     <Content Include="Views\Shared\_LayoutSpace.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\UserProfile.cshtml" />
-    <Content Include="Views\Home\EditProfile.cshtml" />
     <Content Include="Views\Home\Callendar.cshtml" />
     <Content Include="Views\SeedBodies\Index.cshtml" />
+    <Content Include="Views\AppUser\UserProfile.cshtml" />
+    <Content Include="Views\AppUser\EditProfile.cshtml" />
+    <Content Include="Views\Bodies\BodiesTable.cshtml" />
+    <Content Include="Views\Calendar\ShowCalendar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\ApiControllers\" />
-    <Folder Include="Views\UserProfile\" />
+    <Folder Include="Controllers\ApiControllers\ApiAppUsersControllers\" />
+    <Folder Include="Controllers\ApiControllers\ApiBodiesControllers\" />
+    <Folder Include="Controllers\ApiControllers\ApiBroadsControllers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
