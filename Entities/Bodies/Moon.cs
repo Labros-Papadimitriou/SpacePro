@@ -11,14 +11,14 @@ namespace Entities.Bodies
     {
         public int MoonId { get; set; }
         public string Name { get; set; }
-        public decimal Mass { get; set; }
+        
         [Display(Name = "Mass")]
-        public decimal MassValue { get; set; }
+        public decimal? MassValue { get; set; }
         [Display(Name = "Volume")]
-        public decimal VolValue { get; set; }
+        public decimal? VolValue { get; set; }
 
         public string DiscoveredBy { get; set; }
-        public DateTime DiscoveryDate { get; set; }
+        public DateTime? DiscoveryDate { get; set; }
         //public int PlanetId { get; set; }
         //public Planet AroundPlanet { get; set; }
     }
