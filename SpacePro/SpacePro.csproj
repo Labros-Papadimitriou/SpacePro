@@ -184,7 +184,11 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppUsersContollers\AppUserController.cs" />
     <Compile Include="Controllers\BodiesControllers\BodiesController.cs" />
+    <Compile Include="Controllers\BroadsControllers\ArticleController.cs" />
     <Compile Include="Controllers\BroadsControllers\CalendarController.cs" />
+    <Compile Include="Controllers\BroadsControllers\GalleryController.cs" />
+    <Compile Include="Controllers\BroadsControllers\PaymentController.cs" />
+    <Compile Include="Controllers\BroadsControllers\SocialController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SeedBodiesController.cs" />
@@ -1782,6 +1786,12 @@
     <Content Include="Views\AppUser\EditProfile.cshtml" />
     <Content Include="Views\Bodies\BodiesTable.cshtml" />
     <Content Include="Views\Calendar\ShowCalendar.cshtml" />
+    <Content Include="Views\Gallery\ShowGallery.cshtml" />
+    <Content Include="Views\Article\ShowArticles.cshtml" />
+    <Content Include="Views\Social\ShowSocial.cshtml" />
+    <Content Include="Views\Article\DetailsArticles.cshtml" />
+    <Content Include="Views\Article\CreateArticles.cshtml" />
+    <Content Include="Views\Payment\ShowPaymentMethods.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
