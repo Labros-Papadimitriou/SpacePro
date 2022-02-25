@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Initializers\MockupDbInitializer.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Seeding\SeedingService.cs" />
   </ItemGroup>

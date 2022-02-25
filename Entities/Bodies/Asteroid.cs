@@ -9,9 +9,12 @@ namespace Entities.Bodies
 {
     public class Asteroid
     {
-        //[Required]
+        public Asteroid()
+        {
+            BodyImages = new HashSet<BodyImage>();
+        }
         public int AsteroidId { get; set; }
-        //[Required]
+        [Required]
         public string Name { get; set; }
         [Display(Name = "Mass")]
         public decimal? MassValue { get; set; }
@@ -21,5 +24,8 @@ namespace Entities.Bodies
 
         public string DiscoveredBy { get; set; }
         public DateTime? DiscoveryDate { get; set; }
+
+        //Navigation Properties
+        public ICollection<BodyImage> BodyImages { get; set; }
     }
 }

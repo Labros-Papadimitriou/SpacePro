@@ -11,7 +11,33 @@ namespace Entities.IdentityUsers
 {
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            Skills = new HashSet<string>();
+            UserPosts = new HashSet<UserPost>();
+        }
+
         public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+
+        public string AboutMe { get; set; }
+
+        public string Work { get; set; }
+
+        public string Education { get; set; }
+
+        public DateTime? DateOfBirth;
+
+        public bool IsAuthorOfTheMonth { get; set; }
+        public bool IsWinnerSub { get; set; }
+
+        public ICollection<string> Skills { get; set; }
+
+        public ICollection<UserPost> UserPosts { get; set; }
+
+        public UserImage UserImage { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

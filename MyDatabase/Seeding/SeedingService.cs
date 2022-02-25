@@ -98,16 +98,16 @@ namespace MyDatabase.Seeding
             db.SaveChanges();
         }
 
-        public void SeedImages()
-        {
-            Image i1 = new Image() { Url = "~/Template/sash/assets/images/media/1.jpg" };
-            Image i2 = new Image() { Url = "~/Template/sash/assets/images/media/3.jpg" };
-            Image i3 = new Image() { Url = "~/Template/sash/assets/images/media/7.jpg" };
-            IList<Image> images = new List<Image> { i1, i2, i3 };
+        //public void SeedImages()
+        //{
+        //    ArticleImage i1 = new ArticleImage() { Url = "~/Template/sash/assets/images/media/1.jpg" };
+        //    ArticleImage i2 = new ArticleImage() { Url = "~/Template/sash/assets/images/media/3.jpg" };
+        //    ArticleImage i3 = new ArticleImage() { Url = "~/Template/sash/assets/images/media/7.jpg" };
+        //    IList<ArticleImage> images = new List<ArticleImage> { i1, i2, i3 };
 
-            db.Images.AddRange(images);
-            db.SaveChanges();
-        }
+        //    db.ArticleImages.AddRange(images);
+        //    db.SaveChanges();
+        //}
         #endregion
 
     }
