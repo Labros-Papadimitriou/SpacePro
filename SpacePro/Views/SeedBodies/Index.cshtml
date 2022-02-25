@@ -13,7 +13,7 @@
 <br />
 <br />
 <h5>WARNING!!! PRESS ONLY ONCE!</h5>
-<button id="seed-moon" class="btn btn-primary" disabled>SEED MOONS</button>
+<button id="seed-moon" class="btn btn-primary" >SEED MOONS</button>
 <br />
 <br />
 <br />
@@ -76,7 +76,7 @@
 
     $("#seed-moon").click(function () {
         $.ajax({
-            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2CbodyType%2CisPlanet%2Cdimension%2CdiscoveredBy%2CdiscoveryDate&rowData=false",
+            url: "https://api.le-systeme-solaire.net/rest.php/bodies?data=name%2Cvol%2Cmass%2CvolValue%2CmassValue%2Cdimension%2CdiscoveredBy%2CdiscoveryDate%2CisPlanet%2CbodyType%2CaroundPlanet%2Cplanet",
             dataType: 'json',
             type: 'get',
             success: function (data) {
@@ -93,14 +93,15 @@
                     var dimension = moons[i].dimension;
                     var discoveredBy = moons[i].discoveredBy;
                     var discoveryDate = +moons[i].discoveryDate.split("/")[2] < 1753 ? "01/01/1753" : moons[i].discoveryDate;
-
+                    var aroundPlanet = moons[i].aroundPlanet.planet;
                     var obj = {
                         Name: name,
                         MassValue: mass,
                         VolValue: null ? 0 : vol,
                         Dimension: dimension,
                         DiscoveredBy: discoveredBy,
-                        DiscoveryDate: discoveryDate
+                        DiscoveryDate: discoveryDate,
+                        AroundPlanet:aroundPlanet
                     }
 
                     moonsList.push(obj);
