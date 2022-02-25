@@ -33,8 +33,17 @@ namespace SpacePro.Controllers
         }
 
         [HttpPost]
-        public void CreateMoons(List<Moon> moons)
+        public void CreateMoons(List<Moon> apiMoons)
         {
+            var moons = apiMoons.Where(x => db.Planets.Any(p => x.aroundPlanet.ToLower() == p.Name.ToLower()));
+            moons = moons.Select(x=>new Moon{ 
+                Name = x.Name,
+                MassValue=x.MassValue,
+                VolValue=x.VolValue,
+                DiscoveredBy = x.DiscoveredBy,
+                DiscoveryDate=x.DiscoveryDate,
+                PlanetId=db.Planets.FirstOrDefault(p=>p.Name.ToLower()==x.aroundPlanet.ToLower()).PlanetId
+            });
             foreach (var moon in moons)
             {
                 db.Entry(moon).State = EntityState.Added;

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,9 @@ namespace Entities.Bodies
 
         public string DiscoveredBy { get; set; }
         public DateTime? DiscoveryDate { get; set; }
+        //For SeedBodiesController Use Only.Not To be mapped.
+        [NotMapped]
+        public string aroundPlanet { get; set; }
 
         //Foreign Keys
         public int PlanetId { get; set; }
