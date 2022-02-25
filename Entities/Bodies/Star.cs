@@ -9,17 +9,23 @@ namespace Entities.Bodies
 {
     public class Star
     {
-        //[Required]
+        public Star()
+        {
+            BodyImages = new HashSet<BodyImage>();
+        }
         public int StarId { get; set; }
-        //[Required]
+        [Required]
         public string Name { get; set; }
-        //[Display(Name ="Mass")]
+        [Display(Name = "Mass")]
         public decimal? MassValue { get; set; }
-        [Display(Name ="Volume")]
+        [Display(Name = "Volume")]
         public decimal? VolValue { get; set; }
         public string Dimension { get; set; }
         public string DiscoveredBy { get; set; }
         public DateTime? DiscoveryDate { get; set; }
+
+        //Navigation Properties
+        public ICollection<BodyImage> BodyImages { get; set; }
 
     }
 }

@@ -26,24 +26,33 @@ namespace MyDatabase
         }
 
         // Fluent API
-        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        //{
-        //    //ZeroOne To One Relationship
-        //    //Category has 0-1 Articles and Article has 1 Category
-        //    modelBuilder.Entity<Article>()
-        //    .HasRequired(x => x.ArticleCategory);
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //ZeroOne To One Relationship
+            //Category has 0-1 Articles and Article has 1 Category
+            modelBuilder.Entity<Article>()
+            .HasRequired(x => x.ArticleCategory);
 
-        //    base.OnModelCreating(modelBuilder);
-        //}
+            modelBuilder.Entity<UserImage>()
+            .HasRequired(x => x.ApplicationUser);
+
+            modelBuilder.Entity<UserPost>()
+            .HasRequired(x => x.ApplicationUser);
+
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<Planet> Planets { get; set; }
         public DbSet<Comet> Comets { get; set; }
         public DbSet<Star> Stars { get; set; }
         public DbSet<Asteroid> Asteroids { get; set; }
         public DbSet<Moon> Moons  { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<ArticleImage> ArticleImages { get; set; }
         public DbSet<Article> Articles { get; set; }
         public DbSet<ArticleCategory> ArticleCategories { get; set; }
         public DbSet<Event> Events { get; set; }
+        public DbSet<UserPost> UserPosts { get; set; }
+        public DbSet<UserImage> UserImages { get; set; }
+        public DbSet<BodyImage> BodyImages { get; set; }
     }
 }

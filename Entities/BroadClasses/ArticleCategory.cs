@@ -16,6 +16,6 @@ namespace Entities.BroadClasses
         public string Title { get; set; }
 
         //Navigation Properties
-        //public Article Article { get; set; }
+        public Article Article { get; set; }
     }
 }

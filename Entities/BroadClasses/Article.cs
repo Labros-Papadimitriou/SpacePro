@@ -9,10 +9,11 @@ namespace Entities.BroadClasses
 {
     public class Article
     {
-        //public Article()
-        //{
-        //    PostDate = DateTime.Now;
-        //}
+        public Article()
+        {
+            PostDate = DateTime.Now;
+            ArticleImages = new HashSet<ArticleImage>();
+        }
 
         public int ArticleId { get; set; }
 
@@ -21,20 +22,20 @@ namespace Entities.BroadClasses
         [MaxLength(30)]
         public string Title { get; set; }
 
-        //[Required]
-        //[MinLength(10000)]
-        //public string Description { get; set; }
+        [Required]
+        [MinLength(10000)]
+        public string Description { get; set; }
 
-        //[Display(Name = "Date Posted")]
-        //public DateTime PostDate { get; private set; }
+        [Display(Name = "Date Posted")]
+        public DateTime PostDate { get; private set; }
 
-        //[Display(Name = "Post Likes")]
-        //public int? PostLikes { get; set; }
+        [Display(Name = "Post Likes")]
+        public int? PostLikes { get; set; }
 
-        ////Navigation Properties
-        //[Display(Name = "Category")]
-        //public ArticleCategory ArticleCategory { get; set; }
+        //Navigation Properties
+        [Display(Name = "Category")]
+        public ArticleCategory ArticleCategory { get; set; }
 
-        //public Image Image { get; set; }
+        public ICollection<ArticleImage> ArticleImages { get; set; }
     }
 }
