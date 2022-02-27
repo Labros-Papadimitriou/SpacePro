@@ -13,7 +13,6 @@ namespace Entities.IdentityUsers
     {
         public ApplicationUser()
         {
-            Skills = new HashSet<string>();
             UserPosts = new HashSet<UserPost>();
         }
 
@@ -31,8 +30,6 @@ namespace Entities.IdentityUsers
 
         public bool IsAuthorOfTheMonth { get; set; }
         public bool IsWinnerSub { get; set; }
-
-        public ICollection<string> Skills { get; set; }
 
         public ICollection<UserPost> UserPosts { get; set; }
 

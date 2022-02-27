@@ -1518,7 +1518,6 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -1792,6 +1791,7 @@
     <Content Include="Views\Article\DetailsArticles.cshtml" />
     <Content Include="Views\Article\CreateArticles.cshtml" />
     <Content Include="Views\Payment\ShowPaymentMethods.cshtml" />
+    <Content Include="Views\Shared\_ProfilPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
