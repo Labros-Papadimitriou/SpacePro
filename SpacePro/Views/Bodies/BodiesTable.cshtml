@@ -1,1 +1,59 @@
-﻿
+﻿<table id="bodiesTable" class="table table-striped table-bordered" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Volume</th>
+            <th>Mass</th>
+            <th>Dimension</th>
+            <th>Discovered By</th>
+            <th>Discovery Date</th>
+        </tr>
+    </thead>
+</table>
+    @section bodies{
+      
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#bodiesTable').DataTable({
+                    ajax: {
+                        url: "/Bodies/GetBodies",
+                        type: "GET",
+                        dataType: "json"
+                    },
+                    columns: [
+
+                        {
+                            data: "Name", render: function (name) {
+                                console.log(name);
+                                return name
+                            }
+                        },
+                        {
+                            data: "VolValue"
+                        },
+                        {
+                            data: "MassValue"
+                        },
+                        {
+                            data: "Dimension"
+                        },
+                        {
+                            data: "DiscoveredBy"
+                        },
+                        {
+                            data: "DiscoveryDate", render: function (date) {
+                                if (date != null) {
+                                    let mydate = moment.utc(date);
+                                    return mydate.format('DD-MM-YYYY');
+                                }
+                                else {
+                                    return date;
+                                }
+                            }
+                        }
+
+                    ]
+                });
+            });
+        </script>
+    }

@@ -21,7 +21,7 @@ namespace Entities.Bodies
         public decimal? MassValue { get; set; }
         [Display(Name = "Volume")]
         public decimal? VolValue { get; set; }
-
+        public string Dimension { get; set; }
         public string DiscoveredBy { get; set; }
         public DateTime? DiscoveryDate { get; set; }
         //For SeedBodiesController Use Only.Not To be mapped.
