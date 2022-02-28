@@ -30,6 +30,7 @@
     <link href="~/Template/sash/assets/css/transparent-style.css" rel="stylesheet">
     <link href="~/Template/sash/assets/css/skin-modes.css" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" />
 
     <!--C3 CHARTS CSS -->
     <link href="~/Template/sash/assets/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
@@ -74,7 +75,7 @@
                             <!-- MESSAGE BOX -->
                             <button class="navbar-toggler navresponsive-toggler d-md-none ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent-4" aria-controls="navbarSupportedContent-4" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon fe fe-more-vertical"></span>
-                            </button>                            
+                            </button>
                             <div class="navbar navbar-collapse responsive-navbar p-0">
                                 <div class="collapse navbar-collapse" id="navbarSupportedContent-4">
                                     <div class="d-flex order-lg-2">
@@ -263,8 +264,10 @@
     <!--Data Tables-->
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
     @RenderSection("social", required: false)
     @RenderSection("scripts", required: false)
+    @RenderSection("bodies", required: false)
 </body>
 
 </html>
