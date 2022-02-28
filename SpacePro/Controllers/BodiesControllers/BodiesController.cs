@@ -30,7 +30,8 @@ namespace SpacePro.Controllers.BodiesControllers
                 MassValue = m.MassValue,
                 Dimension = m.Dimension,
                 DiscoveredBy = m.DiscoveredBy,
-                DiscoveryDate = m.DiscoveryDate
+                DiscoveryDate = m.DiscoveryDate,
+                BodyType= "Moon"
             });
             bodies.AddRange(moons);
             var planets = db.Planets.Select(p => new
@@ -41,7 +42,8 @@ namespace SpacePro.Controllers.BodiesControllers
                 MassValue = p.MassValue,
                 Dimension = p.Dimension,
                 DiscoveredBy = p.DiscoveredBy,
-                DiscoveryDate = p.DiscoveryDate
+                DiscoveryDate = p.DiscoveryDate,
+                BodyType = "Planet"
             });
             bodies.AddRange(planets);
             var asteroids = db.Asteroids.Select(a => new
@@ -52,7 +54,8 @@ namespace SpacePro.Controllers.BodiesControllers
                 MassValue = a.MassValue,
                 Dimension = a.Dimension,
                 DiscoveredBy = a.DiscoveredBy,
-                DiscoveryDate = a.DiscoveryDate
+                DiscoveryDate = a.DiscoveryDate,
+                BodyType = "Asteroid"
             });
             bodies.AddRange(asteroids);
             var comets = db.Comets.Select(c => new
@@ -63,7 +66,8 @@ namespace SpacePro.Controllers.BodiesControllers
                 MassValue = c.MassValue,
                 Dimension = c.Dimension,
                 DiscoveredBy = c.DiscoveredBy,
-                DiscoveryDate = c.DiscoveryDate
+                DiscoveryDate = c.DiscoveryDate,
+                BodyType = "Comet"
             });
             bodies.AddRange(comets);
             var stars = db.Stars.Select(s => new
@@ -74,7 +78,8 @@ namespace SpacePro.Controllers.BodiesControllers
                 MassValue = s.MassValue,
                 Dimension = s.Dimension,
                 DiscoveredBy = s.DiscoveredBy,
-                DiscoveryDate = s.DiscoveryDate
+                DiscoveryDate = s.DiscoveryDate,
+                BodyType = "Star"
             });
             bodies.AddRange(stars);
 
