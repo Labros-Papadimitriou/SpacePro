@@ -178,21 +178,220 @@
     <script src="~/Template/sash/assets/js/themeColors.js"></script>
 
     <!-- Sticky js -->
-    <script src="~/Template/sash/assets/js/sticky.js"></script>
+    <!doctype html>
+    <html lang="en" dir="ltr">
 
-    <!-- CUSTOM JS -->
-    <script src="~/Template/sash/assets/js/custom.js"></script>
+    <head>
 
-    <!-- FULL CALENDAR JS -->
-    <script src='~/Template/sash/assets/plugins/fullcalendar/moment.min.js'></script>
-    <script src='~/Template/sash/assets/plugins/fullcalendar/fullcalendar.min.js'></script>
-    <script src="~/Template/sash/assets/js/fullcalendar.js"></script>
+        <!-- META DATA -->
+        <meta charset="UTF-8">
+        <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="Sash – Bootstrap 5  Admin & Dashboard Template">
+        <meta name="author" content="Spruko Technologies Private Limited">
+        <meta name="keywords" content="admin,admin dashboard,admin panel,admin template,bootstrap,clean,dashboard,flat,jquery,modern,responsive,premium admin templates,responsive admin,ui,ui kit.">
 
-    <!--Data Tables-->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    @RenderSection("social", required: false)
-    @RenderSection("scripts", required: false)
+        <!-- FULL CALENDAR CSS -->
+        <link href='~/Template/sash/assets/plugins/fullcalendar/fullcalendar.css' rel='stylesheet' />
+
+        <!-- FAVICON -->
+        <link rel="shortcut icon" type="image/x-icon" href="../assets/images/brand/favicon.ico" />
+
+        <!-- TITLE -->
+        <title>Sash – Bootstrap 5 Admin & Dashboard Template</title>
+
+        <!-- BOOTSTRAP CSS -->
+        <link id="style" href="~/Template/sash/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+        <!-- STYLE CSS -->
+        <link href="~/Template/sash/assets/css/style.css" rel="stylesheet" />
+        <link href="~/Template/sash/assets/css/dark-style.css" rel="stylesheet" />
+        <link href="~/Template/sash/assets/css/transparent-style.css" rel="stylesheet">
+        <link href="~/Template/sash/assets/css/skin-modes.css" rel="stylesheet" />
+        <link href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css" />
+
+        <!--C3 CHARTS CSS -->
+        <link href="~/Template/sash/assets/plugins/charts-c3/c3-chart.css" rel="stylesheet" />
+
+        <!-- P-scroll bar css-->
+        <link href="~/Template/sash/assets/plugins/p-scroll/perfect-scrollbar.css" rel="stylesheet" />
+
+        <!--- FONT-ICONS CSS -->
+        <link href="~/Template/sash/assets/css/icons.css" rel="stylesheet" />
+
+        <!-- SIDEBAR CSS -->
+        <link href="~/Template/sash/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
+
+        <!-- COLOR SKIN CSS -->
+        <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/sash/assets/colors/color1.css" />
+
+    </head>
+
+    <body class="app sidebar-mini ltr">
+
+        <!-- GLOBAL-LOADER -->
+        <div id="global-loader">
+            <img src="~/Template/sash/assets/images/loader.svg" class="loader-img" alt="Loader">
+        </div>
+        <!-- /GLOBAL-LOADER -->
+        <!-- PAGE -->
+        <div class="page">
+            <div class="page-main">
+                <!-- app-Header -->
+                <div class="app-header header sticky" style="background-color:black">
+                    <div class="container-fluid main-container">
+                        <div class="d-flex">
+                            <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
+                            <!-- sidebar-toggle-->
+                            <a class="logo-horizontal " href="/Home/Index">
+                                <img src="~/Template/sash/assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
+                            </a>
+                            <div style="margin-left:50px">
+                                @Html.Partial("_LoginPartial")
+                            </div>
+                            @Html.Partial("_ProfilPartial")
+                        </div>
+                    </div>
+                </div>
+                <!-- /app-Header
+                <!--APP-SIDEBAR-->
+                <div class="sticky">
+                    <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
+                    <div class="app-sidebar">
+                        <div class="side-header">
+                            <a class="header-brand1" href="index.html">
+                                <img src="~/sash/assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
+                            </a>
+                        </div>
+                        <div class="main-sidemenu">
+                            <div class="slide-left disabled" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" /></svg></div>
+                            <ul class="side-menu">
+                                <li class="sub-category">
+                                    <h3>Main</h3>
+                                </li>
+                                <!--HOME-->
+                                <li>
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="/Home/Index"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Home</span></a>
+                                </li>
+                                <!--BODIES-->
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="/Bodies/BodiesTable"><i class="side-menu__icon fe fe-circle"></i><span class="side-menu__label">Bodies</span></a>
+                                </li>
+                                <!--ARTICLES-->
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="/Article/ShowArticles"><i class="side-menu__icon fe fe-folder"></i><span class="side-menu__label">Articles</span></a>
+                                </li>
+                                <!--GALLERY-->
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="/Gallery/ShowGallery"><i class="side-menu__icon fe fe-image"></i><span class="side-menu__label">Gallery</span></a>
+                                </li>
+                                <!--EVENTS-->
+                                <li class="slide">
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Events</span></a>
+                                </li>
+                                <li>
+                                    <a class="side-menu__item" data-bs-toggle="slide" href="/Payment/ShowPaymentMethods"><i class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Payment</span></a>
+                                </li>
+                            </ul>
+                            <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" /></svg></div>
+                        </div>
+                    </div>
+                    <!--/APP-SIDEBAR-->
+                    <!--app-content open-->
+                    <div class="main-content app-content mt-0">
+                        <div class="side-app">
+                            <!-- CONTAINER -->
+                            <div class="main-container container-fluid">
+                                @RenderBody()
+                            </div>
+                            <!-- CONTAINER CLOSED -->
+                        </div>
+                    </div>
+                    <!--app-content closed-->
+                </div>
+            </div>
+            <!-- FOOTER -->
+            <footer class="footer">
+                <div class="container">
+                    <div class="row align-items-center flex-row-reverse">
+                        <div class="col-md-12 col-sm-12 text-center text-white">
+                            Copyright © 2022 <a href="#" class="text-azure">  Pluto  </a>. Designed  by  <a href="#" class="text-azure">Tholwmenoi</a>. All rights reserved.
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- FOOTER CLOSED -->
+        </div>
+
+        <!-- BACK-TO-TOP -->
+        <a href="#top" id="back-to-top"><i class="fa fa-angle-up"></i></a>
+
+        <!-- JQUERY JS -->
+        <script src="~/Template/sash/assets/js/jquery.min.js"></script>
+
+        <!-- BOOTSTRAP JS -->
+        <script src="~/Template/sash/assets/plugins/bootstrap/js/popper.min.js"></script>
+        <script src="~/Template/sash/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- SPARKLINE JS-->
+        <script src="~/Template/sash/assets/js/jquery.sparkline.min.js"></script>
+
+        <!-- CHART-CIRCLE JS-->
+        <script src="~/Template/sash/assets/js/circle-progress.min.js"></script>
+
+        <!-- INPUT MASK JS-->
+        <script src="~/Template/sash/assets/plugins/input-mask/jquery.mask.min.js"></script>
+
+        <!-- SIDE-MENU JS -->
+        <script src="~/Template/sash/assets/plugins/sidemenu/sidemenu.js"></script>
+
+        <!-- SIDEBAR JS -->
+        <script src="~/Template/sash/assets/plugins/sidebar/sidebar.js"></script>
+
+        <!-- Perfect SCROLLBAR JS-->
+        <script src="~/Template/sash/assets/plugins/p-scroll/perfect-scrollbar.js"></script>
+        <script src="~/Template/sash/assets/plugins/p-scroll/pscroll.js"></script>
+        <script src="~/Template/sash/assets/plugins/p-scroll/pscroll-1.js"></script>
+
+        <!-- Color Theme js -->
+        <script src="~/Template/sash/assets/js/themeColors.js"></script>
+
+        <!-- Sticky js -->
+        <script src="~/Template/sash/assets/js/sticky.js"></script>
+
+        <!-- CUSTOM JS -->
+        <script src="~/Template/sash/assets/js/custom.js"></script>
+
+        <!-- FULL CALENDAR JS -->
+        <script src='~/Template/sash/assets/plugins/fullcalendar/moment.min.js'></script>
+        <script src='~/Template/sash/assets/plugins/fullcalendar/fullcalendar.min.js'></script>
+        <script src="~/Template/sash/assets/js/fullcalendar.js"></script>
+
+        <!--Data Tables-->
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+        @RenderSection("social", required: false)
+        @RenderSection("scripts", required: false)
+    </body>
+
+</html>
+
+
+<script src="~/Template/sash/assets/js/sticky.js"></script>
+
+<!-- CUSTOM JS -->
+<script src="~/Template/sash/assets/js/custom.js"></script>
+
+<!-- FULL CALENDAR JS -->
+<script src='~/Template/sash/assets/plugins/fullcalendar/moment.min.js'></script>
+<script src='~/Template/sash/assets/plugins/fullcalendar/fullcalendar.min.js'></script>
+<script src="~/Template/sash/assets/js/fullcalendar.js"></script>
+
+<!--Data Tables-->
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
+@RenderSection("social", required: false)
+@RenderSection("scripts", required: false)
 </body>
 
 </html>
