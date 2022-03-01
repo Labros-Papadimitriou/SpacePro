@@ -1,21 +1,32 @@
-﻿<!-- PAGE-HEADER -->
-<div class="page-header">
-    <h1 class="page-title">Blog</h1>
+﻿<div class="row">
+    <div class="col-xl-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="input-group">
+                    <input type="text" class="form-control border-end-0" placeholder="Search ...">
+                    <button class="btn input-group-text bg-transparent border-start-0 text-muted">
+                        <i class="fe fe-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<!-- PAGE-HEADER END -->
-<!-- ROW-1 OPEN -->
 <div class="row">
     <div class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
         <div class="card">
-            <a href="blog-details.html"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/13.jpg" alt="And this isn&#39;t my nose. This is a false one."></a>
+            <a href="/Article/DetailsArticles"><img id="article-image" class="card-img-top" src="" alt=""></a>
             <div class="card-body d-flex flex-column">
-                <h3><a href="blog-details.html">Voluptatem quia voluptas.</a></h3>
-                <div class="text-muted">To take a trivial example, which of us ever undertakes laborious physical exerciser , except to obtain some advantage from it...</div>
+                <h3><a id="article-title" href="/Article/DetailsArticles"></a></h3>
+                <div id ="article-description" class="text-muted"></div>
                 <div class="d-flex align-items-center pt-5 mt-auto">
                     <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/18.jpg"></div>
                     <div>
                         <a href="profile.html" class="text-default">Megan Peters</a>
-                        <small class="d-block text-muted">1 days ago</small>
+                        <small id="article-postdate" class="d-block text-muted"></small>
+                    </div>
+                    <div class="media-body" style="margin-left:35px">
+                        <h6 id="article-likes" class="mb-0 mt-2 ms-2"></h6>
                     </div>
                     <div class="ms-auto">
                         <a href="javascript:void(0)" class="icon d-none d-md-inline-block text-muted"><i class="fe fe-heart me-1 border brround"></i></a>
@@ -25,14 +36,14 @@
             </div>
         </div>
         <div class="card">
-            <a href="blog-details.html"><img class="card-img-top br-br-0 br-bl-0" src="~/Template/sash/assets/images/media/15.jpg" alt="How do you know she is a witch?"></a>
+            <a href="/Article/DetailsArticles"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/14.jpg" alt="Well, I didn&#39;t vote for you."></a>
             <div class="card-body d-flex flex-column">
                 <h3><a href="blog-details.html"> Voluptatem quia voluptas </a></h3>
-                <div class="text-muted">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque...</div>
+                <div class="text-muted">Who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces.</div>
                 <div class="d-flex align-items-center pt-5 mt-auto">
-                    <div class="avatar  brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/6.jpg"></div>
+                    <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/16.jpg"></div>
                     <div>
-                        <a href="profile.html" class="text-default">Carol Paige</a>
+                        <a href="profile.html" class="text-default">Anna Ogden</a>
                         <small class="d-block text-muted">2 days ago</small>
                     </div>
                     <div class="ms-auto">
@@ -42,12 +53,10 @@
                 </div>
             </div>
         </div>
-        <!-- COL-END -->
     </div>
-    <!-- COL-END -->
     <div class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
         <div class="card">
-            <a href="blog-details.html"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/14.jpg" alt="Well, I didn&#39;t vote for you."></a>
+            <a href="/Article/DetailsArticles"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/14.jpg" alt="Well, I didn&#39;t vote for you."></a>
             <div class="card-body d-flex flex-column">
                 <h3><a href="blog-details.html"> Voluptatem quia voluptas </a></h3>
                 <div class="text-muted">Who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces.</div>
@@ -65,15 +74,15 @@
             </div>
         </div>
         <div class="card">
-            <a href="blog-details.html"><img class="card-img-top br-br-0 br-bl-0" src="~/Template/sash/assets/images/media/16.jpg" alt="Shut up!"></a>
+            <a href="/Article/DetailsArticles"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/14.jpg" alt="Well, I didn&#39;t vote for you."></a>
             <div class="card-body d-flex flex-column">
                 <h3><a href="blog-details.html"> Voluptatem quia voluptas </a></h3>
-                <div class="text-muted">Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut ..</div>
+                <div class="text-muted">Who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces.</div>
                 <div class="d-flex align-items-center pt-5 mt-auto">
-                    <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/7.jpg"></div>
+                    <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/16.jpg"></div>
                     <div>
-                        <a href="profile.html" class="text-default">Fiona Hodges</a>
-                        <small class="d-block text-muted">5 days ago</small>
+                        <a href="profile.html" class="text-default">Anna Ogden</a>
+                        <small class="d-block text-muted">2 days ago</small>
                     </div>
                     <div class="ms-auto">
                         <a href="javascript:void(0)" class="icon d-none d-md-inline-block text-muted"><i class="fe fe-heart me-1 border brround"></i></a>
@@ -100,27 +109,28 @@
             </div>
         </div>
     </div>
-    <!-- COL-END -->
-    <div class="col-xl-4">
-        <div class="card">
-            <div class="card-body">
-                <div class="input-group">
-                    <input type="text" class="form-control border-end-0" placeholder="Search ...">
-                    <button class="btn input-group-text bg-transparent border-start-0 text-muted">
-                        <i class="fe fe-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div class="card">
-            <div class="card-body">
-                <h4 class="fw-bold">NEVER MISS A POST !</h4>
-                <P>Subscribe to get the latest posts.</P>
-                <input class="form-control" placeholder="Enter your name *" type="text">
-                <a href="#" class="btn btn-danger mt-5">Subscribe</a>
-            </div>
-        </div>
-    </div>
 </div>
-<!-- ROW-1 CLOSED -->
+
+@section article{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '/Article/GetArticle',
+                dataType: 'json',
+                type: 'get',
+                success: function (article) {
+                    $("#article-title").html(article[0].Title)
+                    $("#article-description").html(article[0].Description)
+                    $("#article-likes").html(article[0].PostLikes + " likes")
+                    let date = article.PostDate;
+                    let postdate = moment.utc(date).format('DD-MM-YYYY');
+                    $("#article-postdate").html("Post Date: " + postdate);
+                    $("#article-postdate").html("Post Date: " + postdate);
+                    $("#article-image").attr("src", article[0].Image[0].Url);
+                    $("#article-image").attr("alt", article[0].Image[0].AlternativeText);
+                }
+            })
+        })
+    </script>
+}
+
