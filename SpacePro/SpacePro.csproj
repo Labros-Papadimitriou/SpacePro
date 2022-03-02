@@ -210,6 +210,7 @@
     <Content Include="Content\BodiesImages\Asteroids\300px-8405_asbolus.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Ceres.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Chiron.jpg" />
+    <Content Include="Content\BodiesImages\Asteroids\Hector.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Itokawa.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Ixion.png" />
     <Content Include="Content\BodiesImages\Asteroids\Junon.jpg" />
@@ -232,6 +233,7 @@
     <Content Include="Content\BodiesImages\Moons\Calypso.png" />
     <Content Include="Content\BodiesImages\Moons\Charon.jpg" />
     <Content Include="Content\BodiesImages\Moons\Deimos.jpg" />
+    <Content Include="Content\BodiesImages\Moons\Dione.jpg" />
     <Content Include="Content\BodiesImages\Moons\Enceladus.jpg" />
     <Content Include="Content\BodiesImages\Moons\Epimetheus.jpg" />
     <Content Include="Content\BodiesImages\Moons\Europa.jpg" />
@@ -242,12 +244,15 @@
     <Content Include="Content\BodiesImages\Moons\LaLune.jpg" />
     <Content Include="Content\BodiesImages\Moons\Mimas.jpg" />
     <Content Include="Content\BodiesImages\Moons\Nix.jpg" />
+    <Content Include="Content\BodiesImages\Moons\Oberon.jpg" />
     <Content Include="Content\BodiesImages\Moons\Phobos.jpg" />
     <Content Include="Content\BodiesImages\Moons\Prometheus.jpg" />
     <Content Include="Content\BodiesImages\Moons\Rhea.jpg" />
     <Content Include="Content\BodiesImages\Moons\Titan.jpg" />
     <Content Include="Content\BodiesImages\Moons\Titania.jpg" />
     <Content Include="Content\BodiesImages\Moons\Triton.jpg" />
+    <Content Include="Content\BodiesImages\Moons\Umbriel.jpg" />
+    <Content Include="Content\BodiesImages\Stars\Sun.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -267,11 +272,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Content\BodiesImages\Moons\Dione.webp" />
-    <Content Include="Content\BodiesImages\Moons\Oberon.webp" />
-    <Content Include="Content\BodiesImages\Moons\Umbriel.webp" />
-    <Content Include="Content\BodiesImages\Stars\Sun.webp" />
-    <Content Include="Content\BodiesImages\Asteroids\Hector.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
