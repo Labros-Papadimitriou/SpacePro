@@ -50,8 +50,8 @@ namespace SpacePro.Models
     {
         [Required]
         [Display(Name = "User Name")]
-      
-        public string UserName { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
