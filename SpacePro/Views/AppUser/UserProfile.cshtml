@@ -56,6 +56,13 @@
                 </div>
             </div>
         </div>
+        <div id="success">
+        </div>
+        <div id="newPost">
+            <label class="fw-semibold fs-20" style="display:block" for="txtArea">New Post</label>
+            <textarea rows="4" cols="50" maxlength="200" id="txtArea" style="color:white; background-color:#00000000"></textarea>
+            <button id="btnCreatePost" class="btn btn-secondary">Create</button>
+        </div>
         <div class="card">
             <div class="card-header">
                 <div class="card-title">About</div>
@@ -86,44 +93,44 @@
             </div>
         </div>
     </div>
-    <div class="col-xl-6">
-        <div class="card border p-0 shadow-none">
-            @foreach (var post in @Model.UserPosts)
-            {
-                <div class="card-body">
-                    <div class="d-flex">
-                        <div class="ms-auto">
-                            <div class="dropdown show">
-                                <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
-                                    <span class=""><i class="fe fe-more-vertical"></i></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-end">
-                                    <a class="dropdown-item" href="#">Edit Post</a>
-                                    <a class="dropdown-item" href="#">Delete Post</a>
+    <div id="postsTable" class="col-xl-6">
+        @*<div class="card border p-0 shadow-none">
+                @foreach (var post in @Model.UserPosts.Reverse())
+                {
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="ms-auto">
+                                <div class="dropdown show">
+                                    <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
+                                        <span class=""><i class="fe fe-more-vertical"></i></span>
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <a class="dropdown-item" href="#">Edit Post</a>
+                                        <a class="dropdown-item" href="#">Delete Post</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <p class="mb-0">
+                                @post.PostDetails
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="media mt-0">
+                            <div class="media-body">
+                                <h6 class="mb-0 mt-2 ms-2">@post.PostLikes people like your post</h6>
+                            </div>
+                            <div class="ms-auto">
+                                <div class="d-flex mt-1">
+                                    <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mt-4">
-                        <p class="mb-0">
-                            @post.PostDetails
-                        </p>
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="media mt-0">
-                        <div class="media-body">
-                            <h6 class="mb-0 mt-2 ms-2">@post.PostLikes people like your post</h6>
-                        </div>
-                        <div class="ms-auto">
-                            <div class="d-flex mt-1">
-                                <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
+                }
+            </div>*@
     </div>
     <div class="col-xl-3">
         <div class="card">
@@ -166,21 +173,134 @@
             </div>
         </div>
         @*<div class="card">
-            <div class="card-header">
-                <div class="card-title">Skills</div>
-            </div>
-            <div class="card-body">
-                <div class="tags">
-                    <a href="#" class="tag">Laravel</a>
-                    <a href="#" class="tag">Angular</a>
-                    <a href="#" class="tag">HTML</a>
-                    <a href="#" class="tag">Vuejs</a>
-                    <a href="#" class="tag">Codiegniter</a>
-                    <a href="#" class="tag">JavaScript</a>
-                    <a href="#" class="tag">Bootstrap</a>
-                    <a href="#" class="tag">PHP</a>
+                <div class="card-header">
+                    <div class="card-title">Skills</div>
                 </div>
-            </div>
-        </div>*@
+                <div class="card-body">
+                    <div class="tags">
+                        <a href="#" class="tag">Laravel</a>
+                        <a href="#" class="tag">Angular</a>
+                        <a href="#" class="tag">HTML</a>
+                        <a href="#" class="tag">Vuejs</a>
+                        <a href="#" class="tag">Codiegniter</a>
+                        <a href="#" class="tag">JavaScript</a>
+                        <a href="#" class="tag">Bootstrap</a>
+                        <a href="#" class="tag">PHP</a>
+                    </div>
+                </div>
+            </div>*@
     </div>
 </div>
+
+
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            AllPosts();
+            $(".fe-edit").click(function () {
+                ShowNewPost();
+                $("#btnCreatePost").click(function () {
+
+                    let postDetails = $("#txtArea").val();
+
+                    var settings = {
+                        "url": "/UserPost/CreatePost",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify({
+                            "postDetails": postDetails
+                        }),
+                    };
+                    $.ajax(settings).done(function (response) {
+
+                    });
+                    HideNewPost();
+                    let template = `<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                         <strong>Fiitched!</strong>
+                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                       </div>`;
+                    $("#success").prepend(template);
+                    $("#txtArea").val("");
+                })
+
+            })
+        })
+    </script>
+    <script>
+        HideNewPost();
+
+        function ShowNewPost() {
+            $("#newPost").show(500);
+        }
+        function HideNewPost() {
+            $("#newPost").hide(200);
+        }
+    </script>
+    <script>
+        
+
+
+        function AllPosts() {
+            var settings = {
+                "url": "/UserPost/GetPosts",
+                "method": "GET",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                let posts = response.data[0];
+                for (var post of posts) {
+                    console.log(post);
+                    let template = `<div class="card border p-0 shadow-none">
+                                     <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="ms-auto">
+                                                <div class="dropdown show">
+                                                    <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
+                                                        <span class=""><i class="fe fe-more-vertical"></i></span>
+                                                    </a>
+                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                        <a class="dropdown-item" href="#">Edit Post</a>
+                                                        <a class="dropdown-item" href="#">Delete Post</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <p class="mb-0">
+                                               ${post.PostDetails}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <div class="media mt-0">
+                                            <div class="media-body">
+                                                <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
+                                            </div>
+                                            <div class="ms-auto">
+                                                <div class="d-flex mt-1">
+                                                    <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>`;
+
+                    $("#postsTable").append(template);
+                }
+
+
+
+            });
+
+
+        
+        }
+
+    </script>
+
+}
