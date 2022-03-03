@@ -188,6 +188,7 @@
     <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\PlanetsController.cs" />
     <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\StarsController.cs" />
     <Compile Include="Controllers\AppUsersContollers\AppUserController.cs" />
+    <Compile Include="Controllers\AppUsersContollers\UserPostController.cs" />
     <Compile Include="Controllers\BodiesControllers\BodiesController.cs" />
     <Compile Include="Controllers\BroadsControllers\ArticleController.cs" />
     <Compile Include="Controllers\BroadsControllers\CalendarController.cs" />
@@ -1863,6 +1864,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Controllers\ApiControllers\ApiAppUsersControllers\" />
     <Folder Include="Controllers\ApiControllers\ApiBroadsControllers\" />
+    <Folder Include="Views\UserPost\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
