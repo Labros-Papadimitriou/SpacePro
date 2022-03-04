@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
-
 <div class="row" id="user-profile">
     <div class="col-lg-12">
         <div class="card">
@@ -46,10 +45,9 @@
                                 <i class="fe fe-edit fs-20 text-white"></i>
                             </div>
                             <div class="media-body">
-                                <span class="text-muted">Posts</span>
-                                <div class="fw-semibold fs-25">
-                                    @Model.UserPosts.Count
-                                </div>
+                                <span  class="text-muted">Posts</span>
+                                <br />
+                                <strong id="postsCount" class="fs-20 text-white"></strong>
                             </div>
                         </div>
                     </div>
@@ -208,7 +206,7 @@
     </script>
 
     @* Create Post Func *@
-    <script type="text/javascript">
+<script type="text/javascript">
 
         function CreateNewPost() {
 
@@ -235,6 +233,7 @@
                                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
                                     </div>`;
 
+
                 $("#success").prepend(template);
 
                 $("#txtArea").val("");
@@ -247,7 +246,7 @@
 
         }
 
-    </script>
+</script>
 
     @* HIDE AND SHOW FUCNTIONS *@
     <script type="text/javascript">
@@ -278,7 +277,7 @@
 
 
                 $("#postsTable").children().remove();
-
+                let postsCount = response.data.length;
                 let posts = response.data;
                 for (var post of posts) {
 
@@ -317,8 +316,13 @@
                                             </div>
                                     </div>`;
 
+                    
+
                     $("#postsTable").prepend(template);
+                    
                 }
+                $("#postsCount").html(postsCount);
+
             }).fail(function () {
                 console.log("errrrrrrrrrrrrrror");
             });
