@@ -1,0 +1,104 @@
+﻿@model Entities.BroadClasses.Article
+
+
+@{
+    Layout = "~/Views/Shared/_LayoutSpace.cshtml";
+}
+
+<!--app-content open-->
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Article Details</h1>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/Article/ShowArticles">All Articles</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Article Details</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+
+            <div class="row">
+                <div class="col-xl-8">
+                    <div class="card">
+                        <img id="article-image" class="card-img-top br-tr-7 br-tl-7 " src="@Model.ArticleImage.Url" alt="@Model.ArticleImage.AlternativeText">
+                        <div class="card-body">
+                            <div class="d-md-flex">
+                                <a href="javascript:void(0);" class="d-flex me-4 mb-2">
+                                    <i class="fe fe-calendar fs-16 me-1 p-3 bg-secondary-transparent text-secondary bradius"></i>
+                                    <div id="article-postdate" class="mt-0 mt-3 ms-1 text-muted font-weight-semibold">@Model.PostDate</div>
+                                </a>
+                                <a style="margin-left:50px" href="javascript:void(0)" class="d-flex mb-2">
+                                    <i class="fe fe-user fs-16 me-1 p-3 bg-primary-transparent text-primary bradius"></i>
+                                    <div class="mt-0 mt-3 ms-1 text-muted font-weight-semibold">@Model.AuthorName</div>
+                                </a>
+                                <div style="margin-left:60px" href="javascript:void(0)" class="d-flex mb-2">
+                                    <i class="fe fe-book fs-16 me-1 p-3 bg-primary-transparent text-primary bradius"></i>
+                                    <div id="article-category" class="mt-0 mt-3 ms-1 text-muted font-weight-semibold">@Model.ArticleCategory.Title</div>
+                                </div>
+                                <div class="media-body" style="margin-left:75px; margin-top:5px">
+                                    <div id="article-likes" class="mb-0 mt-2 ms-2" style="color:grey;">@Model.PostLikes people like this article</div>
+                                </div>
+                                <div class="ms-auto mt-3">
+                                    <button id="like-btn" class="btn btn-success">Like</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h3><a id="article-title" href="#">@Model.Title</a></h3>
+                            <p id="article-description" class="card-text"></p>
+                        </div>
+                        <div id="article-description" class="text-muted">@Model.FullDescription</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- CONTAINER CLOSED -->
+    </div>
+</div>
+<!--app-content closed-->
+
+@section article{
+    <script>
+
+        $(document).ready(function () {
+            $("#like-btn").click(function () {
+
+                if ($("#like-btn").html() == "Like") {
+                    $("#like-btn").html('Unlike');
+                    $("#like-btn").attr('class', "btn btn-danger");
+
+                    $.ajax({
+                    url: `/Article/GiveLike?id=@Model.ArticleId`,
+                    dataType: 'json',
+                    type: 'get',
+                    success: function (articleLikes) {
+                        $("#article-likes").html(articleLikes + " people like this article");
+                    }
+                });
+                }
+                else {
+                    $("#like-btn").html('Like');
+                    $("#like-btn").attr('class', "btn btn-success");
+
+
+                    $.ajax({
+                    url: `/Article/RemoveLike?id=@Model.ArticleId`,
+                    dataType: 'json',
+                    type: 'get',
+                    success: function (articleLikes) {
+                        $("#article-likes").html(articleLikes + " people like this article");
+                    }
+                });
+                }
+
+            });
+        });
+    </script>
+}

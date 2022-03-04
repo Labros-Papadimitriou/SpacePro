@@ -9,6 +9,11 @@ namespace Entities.BroadClasses
 {
     public class ArticleCategory
     {
+        public ArticleCategory()
+        {
+            Articles = new HashSet<Article>();
+        }
+
         public int ArticleCategoryId { get; set; }
 
         [Required(ErrorMessage = "Title is needed!")]
@@ -16,6 +21,6 @@ namespace Entities.BroadClasses
         public string Title { get; set; }
 
         //Navigation Properties
-        public Article Article { get; set; }
+        public ICollection<Article> Articles { get; set; }
     }
 }

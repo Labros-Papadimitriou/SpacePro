@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
-<!--app-content open-->S
+<!--app-content open-->
 <div class="main-content app-content mt-0">
     <div class="side-app">
 
@@ -12,11 +12,11 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Blog Details</h1>
+                <h1 class="page-title">Article Details</h1>
                 <div>
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/Home/Index">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+                        <li class="breadcrumb-item"><a href="/Article/ShowArticles">All Articles</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Article Details</li>
                     </ol>
                 </div>
             </div>
@@ -25,45 +25,26 @@
             <div class="row">
                 <div class="col-xl-8">
                     <div class="card">
-                        <img class="card-img-top br-tr-7 br-tl-7 " src="../assets/images/media/blog11.jpg" alt="Card image cap">
+                        <img id="article-image" class="card-img-top br-tr-7 br-tl-7 " src="" alt="">
                         <div class="card-body">
                             <div class="d-md-flex">
                                 <a href="javascript:void(0);" class="d-flex me-4 mb-2">
                                     <i class="fe fe-calendar fs-16 me-1 p-3 bg-secondary-transparent text-secondary bradius"></i>
-                                    <div class="mt-0 mt-3 ms-1 text-muted font-weight-semibold">Sep-25-2021</div>
+                                    <div id="article-postdate" class="mt-0 mt-3 ms-1 text-muted font-weight-semibold">Sep-25-2021</div>
                                 </a>
-                                <a href="profile.html" class="d-flex mb-2">
+                                <a style="margin-left:70px" href="javascript:void(0)" class="d-flex mb-2">
                                     <i class="fe fe-user fs-16 me-1 p-3 bg-primary-transparent text-primary bradius"></i>
                                     <div class="mt-0 mt-3 ms-1 text-muted font-weight-semibold">Harry Fisher</div>
                                 </a>
+                                <div style="margin-left:90px" href="javascript:void(0)" class="d-flex mb-2">
+                                    <i class="fe fe-book fs-16 me-1 p-3 bg-primary-transparent text-primary bradius"></i>
+                                    <div id="article-category" class="mt-0 mt-3 ms-1 text-muted font-weight-semibold"></div>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <h3><a href="#"> Voluptatem quia voluptas</a></h3>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                            <p>
-                                Lorem ipsum dolor sit amet, quis Neque porro quisquam est, nostrud exercitation ullamco laboris commodo consequat. There’s an old maxim that states, “No fun for the writer, no fun for the reader.”No matter what industry
-                                you’re working in, as a blogger, you should live and die by this statement.
-                            </p>
-                            <p>
-                                I must explain to you how all this mistaken idea of denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of the great explorer of the
-                                truth, the master-builder of human happiness. No one rejects, dislikes, or avoids pleasure itself, because it is pleasure.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Categories</div>
-                        </div>
-                        <div class="card-body">
-                            <ul class="list-group">
-                                <li class="list-group-item border-0 p-0"><a href="#"><i class="fe fe-chevron-right"></i> Development</a></li>
-                                <li class="list-group-item border-0 p-0"><a href="#"><i class="fe fe-chevron-right"></i> Web Design</a></li>
-                                <li class="list-group-item border-0 p-0"><a href="#"><i class="fe fe-chevron-right"></i> Technology</a></li>
-                                <li class="list-group-item border-0 p-0"><a href="#"><i class="fe fe-chevron-right"></i> Sports</a></li>
-                            </ul>
+                            <h3><a id="article-title" href="#"> Voluptatem quia voluptas</a></h3>
+                            <p id="article-description" class="card-text"></p>
                         </div>
                     </div>
                 </div>
@@ -73,3 +54,27 @@
     </div>
 </div>
 <!--app-content closed-->
+
+@*@section article{
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: `/Article/GetArticleDetails?${}`,
+                dataType: 'json',
+                type: 'get',
+                success: function (article) {
+                    $("#article-title").html(article[0].Title)
+                    $("#article-description").html(article[0].FullDescription)
+                    $("#article-likes").html(article[0].PostLikes + " likes")
+                    let date = article.PostDate;
+                    let postdate = moment.utc(date).format('DD-MM-YYYY');
+                    $("#article-postdate").html("Post Date: " + postdate);
+                    $("#article-postdate").html("Post Date: " + postdate);
+                    $("#article-image").attr("src", article[0].Image[0].Url);
+                    $("#article-image").attr("alt", article[0].Image[0].AlternativeText);
+                    $("#article-category").html(article[0].Category);
+                }
+            })
+        })
+    </script>
+}*@
