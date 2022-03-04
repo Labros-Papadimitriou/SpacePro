@@ -74,6 +74,8 @@
             //};
             //db.Articles.Add(a2);
             //db.SaveChanges();
+            #endregion
+
         }
     }
 }
