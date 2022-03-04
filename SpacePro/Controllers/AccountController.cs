@@ -77,10 +77,11 @@ namespace SpacePro.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            try
-            {
-                var user = db.Users.Where(u => u.Email.Equals(model.Email)).Single(); // where db is ApplicationDbContext instance
-                var result = await SignInManager.PasswordSignInAsync(user.UserName, model.Password, model.RememberMe, shouldLockout: false);
+
+            var user = db.Users.Where(u => u.Email.Equals(model.Email)).SingleOrDefault();
+            // where db is ApplicationDbContext instance
+            var userName = user==null?model.Email:user.UserName;
+                var result = await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);
                 switch (result)
                 {
                     case SignInStatus.Success:
@@ -94,11 +95,8 @@ namespace SpacePro.Controllers
                         ModelState.AddModelError("", "Invalid login attempt.");
                         return View(model);
                 }
-            }
-            catch (InvalidOperationException )
-            {
-                throw new InvalidOperationException();
-            }
+            
+          
            
         }
 
