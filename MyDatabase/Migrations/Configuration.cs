@@ -14,6 +14,7 @@
 
         protected override void Seed(MyDatabase.ApplicationDbContext db)
         {
+            #region SeedArticles
             //ArticleCategory ac1 = new ArticleCategory() { Title = "BigBang" };
             //ArticleCategory ac2 = new ArticleCategory() { Title = "Planets" };
             //ArticleCategory ac3 = new ArticleCategory() { Title = "Stars" };
@@ -73,6 +74,9 @@
             };
             db.Articles.Add(a2);
             db.SaveChanges();
+            #endregion
+
+
         }
     }
 }
