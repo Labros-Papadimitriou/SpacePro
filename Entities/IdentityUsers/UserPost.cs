@@ -14,6 +14,9 @@ namespace Entities.IdentityUsers
         public string PostDetails { get; set; }
 
         public int? PostLikes { get; set; }
+
+        [ForeignKey("ApplicationUser")]
+        public string ApplicationUser_id { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
     }
 }

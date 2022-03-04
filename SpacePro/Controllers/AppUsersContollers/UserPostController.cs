@@ -23,8 +23,12 @@ namespace SpacePro.Controllers.AppUsersContollers
         public ActionResult GetPosts()
         {
             var userId = User.Identity.GetUserId();
-            var posts = db.Users.Where(x => x.Id == userId).Select(x => x.UserPosts).ToList();
+            var user = db.Users.Find(userId);
+
+            var posts = db.UserPosts.Where(p=>p.ApplicationUser_id == userId).Select(x=>new { x.UserPostId, x.PostDetails, x.PostLikes ,x.ApplicationUser_id});
             //var posts = db.UserPosts.ToList();
+
+
             return Json(new { data = posts }, JsonRequestBehavior.AllowGet);
         }
 
@@ -32,13 +36,24 @@ namespace SpacePro.Controllers.AppUsersContollers
         public ActionResult CreatePost(string postDetails)
         {
             UserPost post = new UserPost();
-            var user = db.Users.Find(User.Identity.GetUserId());
-            post.ApplicationUser = user;
+
+            var userId = User.Identity.GetUserId();
+
+            post.ApplicationUser_id = userId;
             post.PostDetails = postDetails;
             post.PostLikes = 0;
             db.Entry(post).State = EntityState.Added;
             db.SaveChanges();
             return Json(post);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
