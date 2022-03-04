@@ -2,7 +2,7 @@
 using Entities.BroadClasses;
 using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity.EntityFramework;
-using MyDatabase.Initializers;
+//using MyDatabase.Initializers;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -16,7 +16,7 @@ namespace MyDatabase
     {
         public ApplicationDbContext() : base("Sindesmos", throwIfV1Schema: false)
         {
-            //Database.SetInitializer<ApplicationDbContext>(new MockupDbInitializer());
+            //Database.SetInitializer<ApplicationDbContext>(new CreateDatabaseIfNotExists<ApplicationDbContext>());
             //Database.Initialize(false);
         }
 
@@ -29,13 +29,13 @@ namespace MyDatabase
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             //ZeroOne To One Relationship
-            //Category has 0-1 Articles and Article has 1 Category
-            modelBuilder.Entity<Article>()
-            .HasRequired(x => x.ArticleCategory);
+            modelBuilder.Entity<ArticleImage>()
+            .HasRequired(x => x.Article);
 
             modelBuilder.Entity<UserImage>()
             .HasRequired(x => x.ApplicationUser);
 
+            //ZeroOne To One Relationship
             modelBuilder.Entity<UserPost>()
             .HasRequired(x => x.ApplicationUser);
 

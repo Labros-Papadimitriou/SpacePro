@@ -12,13 +12,13 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
+<div id="article-row" class="row">
+    @*<div class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
         <div class="card">
             <a href="/Article/DetailsArticles"><img id="article-image" class="card-img-top" src="" alt=""></a>
             <div class="card-body d-flex flex-column">
                 <h3><a id="article-title" href="/Article/DetailsArticles"></a></h3>
-                <div id ="article-description" class="text-muted"></div>
+                <div id="article-description" class="text-muted"></div>
                 <div class="d-flex align-items-center pt-5 mt-auto">
                     <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/18.jpg"></div>
                     <div>
@@ -35,6 +35,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
         <div class="card">
             <a href="/Article/DetailsArticles"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/14.jpg" alt="Well, I didn&#39;t vote for you."></a>
             <div class="card-body d-flex flex-column">
@@ -73,64 +75,67 @@
                 </div>
             </div>
         </div>
-        <div class="card">
-            <a href="/Article/DetailsArticles"><img class="card-img-top br-tr-7 br-tl-7" src="~/Template/sash/assets/images/media/14.jpg" alt="Well, I didn&#39;t vote for you."></a>
-            <div class="card-body d-flex flex-column">
-                <h3><a href="blog-details.html"> Voluptatem quia voluptas </a></h3>
-                <div class="text-muted">Who chooses to enjoy a pleasure that has no annoying consequences, or one who avoids a pain that produces.</div>
-                <div class="d-flex align-items-center pt-5 mt-auto">
-                    <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/16.jpg"></div>
-                    <div>
-                        <a href="profile.html" class="text-default">Anna Ogden</a>
-                        <small class="d-block text-muted">2 days ago</small>
-                    </div>
-                    <div class="ms-auto">
-                        <a href="javascript:void(0)" class="icon d-none d-md-inline-block text-muted"><i class="fe fe-heart me-1 border brround"></i></a>
-                        <a href="javascript:void(0)" class="icon d-none d-md-inline-block text-muted"><i class="fa fa-thumbs-o-up border brround"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mb-9">
-            <div class="float-end">
-                <ul class="pagination ">
-                    <li class="page-item page-prev disabled">
-                        <a class="page-link" href="#" tabindex="-1">Prev</a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item page-next">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    </div>*@
+    @*<div class="mb-9">
+            <ul class="pagination ">
+                <li class="page-item page-prev disabled">
+                    <a class="page-link" href="#" tabindex="-1">Prev</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item page-next">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </div>*@
 </div>
 
 @section article{
     <script>
         $(document).ready(function () {
             $.ajax({
-                url: '/Article/GetArticle',
+                url: '/Article/GetAllArticles',
                 dataType: 'json',
                 type: 'get',
                 success: function (article) {
-                    $("#article-title").html(article[0].Title)
-                    $("#article-description").html(article[0].Description)
-                    $("#article-likes").html(article[0].PostLikes + " likes")
-                    let date = article.PostDate;
-                    let postdate = moment.utc(date).format('DD-MM-YYYY');
-                    $("#article-postdate").html("Post Date: " + postdate);
-                    $("#article-postdate").html("Post Date: " + postdate);
-                    $("#article-image").attr("src", article[0].Image[0].Url);
-                    $("#article-image").attr("alt", article[0].Image[0].AlternativeText);
+                    console.log(article[0].AuthorName);
+                    for (let i = 0; i < article.length; i++) {
+
+
+                        let date = article[i].PostDate;
+                        let postdate = moment.utc(date).format('DD-MM-YYYY');
+
+                        let template = `
+                                        <div class="col-sm-6 col-md-12 col-lg-6 col-xl-4">
+                                            <div class="card">
+                                                <a href="/Article/GetArticleDetails?id=${article[i].ArticleId}"><img id="article-image-${article[i].ArticleId}" class="card-img-top" src="${article[i].Url}" alt="${article[i].AlternativeText}"></a>
+                                                <div class="card-body d-flex flex-column">
+                                                    <h3><a id="article-title-${article[i].ArticleId}" href="/Article/GetArticleDetails?id=${article[i].ArticleId}">${article[i].Title}</a></h3>
+                                                    <div id="article-description-${article[i].ArticleId}" class="text-muted">${article[i].ShortDescription}</div>
+                                                    <div class="d-flex align-items-center pt-5 mt-auto">
+                                                        <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/18.jpg"></div>
+                                                        <div>
+                                                            <a href="javascript:void(0)" class="text-default">By: ${article[i].AuthorName}</a>
+                                                            <small id="article-postdate-${article[i].ArticleId}" class="d-block text-muted">${"Post Date: " + postdate}</small>
+                                                        </div>
+                                                        <div class="media-body" style="margin-left:170px; margin-bottom:11px">
+                                                            <h6 id="article-likes-${article[i].ArticleId}" class="mb-0 mt-2 ms-2">${article[i].PostLikes + " likes"}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+
+                        let column = $(template);
+
+                        $("#article-row").append(column);
+                    }
                 }
             })
         })
     </script>
 }
-
