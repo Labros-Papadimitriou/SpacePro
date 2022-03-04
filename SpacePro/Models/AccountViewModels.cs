@@ -49,7 +49,7 @@ namespace SpacePro.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
+        [Display(Name = "User Name")]
         [EmailAddress]
         public string Email { get; set; }
 
