@@ -46,7 +46,24 @@ namespace SpacePro.Controllers.AppUsersContollers
             db.SaveChanges();
             return Json(post);
         }
+        [HttpPost]
+        public ActionResult DeletePost(int id)
+        {
+            var post = db.UserPosts.Find(id);
+            db.Entry(post).State = EntityState.Deleted;
+            db.SaveChanges();
 
+            return Json(post);
+        }
+        [HttpPost]
+        public ActionResult EditPost(int id, string postDetails)
+        {
+            var post = db.UserPosts.Find(id);
+            post.PostDetails = postDetails;
+            db.Entry(post).State = EntityState.Modified;
+            db.SaveChanges();
+            return Json(post);
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

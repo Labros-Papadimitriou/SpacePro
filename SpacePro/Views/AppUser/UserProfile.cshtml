@@ -45,7 +45,7 @@
                                 <i class="fe fe-edit fs-20 text-white"></i>
                             </div>
                             <div class="media-body">
-                                <span  class="text-muted">Posts</span>
+                                <span class="text-muted">Posts</span>
                                 <br />
                                 <strong id="postsCount" class="fs-20 text-white"></strong>
                             </div>
@@ -56,10 +56,11 @@
         </div>
         <div id="success">
         </div>
-        <div id="newPost">
+        <div id="newPost" title="Create new Post">
             <label class="fw-semibold fs-20" style="display:block" for="txtArea">New Post</label>
             <textarea rows="4" cols="50" maxlength="200" id="txtArea" style="color:white; background-color:#00000000"></textarea>
             <button id="btnCreatePost" class="btn btn-secondary">Create</button>
+            <button id="DismissPost" class="btn  btn-danger">Dismiss</button>
         </div>
         <div class="card">
             <div class="card-header">
@@ -198,15 +199,18 @@
             HideNewPost();
 
             AllPosts();
-
-            $(".fe-edit").click(ShowNewPost);
+            $("#delPost").click(function () {
+                console.log("geua");
+            });
+            $(".fe-edit").click(ShowNewPost)
 
             $("#btnCreatePost").click(CreateNewPost);
+
         })
     </script>
 
     @* Create Post Func *@
-<script type="text/javascript">
+    <script type="text/javascript">
 
         function CreateNewPost() {
 
@@ -229,9 +233,9 @@
                 HideNewPost();
 
                 let template = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                      <strong>Created!</strong>
-                                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
-                                    </div>`;
+                                              <strong>Created!</strong>
+                                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                                            </div>`;
 
 
                 $("#success").prepend(template);
@@ -246,13 +250,17 @@
 
         }
 
-</script>
+    </script>
 
     @* HIDE AND SHOW FUCNTIONS *@
     <script type="text/javascript">
 
         function ShowNewPost() {
             $("#newPost").show(500);
+            $("#DismissPost").click(function () {
+                $("#txtArea").val("");
+                HideNewPost();
+            })
         }
 
         function HideNewPost() {
@@ -261,14 +269,13 @@
 
     </script>
 
-
     @* ALL POSTS FUNCTION *@
     <script type="text/javascript">
 
         function AllPosts() {
 
             var settings = {
-                "url": "https://localhost:44356/UserPost/GetPosts",
+                "url": "/UserPost/GetPosts",
                 "method": "GET",
                 "timeout": 0,
             };
@@ -282,44 +289,44 @@
                 for (var post of posts) {
 
                     let template = `<div class="card border p-0 shadow-none">
-                                             <div class="card-body">
-                                                <div class="d-flex">
-                                                    <div class="ms-auto">
-                                                        <div class="dropdown show">
-                                                            <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
-                                                                <span class=""><i class="fe fe-more-vertical"></i></span>
-                                                            </a>
-                                                            <div class="dropdown-menu dropdown-menu-end">
-                                                                <a class="dropdown-item" href="#">Edit Post</a>
-                                                                <a class="dropdown-item" href="#">Delete Post</a>
+                                                     <div class="card-body">
+                                                        <div class="d-flex">
+                                                            <div class="ms-auto">
+                                                                <div class="dropdown show">
+                                                                    <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
+                                                                        <span class=""><i class="fe fe-more-vertical"></i></span>
+                                                                    </a>
+                                                                    <div class="dropdown-menu dropdown-menu-end">
+                                                                        <a onclick="EditPost(${post.UserPostId})" class="dropdown-item" href="#">Edit Post</a>
+                                                                        <a onclick="DeletePost(${post.UserPostId})" class="dropdown-item" href="#"> Delete Post</a>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="mt-4">
+                                                            <p id="editDetailsPost${post.UserPostId}" class="mb-0 card-title fs-25">
+                                                               ${post.PostDetails}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        <div class="media mt-0">
+                                                            <div class="media-body">
+                                                                <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
+                                                            </div>
+                                                            <div class="ms-auto">
+                                                                <div class="d-flex mt-1">
+                                                                    <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="mt-4">
-                                                    <p class="mb-0">
-                                                       ${post.PostDetails}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="card-footer">
-                                                <div class="media mt-0">
-                                                    <div class="media-body">
-                                                        <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
-                                                    </div>
-                                                    <div class="ms-auto">
-                                                        <div class="d-flex mt-1">
-                                                            <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                    </div>`;
+                                            </div>`;
 
-                    
+
 
                     $("#postsTable").prepend(template);
-                    
+
                 }
                 $("#postsCount").html(postsCount);
 
@@ -327,6 +334,70 @@
                 console.log("errrrrrrrrrrrrrror");
             });
         }
+
+    </script>
+
+    @* EDIT & DELETE FUNCS *@
+    <script type="text/javascript">
+
+        function EditPost(id) {
+            $(`#editDetailsPost${id}`).attr('contenteditable', "true").css("background-color", "#3e3d3dcc");
+
+            $(document).on('keypress', function (e) {
+                if (e.which == 13) {
+                    e.preventDefault();
+                    let postDetails = $(`#editDetailsPost${id}`).html();
+                    let RequestCls = {
+                        id : id,
+                        postDetails : postDetails
+                    }
+
+
+                    var settings = {
+                        "url": "/UserPost/EditPost",
+                        "method": "POST",
+                        "timeout": 0,
+                        "headers": {
+                            "Content-Type": "application/json"
+                        },
+                        "data": JSON.stringify(RequestCls),
+                    };
+
+                    $.ajax(settings).done(function (response) {
+                        AllPosts();
+                    });
+
+
+
+                }
+            });
+
+        }
+
+        function DeletePost(id) {
+
+            var settings = {
+                "url": "/UserPost/DeletePost",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "id": id
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                AllPosts();
+
+
+            }).fail(function () {
+
+                console.log("errrrrrrrrrrrrrror");
+            });
+        }
+
     </script>
 
 }
