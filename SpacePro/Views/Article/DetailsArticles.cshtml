@@ -54,27 +54,3 @@
     </div>
 </div>
 <!--app-content closed-->
-
-@*@section article{
-    <script>
-        $(document).ready(function () {
-            $.ajax({
-                url: `/Article/GetArticleDetails?${}`,
-                dataType: 'json',
-                type: 'get',
-                success: function (article) {
-                    $("#article-title").html(article[0].Title)
-                    $("#article-description").html(article[0].FullDescription)
-                    $("#article-likes").html(article[0].PostLikes + " likes")
-                    let date = article.PostDate;
-                    let postdate = moment.utc(date).format('DD-MM-YYYY');
-                    $("#article-postdate").html("Post Date: " + postdate);
-                    $("#article-postdate").html("Post Date: " + postdate);
-                    $("#article-image").attr("src", article[0].Image[0].Url);
-                    $("#article-image").attr("alt", article[0].Image[0].AlternativeText);
-                    $("#article-category").html(article[0].Category);
-                }
-            })
-        })
-    </script>
-}*@

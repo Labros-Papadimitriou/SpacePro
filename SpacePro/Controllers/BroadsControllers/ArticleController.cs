@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using Entities.BroadClasses;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
@@ -16,21 +17,9 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             db = new ApplicationDbContext();
         }
-
+        // ------------------------SHOW START------------------------------- //
         [HttpGet]
         public ActionResult ShowArticles()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult CreateArticles()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public ActionResult DetailsArticles()
         {
             return View();
         }
@@ -53,6 +42,33 @@ namespace SpacePro.Controllers.BroadsControllers
 
             return Json(article, JsonRequestBehavior.AllowGet);
         }
+        // ------------------------SHOW END------------------------------- //
+
+
+
+        // ------------------------CREATE START------------------------------- //
+        [HttpGet]
+        public ActionResult CreateArticles()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public void CreateNewArticle(Article article)
+        {
+            
+        }
+        // ------------------------CREATE END------------------------------- //
+
+
+
+
+        // ------------------------DETAILS START------------------------------- //
+        [HttpGet]
+        public ActionResult DetailsArticles()
+        {
+            return View();
+        }
 
         [HttpGet]
         public ActionResult GetArticleDetails(int? id)
@@ -61,7 +77,11 @@ namespace SpacePro.Controllers.BroadsControllers
 
             return View(article);
         }
+        // ------------------------DETAILS END------------------------------- //
 
+
+
+        // ------------------------LIKES START------------------------------- //
         [HttpGet]
         public JsonResult GiveLike(int? id)
         {
@@ -81,7 +101,6 @@ namespace SpacePro.Controllers.BroadsControllers
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
-
-
+        // ------------------------LIKES END------------------------------- //
     }
 }
