@@ -202,12 +202,15 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Dtos\CreateArticleDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ArticlesImages\cometsmock.jpg" />
+    <Content Include="Content\ArticlesImages\fermiparadox.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\300px-8405_asbolus.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Ceres.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Chiron.jpg" />

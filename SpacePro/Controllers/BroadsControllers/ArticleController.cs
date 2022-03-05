@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Entities.BroadClasses;
+using SpacePro.Models.Dtos;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
@@ -17,7 +18,6 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             db = new ApplicationDbContext();
         }
-        // ------------------------SHOW START------------------------------- //
         [HttpGet]
         public ActionResult ShowArticles()
         {
@@ -42,11 +42,9 @@ namespace SpacePro.Controllers.BroadsControllers
 
             return Json(article, JsonRequestBehavior.AllowGet);
         }
-        // ------------------------SHOW END------------------------------- //
 
 
 
-        // ------------------------CREATE START------------------------------- //
         [HttpGet]
         public ActionResult CreateArticles()
         {
@@ -54,16 +52,36 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpPost]
-        public void CreateNewArticle(Article article)
+        public ActionResult CreateNewArticle(CreateArticleDto articleDto, HttpPostedFileBase image)
         {
-            
+            if (image != null)
+            {
+                image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
+            }
+
+            ArticleImage articleImage = new ArticleImage();
+            articleImage.Name = image.FileName;
+            articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
+            articleImage.AlternativeText = (image.FileName).Split('.')[0];
+            db.Entry(articleImage).State = EntityState.Added;
+
+            Article article = new Article();
+            article.Title = articleDto.Title;
+            article.ShortDescription = articleDto.ShortDescription;
+            article.FullDescription = articleDto.FullDescription;
+            article.AuthorName = articleDto.AuthorName;
+            article.PostLikes = 0;
+            article.PostDate = DateTime.Now;
+            article.ArticleCategoryId = articleDto.ArticleCategoryId;
+            article.ArticleImage = articleImage;
+            db.Entry(article).State = EntityState.Added;
+
+            db.SaveChanges();
+
+            return View("ShowArticles");
         }
-        // ------------------------CREATE END------------------------------- //
 
 
-
-
-        // ------------------------DETAILS START------------------------------- //
         [HttpGet]
         public ActionResult DetailsArticles()
         {
@@ -77,11 +95,9 @@ namespace SpacePro.Controllers.BroadsControllers
 
             return View(article);
         }
-        // ------------------------DETAILS END------------------------------- //
 
 
 
-        // ------------------------LIKES START------------------------------- //
         [HttpGet]
         public JsonResult GiveLike(int? id)
         {
@@ -101,6 +117,5 @@ namespace SpacePro.Controllers.BroadsControllers
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
-        // ------------------------LIKES END------------------------------- //
     }
 }
