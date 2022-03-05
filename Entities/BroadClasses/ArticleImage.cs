@@ -11,6 +11,8 @@ namespace Entities.BroadClasses
     {
         public int ArticleImageId { get; set; }
 
+        public string Name { get; set; }
+
         [Required(ErrorMessage = "Image URL is needed!")]
         [Display(Name = "Image URL")]
         public string Url { get; set; }

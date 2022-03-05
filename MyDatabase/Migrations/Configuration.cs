@@ -29,7 +29,7 @@
             //db.ArticleCategories.AddRange(articleCategories);
             //db.SaveChanges();
 
-            //ArticleImage ai1 = new ArticleImage() { Url = "https://i.ytimg.com/vi/sNhhvQGsMEc/sddefault.jpg", AlternativeText = "Fermi Paradox" };
+            //ArticleImage ai1 = new ArticleImage() { Name = "fermiparadox.jpg" Url = "/Content/ArticlesImages/fermiparadox.jpg", AlternativeText = "Fermi Paradox" };
             //db.ArticleImages.Add(ai1);
 
             //Article a1 = new Article()
@@ -48,7 +48,7 @@
             //};
             //db.Articles.Add(a1);
 
-            //ArticleImage ai2 = new ArticleImage() { Url = "https://ec.europa.eu/research-and-innovation/sites/default/files/styles/w1108/public/hm/field/image/pia00330_modest.jpg?itok=ndI38m2N", AlternativeText = "Comets" };
+            //ArticleImage ai2 = new ArticleImage() { Name = "cometsmock.jpg" Url = "/Content/ArticlesImages/cometsmock.jpg", AlternativeText = "Comets" };
             //db.ArticleImages.Add(ai2);
 
             //Article a2 = new Article()
@@ -77,6 +77,7 @@
             //db.Articles.Add(a2);
             //db.SaveChanges();
             #endregion
+
             #region SeedBodyImages
             //stars
             BodyImage sun = new BodyImage() { Url = "/Content/BodiesImages/Stars/Sun.jpg", AlternativeText = "Sun" };
