@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MyDatabase;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,10 +9,24 @@ namespace SpacePro.Controllers.BroadsControllers
 {
     public class GalleryController : Controller
     {
+        ApplicationDbContext db;
+        public GalleryController()
+        {
+            db = new ApplicationDbContext();
+        }
         // GET: Gallery
         public ActionResult ShowGallery()
         {
-            return View();
+            var images = db.BodyImages;
+            return View(images);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

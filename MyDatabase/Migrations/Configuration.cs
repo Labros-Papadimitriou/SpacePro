@@ -79,68 +79,68 @@
             #endregion
             #region SeedBodyImages
             //stars
-            BodyImage sun = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Stars\Sun.jpg", AlternativeText = "Sun" };
+            BodyImage sun = new BodyImage() { Url = "/Content/BodiesImages/Stars/Sun.jpg", AlternativeText = "Sun" };
             //planets
-            BodyImage earth = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Stars\Sun.jpg", AlternativeText = "Earth" };
-            BodyImage jupiter = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Jupiter.jpg", AlternativeText = "Jupiter" };
-            BodyImage mars = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Mars.jpg", AlternativeText = "Mars" };
-            BodyImage mercury = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Mercury.jpg", AlternativeText = "Mercury" };
-            BodyImage neptune = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Neptune.jpg", AlternativeText = "Neptune" };
-            BodyImage pluto = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Pluto.jpg", AlternativeText = "Pluto" };
-            BodyImage saturn = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Saturn.jpg", AlternativeText = "Saturn" };
-            BodyImage uranus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Uranus.jpg", AlternativeText = "Uranus" };
-            BodyImage venus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Planets Images\Uranus.jpg", AlternativeText = "Venus" };
+            BodyImage earth = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Earth.jpg", AlternativeText = "Earth" };
+            BodyImage jupiter = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Jupiter.jpg", AlternativeText = "Jupiter" };
+            BodyImage mars = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Mars.jpg", AlternativeText = "Mars" };
+            BodyImage mercury = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Mercury.jpg", AlternativeText = "Mercury" };
+            BodyImage neptune = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Neptune.jpg", AlternativeText = "Neptune" };
+            BodyImage pluto = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Pluto.jpg", AlternativeText = "Pluto" };
+            BodyImage saturn = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Saturn.jpg", AlternativeText = "Saturn" };
+            BodyImage uranus = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Uranus.jpg", AlternativeText = "Uranus" };
+            BodyImage venus = new BodyImage() { Url = "/Content/BodiesImages/PlanetsImages/Venus.jpg", AlternativeText = "Venus" };
 
             //moons
-            BodyImage adrastea = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Adrastea.jpg", AlternativeText = "Adrastea" };
-            BodyImage amalthea = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Amalthea.jpg", AlternativeText = "Amalthea" };
-            BodyImage ariel = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Ariel.jpg", AlternativeText = "Ariel" };
-            BodyImage callisto = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Callisto.jpg", AlternativeText = "Callisto" };
-            BodyImage calypso = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Calypso.png", AlternativeText = "Calypso" };
-            BodyImage charon = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Charon.jpg", AlternativeText = "Charon" };
-            BodyImage deimos = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Deimos.jpg", AlternativeText = "Deimos" };
-            BodyImage dione = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Dione.jpg", AlternativeText = "Dione" };
-            BodyImage enceladus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Enceladus.jpg", AlternativeText = "Enceladus" };
-            BodyImage epimetheus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Epimetheus.jpg", AlternativeText = "Epimetheus" };
-            BodyImage europa = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Europa.jpg", AlternativeText = "Europa" };
-            BodyImage ganymede = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Ganymede.jpg", AlternativeText = "Ganymede" };
-            BodyImage hyperion = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Hyperion.jpg", AlternativeText = "Hyperion" };
-            BodyImage iapetus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Iapetus.jpg", AlternativeText = "Iapetus" };
-            BodyImage io = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Io.jpg", AlternativeText = "Io" };
-            BodyImage lalune = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\LaLune.jpg", AlternativeText = "LaLune" };
-            BodyImage mimas = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Mimas.jpg", AlternativeText = "Mimas" };
-            BodyImage nix = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Nix.jpg", AlternativeText = "Nix" };
-            BodyImage oberon = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Oberon.jpg", AlternativeText = "Oberon" };
-            BodyImage phobos = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Phobos.jpg", AlternativeText = "Phobos" };
-            BodyImage prometheus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Prometheus.jpg", AlternativeText = "Prometheus" };
-            BodyImage rhea = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Rhea.jpg", AlternativeText = "Rhea" };
-            BodyImage titan = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Titan.jpg", AlternativeText = "Titan" };
-            BodyImage titania = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Titania.jpg", AlternativeText = "Titania" };
-            BodyImage triton = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Triton.jpg", AlternativeText = "Triton" };
-            BodyImage umbriel = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Moons\Umbriel.jpg", AlternativeText = "Umbriel" };
+            BodyImage adrastea = new BodyImage() { Url = "/Content/BodiesImages/Moons/Adrastea.jpg", AlternativeText = "Adrastea" };
+            BodyImage amalthea = new BodyImage() { Url = "/Content/BodiesImages/Moons/Amalthea.jpg", AlternativeText = "Amalthea" };
+            BodyImage ariel = new BodyImage() { Url = "/Content/BodiesImages/Moons/Ariel.jpg", AlternativeText = "Ariel" };
+            BodyImage callisto = new BodyImage() { Url = "/Content/BodiesImages/Moons/Callisto.jpg", AlternativeText = "Callisto" };
+            BodyImage calypso = new BodyImage() { Url = "/Content/BodiesImages/Moons/Calypso.png", AlternativeText = "Calypso" };
+            BodyImage charon = new BodyImage() { Url = "/Content/BodiesImages/Moons/Charon.jpg", AlternativeText = "Charon" };
+            BodyImage deimos = new BodyImage() { Url = "/Content/BodiesImages/Moons/Deimos.jpg", AlternativeText = "Deimos" };
+            BodyImage dione = new BodyImage() { Url = "/Content/BodiesImages/Moons/Dione.jpg", AlternativeText = "Dione" };
+            BodyImage enceladus = new BodyImage() { Url = "/Content/BodiesImages/Moons/Enceladus.jpg", AlternativeText = "Enceladus" };
+            BodyImage epimetheus = new BodyImage() { Url = "/Content/BodiesImages/Moons/Epimetheus.jpg", AlternativeText = "Epimetheus" };
+            BodyImage europa = new BodyImage() { Url = "/Content/BodiesImages/Moons/Europa.jpg", AlternativeText = "Europa" };
+            BodyImage ganymede = new BodyImage() { Url = "/Content/BodiesImages/Moons/Ganymede.jpg", AlternativeText = "Ganymede" };
+            BodyImage hyperion = new BodyImage() { Url = "/Content/BodiesImages/Moons/Hyperion.jpg", AlternativeText = "Hyperion" };
+            BodyImage iapetus = new BodyImage() { Url = "/Content/BodiesImages/Moons/Iapetus.jpg", AlternativeText = "Iapetus" };
+            BodyImage io = new BodyImage() { Url = "/Content/BodiesImages/Moons/Io.jpg", AlternativeText = "Io" };
+            BodyImage lalune = new BodyImage() { Url = "/Content/BodiesImages/Moons/LaLune.jpg", AlternativeText = "LaLune" };
+            BodyImage mimas = new BodyImage() { Url = "/Content/BodiesImages/Moons/Mimas.jpg", AlternativeText = "Mimas" };
+            BodyImage nix = new BodyImage() { Url = "/Content/BodiesImages/Moons/Nix.jpg", AlternativeText = "Nix" };
+            BodyImage oberon = new BodyImage() { Url = "/Content/BodiesImages/Moons/Oberon.jpg", AlternativeText = "Oberon" };
+            BodyImage phobos = new BodyImage() { Url = "/Content/BodiesImages/Moons/Phobos.jpg", AlternativeText = "Phobos" };
+            BodyImage prometheus = new BodyImage() { Url = "/Content/BodiesImages/Moons/Prometheus.jpg", AlternativeText = "Prometheus" };
+            BodyImage rhea = new BodyImage() { Url = "/Content/BodiesImages/Moons/Rhea.jpg", AlternativeText = "Rhea" };
+            BodyImage titan = new BodyImage() { Url = "/Content/BodiesImages/Moons/Titan.jpg", AlternativeText = "Titan" };
+            BodyImage titania = new BodyImage() { Url = "/Content/BodiesImages/Moons/Titania.jpg", AlternativeText = "Titania" };
+            BodyImage triton = new BodyImage() { Url = "/Content/BodiesImages/Moons/Triton.jpg", AlternativeText = "Triton" };
+            BodyImage umbriel = new BodyImage() { Url = "/Content/BodiesImages/Moons/Umbriel.jpg", AlternativeText = "Umbriel" };
 
             //asteroids
-            BodyImage asbolus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Asbolus.jpg", AlternativeText = "Asbolus" };
-            BodyImage ceres = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Ceres.jpg", AlternativeText = "Ceres" };
-            BodyImage chiron = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Chiron.jpg", AlternativeText = "Chiron" };
-            BodyImage hector = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Hector.jpg", AlternativeText = "Hector" };
-            BodyImage itokawa = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Itokawa.jpg", AlternativeText = "Itokawa" };
-            BodyImage ixion = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Ixion.png", AlternativeText = "Ixion" };
-            BodyImage junon = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Junon.jpg", AlternativeText = "Junon" };
-            BodyImage lutetia = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Lutetia.png", AlternativeText = "Lutetia" };
-            BodyImage mathilde = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Mathilde.png", AlternativeText = "Mathilde" };
-            BodyImage pholus = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Pholus.jpg", AlternativeText = "Pholus" };
-            BodyImage quaoar = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Quaoar.jpg", AlternativeText = "Quaoar" };
-            BodyImage steins = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Steins.png", AlternativeText = "Steins" };
-            BodyImage toutaris = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Toutatis.jpg", AlternativeText = "Toutatis" };
-            BodyImage varuna = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Varuna.png", AlternativeText = "Varuna" };
-            BodyImage vesta = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Asteroids\Vesta.jpg", AlternativeText = "Vesta" };
+            BodyImage asbolus = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Asbolus.jpg", AlternativeText = "Asbolus" };
+            BodyImage ceres = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Ceres.jpg", AlternativeText = "Ceres" };
+            BodyImage chiron = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Chiron.jpg", AlternativeText = "Chiron" };
+            BodyImage hector = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Hector.jpg", AlternativeText = "Hector" };
+            BodyImage itokawa = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Itokawa.jpg", AlternativeText = "Itokawa" };
+            BodyImage ixion = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Ixion.png", AlternativeText = "Ixion" };
+            BodyImage junon = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Junon.jpg", AlternativeText = "Junon" };
+            BodyImage lutetia = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Lutetia.png", AlternativeText = "Lutetia" };
+            BodyImage mathilde = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Mathilde.png", AlternativeText = "Mathilde" };
+            BodyImage pholus = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Pholus.jpg", AlternativeText = "Pholus" };
+            BodyImage quaoar = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Quaoar.jpg", AlternativeText = "Quaoar" };
+            BodyImage steins = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Steins.png", AlternativeText = "Steins" };
+            BodyImage toutaris = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Toutatis.jpg", AlternativeText = "Toutatis" };
+            BodyImage varuna = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Varuna.png", AlternativeText = "Varuna" };
+            BodyImage vesta = new BodyImage() { Url = "/Content/BodiesImages/Asteroids/Vesta.jpg", AlternativeText = "Vesta" };
 
             //Comets
-            BodyImage neowise = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Comets\C2020F3(NEOWISE).jpg", AlternativeText = "NEOWISE" };
-            BodyImage halley = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Comets\Halley.jpg", AlternativeText = "Halley" };
-            BodyImage hyakutake = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Comets\Hyakutake.jpg", AlternativeText = "Hyakutake" };
-            BodyImage levy = new BodyImage() { Url = @"\SpacePro\Content\BodiesImages\Comets\Levy.png", AlternativeText = "Levy" };
+            BodyImage neowise = new BodyImage() { Url = "/Content/BodiesImages/Comets/C2020F3(NEOWISE).jpg", AlternativeText = "NEOWISE" };
+            BodyImage halley = new BodyImage() { Url = "/Content/BodiesImages/Comets/Halley.jpg", AlternativeText = "Halley" };
+            BodyImage hyakutake = new BodyImage() { Url = "/Content/BodiesImages/Comets/Hyakutake.jpg", AlternativeText = "Hyakutake" };
+            BodyImage levy = new BodyImage() { Url = "/Content/BodiesImages/Comets/Levy.png", AlternativeText = "Levy" };
 
             List<BodyImage> bodyImages = new List<BodyImage>() { sun,levy,hyakutake,halley,neowise,vesta,varuna,toutaris,steins,quaoar,pholus,mathilde,lutetia,junon,ixion,itokawa,
             hector,chiron,ceres,asbolus,umbriel,triton,titan,titania,rhea,prometheus,phobos,oberon,nix,mimas,lalune,io,iapetus,hyperion,ganymede,europa,epimetheus,enceladus,dione,deimos,
