@@ -4,5 +4,135 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
-<h2>Index</h2>
+<style>
+    body {
+        -webkit-font-smoothing: antialiased;
+    }
 
+    .earth-demo {
+        background: #000;
+        position: absolute;
+        top: 70px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+    }
+
+        .earth-demo:before {
+            background: url(https://cssanimation.rocks/images/random/space2.jpg) repeat center;
+            background-size: cover;
+            content: "";
+            opacity: 0.5;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+    .earth {
+        position: absolute;
+        top: calc(50% - 100px);
+        left: calc(50% - 100px);
+    }
+
+        .earth img {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .earth .more-info {
+            background-image: linear-gradient(to bottom, rgba(10, 10, 10, 1), black);
+            border-radius: 1em;
+            color: #fff;
+            opacity: 0;
+            padding: 1em;
+            transform: scale(0.8);
+            transform-origin: 0 0;
+            width: 400px;
+        }
+
+            .earth .more-info h1 {
+                margin: 0 0 1em;
+                text-align: right;
+            }
+
+            .earth .more-info h1, .earth .more-info li {
+                font-family: 'Space Mono', monospace;
+                opacity: 0;
+            }
+
+    .moon-container {
+        position: absolute;
+        top: calc(50% - 25px);
+        left: calc(50% - 25px);
+    }
+
+    .moon {
+        animation: spin 20s linear infinite;
+        background: none;
+        width: 50px;
+        height: 50px;
+        pointer-events: none;
+        transform-origin: 25px;
+    }
+
+        .moon img {
+            transform: translateX(-160px) translateY(-160px);
+            width: 50px;
+        }
+
+        .earth img, .moon img {
+            border-radius: 50%;
+            box-shadow: 0 0 12em 1em rgba(110, 140, 200, .6);
+        }
+
+    .earth:hover img, .earth.active img {
+        transform: translateX(-75px) translateY(-75px) scale(0.5);
+    }
+
+    .earth:hover ~ .moon-container, .earth.active ~ .moon-container {
+        transform: translateX(-75px) translateY(-75px) scale(0.4);
+    }
+
+        .earth:hover ~ .moon-container img, .earth.active ~ .moon-container img {
+            transform: translateX(-140px) translateY(-140px);
+        }
+
+    .earth:hover .more-info, .earth.active .more-info {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+        .earth:hover .more-info h1, .earth.active .more-info h1, .earth:hover .more-info li, .earth.active .more-info li {
+            opacity: 1;
+        }
+
+    * {
+        transition: all 4s cubic-bezier(0, 1.5, 0.3, 1);
+    }
+</style>
+
+<article class="earth-demo">
+    <div class="earth">
+        <div class="more-info">
+            <h1>Earth</h1>
+            <ul>
+                <li>Third planet from the Sun</li>
+                <li>Atmosphere: 21% oxygen</li>
+                <li>Liquid water on surface</li>
+                <li>Only planet that has life (that we know of)</li>
+            </ul>
+        </div>
+        <img src="https://cssanimation.rocks/images/random/earth.png">
+    </div>
+    <div class="moon-container">
+        <div class="moon">
+            <img src="https://cssanimation.rocks/images/random/moon.png">
+        </div>
+    </div>
+</article>
