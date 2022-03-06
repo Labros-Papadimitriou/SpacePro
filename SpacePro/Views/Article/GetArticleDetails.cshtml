@@ -16,10 +16,71 @@
                 <h6>Are you sure you want to delete this Article?</h6><br />
             </div>
             <div class="modal-footer">
-                <button id="delete-btn" type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+                <button id="delete-btn" type="button" class="btn btn-danger" data-bs-dismiss="modal">Delete</button>
                 <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
+    </div>
+</div>
+
+<!--OffCanvas Edit-->
+<div class="offcanvas offcanvas-end w-40" data-bs-scroll="true" tabindex="-1" id="edit" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+        <h3 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Edit Article</h3>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">X</button>
+    </div>
+    <div class="offcanvas-body">
+        @using (Html.BeginForm("EditArticle", "Article", new { articleId = Model.ArticleId }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="card-body">
+                <div class="row mb-4">
+                    <label class="col-md-3 form-label">Article Title:</label>
+                    <div class="">
+                        <input id="edit-title" type="text" name="Title" class="form-control" value="@Model.Title" placeholder="Enter Article Title (3-50 characters)" minlength="3" maxlength="50" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3 form-label mb-4">Author Name:</label>
+                    <div class="mb-4">
+                        <input id="edit-authorname" class="content form-control" name="AuthorName" value="@Model.AuthorName" placeholder="Enter Article Title (3-50 characters)" required />
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3 form-label mb-4">Short Description:</label>
+                    <div class="mb-4">
+                        <textarea id="edit-shortdesc" rows="4" class="content form-control" name="ShortDescription" placeholder="Enter Short Description (5-5000 characters)" minlength="5" maxlength="5000" required>@Model.ShortDescription</textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <label class="col-md-3 form-label mb-4">Full Description:</label>
+                    <div class="mb-4">
+                        <textarea id="edit-fulldesc" rows="8" class="content form-control" name="FullDescription" placeholder="Enter Full Description (10-10000 characters)" minlength="10" maxlength="10000" required>@Model.FullDescription</textarea>
+                    </div>
+                </div>
+                <div class="row mb-4">
+                    <label class="col-md-3 form-label">Categories:</label>
+                    <div class="">
+                        <select id="edit-category" name="ArticleCategoryId" class="form-control form-select select2" data-bs-placeholder="Select Country" required>
+                            <option value="1">BigBang</option>
+                            <option value="2">Planets</option>
+                            <option value="3">Stars</option>
+                            <option value="4">Moons</option>
+                            <option value="5">Comets</option>
+                            <option value="6">Theory</option>
+                            <option value="7">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group mb-0">
+                    <label class="col-md-3 form-label mb-4">File Upload:</label>
+                    <input id="edit-image" type="file" class="form-control" name="image" accept=".jpg, .png, image/jpeg, image/png">
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="submit" class="btn btn-success" value="Save Changes" />
+                <button id="clear-btn" class="btn btn-warning float-end">Clear</button>
+            </div>
+        }
     </div>
 </div>
 
@@ -34,7 +95,7 @@
             <div class="page-header">
                 <h1 class="page-title">Article Details</h1>
                 <div style="margin-left:350px">
-                    <button id="edit-btn" class="btn btn-warning">Edit</button>
+                    <button id="edit-offcanvas" class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#edit" aria-controls="offcanvasWithBothOptions">Edit</button>
                     <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete">Delete</button>
                 </div>
                 <div>
@@ -88,7 +149,7 @@
 
 @section article{
     <script>
-
+        // like/unlike - button
         $(document).ready(function () {
             $("#like-btn").click(function () {
 
@@ -125,7 +186,7 @@
     </script>
 
     <script type="text/javascript">
-
+        // delete article
         $("#delete-btn").click(function () {
             $.ajax({
                 url: "/Article/DeleteArticle?articleId=@Model.ArticleId&imageId=@Model.ArticleImage.ArticleImageId",
@@ -138,4 +199,24 @@
         })
 
     </script>
+
+    <script>
+        //edit form pre - fill category option
+        $(document).ready(function () {
+            $('#edit-category option[value=@Model.ArticleCategoryId]').attr('selected', '');
+        })
+    </script>
+
+    <script>
+        //clear edit form
+        $("#clear-btn").click(function () {
+            $("#edit-title").val("");
+            $("#edit-authorname").val("");
+            $("#edit-shortdesc").val("");
+            $("#edit-fulldesc").val("");
+            $("#edit-title").val("");
+            $('#edit-category option[value=7]').attr('selected', '');
+        })
+    </script>
+
 }
