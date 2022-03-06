@@ -93,22 +93,7 @@
     <script>
 
         $(document).ready(function () {
-            $("#like-btn").click(function () {
-
-                let requestCls = {
-
-                }
-
-                $.ajax({
-                    url: `/Article/CreateNewArticle`,
-                    dataType: 'json',
-                    type: 'post',
-                    success: function (articleLikes) {
-                        $("#article-likes").html(articleLikes + " people like this article");
-                    }
-                });
-
-            });
+            
         });
     </script>
 }
