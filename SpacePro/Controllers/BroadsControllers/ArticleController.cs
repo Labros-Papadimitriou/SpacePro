@@ -43,8 +43,6 @@ namespace SpacePro.Controllers.BroadsControllers
             return Json(article, JsonRequestBehavior.AllowGet);
         }
 
-
-
         [HttpGet]
         public ActionResult CreateArticles()
         {
@@ -75,6 +73,39 @@ namespace SpacePro.Controllers.BroadsControllers
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
             article.ArticleImage = articleImage;
             db.Entry(article).State = EntityState.Added;
+
+            db.SaveChanges();
+
+            return RedirectToAction("ShowArticles");
+        }
+
+        [HttpPost]
+        public ActionResult EditArticle(int? articleId, CreateArticleDto articleDto, HttpPostedFileBase image)
+        {
+            var article = db.Articles.Include(x=>x.ArticleImage).FirstOrDefault(x => x.ArticleId == articleId);
+
+            if (image != null)
+            {
+                image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
+
+                ArticleImage articleImage = new ArticleImage();
+                articleImage.Name = image.FileName;
+                articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
+                articleImage.AlternativeText = (image.FileName).Split('.')[0];
+                db.Entry(articleImage).State = EntityState.Added;
+                db.Entry(article.ArticleImage).State = EntityState.Deleted;
+
+                article.ArticleImage = articleImage;
+            }
+
+            article.Title = articleDto.Title;
+            article.ShortDescription = articleDto.ShortDescription;
+            article.FullDescription = articleDto.FullDescription;
+            article.AuthorName = articleDto.AuthorName;
+            article.PostDate = DateTime.Now;
+            article.ArticleCategoryId = articleDto.ArticleCategoryId;
+
+            db.Entry(article).State = EntityState.Modified;
 
             db.SaveChanges();
 
