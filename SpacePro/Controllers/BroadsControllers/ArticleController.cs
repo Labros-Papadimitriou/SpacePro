@@ -78,7 +78,34 @@ namespace SpacePro.Controllers.BroadsControllers
 
             db.SaveChanges();
 
-            return View("ShowArticles");
+            return RedirectToAction("ShowArticles");
+        }
+
+        [HttpDelete]
+        public ActionResult DeleteArticle(int? articleId, int? imageId)
+        {
+            var article = db.Articles.Find(articleId);
+            var articleImage = db.ArticleImages.Find(imageId);
+            var imageName = articleImage.Name;
+
+            db.Entry(articleImage).State = EntityState.Deleted;
+            db.Entry(article).State = EntityState.Deleted;
+
+            db.SaveChanges();
+
+            DeleteImageFromFolder(imageName);
+
+            return Json("/Article/ShowArticles",JsonRequestBehavior.AllowGet);
+        }
+
+        private void DeleteImageFromFolder(string imageName)
+        {
+            var filePath = Server.MapPath("/Content/ArticlesImages/" + imageName);
+
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
         }
 
 
