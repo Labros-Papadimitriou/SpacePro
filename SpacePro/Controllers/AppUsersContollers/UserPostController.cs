@@ -12,7 +12,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 {
     public class UserPostController : Controller
     {
-        private ApplicationDbContext db;
+        private readonly ApplicationDbContext db;
         public UserPostController()
         {
             db = new ApplicationDbContext();
