@@ -26,9 +26,10 @@ namespace Entities.IdentityUsers
 
         public string Education { get; set; }
 
-        public DateTime? DateOfBirth;
+        public DateTime? DateOfBirth { get; set; }
 
         public bool IsAuthorOfTheMonth { get; set; }
+
         public bool IsWinnerSub { get; set; }
 
         public ICollection<UserPost> UserPosts { get; set; }
