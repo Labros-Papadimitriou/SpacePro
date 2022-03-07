@@ -19,11 +19,12 @@
             #region SeedArticles
             //ArticleCategory ac1 = new ArticleCategory() { Title = "BigBang" };
             //ArticleCategory ac2 = new ArticleCategory() { Title = "Planets" };
-            //ArticleCategory ac3 = new ArticleCategory() { Title = "Stars" };
-            //ArticleCategory ac4 = new ArticleCategory() { Title = "Moons" };
-            //ArticleCategory ac5 = new ArticleCategory() { Title = "Comets" };
-            //ArticleCategory ac6 = new ArticleCategory() { Title = "Theory" };
-            //ArticleCategory ac7 = new ArticleCategory() { Title = "Other" };
+            //ArticleCategory ac3 = new ArticleCategory() { Title = "Moons" };
+            //ArticleCategory ac4 = new ArticleCategory() { Title = "Comets" };
+            //ArticleCategory ac5 = new ArticleCategory() { Title = "Asteroids" };
+            //ArticleCategory ac6 = new ArticleCategory() { Title = "Stars" };
+            //ArticleCategory ac7 = new ArticleCategory() { Title = "Theory" };
+            //ArticleCategory ac8 = new ArticleCategory() { Title = "Other" };
             //List<ArticleCategory> articleCategories = new List<ArticleCategory> { ac1, ac2, ac3, ac4, ac5, ac6, ac7 };
 
             //db.ArticleCategories.AddRange(articleCategories);
