@@ -27,7 +27,7 @@
                         <td> <span class="ml-2"></span></td>
                         <td class="font-weight-bold"></td>
                         <td class="font-weight-bold"></td>
-                        <td><button class="btn btn-outline-success">Set Role</button>&emsp;<button class="btn btn-outline-danger">Delete User</button></td>
+                        <td><button class="btn btn-outline-success">Set Role</button>&emsp;<button class="btn btn-outline-danger">Delete User</button><input type="text"/></td>
                     </tr>*@
             </tbody>
         </table>
@@ -48,25 +48,28 @@
                 dataType: "json",
                 success: function (users) {
 
-                    for (let user of users) {
+                    for (let i = 0; i < users.length; i++) {
 
-                        let date = user.DateOfBirth;
+                        let date = users[i].DateOfBirth;
                         let postdate = moment.utc(date).format('DD-MM-YYYY');
 
                         let template = `
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex align-items-center"><img class="rounded-circle" src="" alt="NotReady" width="30"></div>
-                                            </td>
-                                            <td> <span class="ml-2">${user.UserName}</span></td>
-                                            <td class="font-weight-bold">${postdate}</td>
-                                            <td class="font-weight-bold">Not Set Yet</td>
-                                            <td><a class="btn btn-outline-success" >Set Role</a>&emsp;<a onclick="DeleteUser('${user.Id}')" class="btn btn-danger">Delete User</a></td>
-                                        </tr>
-                                        `;
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex align-items-center"><img class="rounded-circle" src="" alt="NotReady" width="30"></div>
+                                                </td>
+                                                <td> <span class="ml-2">${users[i].UserName}</span></td>
+                                                <td class="font-weight-bold">${postdate}</td>
+                                                <td class="font-weight-bold">Not Set Yet</td>
+                                                <td><a class="btn btn-outline-success" >Set Role</a>&emsp;<a id="delete-btn" onclick="ValidDelete(${i})" class="btn btn-danger">Delete User</a>
+                                                    <div id="valid-delete${i}" style="display:inline-block">&nbsp;<input id="delete-input"  style="color:white; background-color:#000" type="text" placeholder="Type YES DELETE"/>&nbsp;<button onclick="DeleteUser(${i}, '${users[i].Id}')" class="btn btn-danger">Yes,Delete!</button></div>
+                                                </td>
+                                            </tr>
+                                            `;
                         let row = $(template);
 
                         $("#social-table tbody").append(row);
+                        $(`#valid-delete${i}`).hide();
                     }
                 }
             })
@@ -75,9 +78,19 @@
 
     <script type="text/javascript">
 
-        function DeleteUser(id) {
+        function ValidDelete(row) {
 
-            $.ajax({
+            $(`#valid-delete${row}`).toggle();
+            
+        }
+
+        function DeleteUser(row, id) {
+
+            let inputText = $(`#valid-delete${row}`).children().val();
+            let condition = inputText == "YES DELETE";
+
+            if (condition) {
+                $.ajax({
                 url: "/Social/DeleteUser?id="+id,
                 type: "delete",
                 dataType: "json",
@@ -85,7 +98,8 @@
                     $("#social-table tbody").empty();
                     FillUsersTable();
                 }
-            })
+                })
+            }
         }
 
     </script>
