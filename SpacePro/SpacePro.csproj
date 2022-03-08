@@ -203,6 +203,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dtos\CreateArticleDto.cs" />
+    <Compile Include="Models\Dtos\EditUserDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1866,6 +1867,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\UserImages\" />
     <Folder Include="Controllers\ApiControllers\ApiAppUsersControllers\" />
     <Folder Include="Controllers\ApiControllers\ApiBroadsControllers\" />
     <Folder Include="Views\UserPost\" />

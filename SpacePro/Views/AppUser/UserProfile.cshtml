@@ -5,6 +5,32 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
+@* MOdal *@
+<div class="modal" id="imageUserModal" aria-labelledby="imageUserModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add new Image</h5>
+                <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("AddUserImage", "AppUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+
+                    <label class="col-md-3 form-label mb-4">File Upload :</label>
+                    <input id="demo" type="file" class="form-control btn btn-secondary" name="image" accept=".jpg, .png, image/jpeg, image/png" required>
+                    <br />
+                    <input class="btn btn-success" type="submit" value="Add Image" />
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <div class="row" id="user-profile">
     <div class="col-lg-12">
         <div class="card">
@@ -13,12 +39,15 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12">
                             <div class="row">
-                                <div class="profile-img-1">
-                                    <img src="/sash/assets/images/users/21.jpg" alt="img">
+                                <div style="background-color:#58585858" class="text-center profile-img-1 rounded-3">
+                                    <!-- Button trigger modal -->
+                                    <img src="@Model.UserImage.Url" alt="img" width="500" height="300" class="rounded-3">
+                                    <i data-bs-toggle="modal" data-bs-target="#imageUserModal" class="fe fe-edit fs-20 text-white"></i>
                                 </div>
+                                <hr />
                                 <div class="profile-img-content text-dark text-center">
                                     <div class="text-dark">
-                                        <h3 class="h3 mb-2">@Model.UserName</h3>
+                                        <h3 class="h2 mb-2">@Model.UserName</h3>
                                         <h5 class="text-muted"></h5>
                                     </div>
                                 </div>
@@ -42,7 +71,7 @@
                     <div class="me-5">
                         <div class="media mb-4">
                             <div class="media-icon bg-secondary bradius me-3 mt-1">
-                                <i class="fe fe-edit fs-20 text-white"></i>
+                                <i id="editPostBtn" class="fe fe-edit fs-20 text-white"></i>
                             </div>
                             <div class="media-body">
                                 <span class="text-muted">Posts</span>
@@ -202,7 +231,7 @@
             $("#delPost").click(function () {
                 console.log("geua");
             });
-            $(".fe-edit").click(ShowNewPost)
+            $("#editPostBtn").click(ShowNewPost)
 
             $("#btnCreatePost").click(CreateNewPost);
 
@@ -233,9 +262,9 @@
                 HideNewPost();
 
                 let template = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                              <strong>Created!</strong>
-                                              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
-                                            </div>`;
+                                                          <strong>Created!</strong>
+                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                                                        </div>`;
 
 
                 $("#success").prepend(template);
@@ -289,39 +318,39 @@
                 for (var post of posts) {
 
                     let template = `<div class="card border p-0 shadow-none">
-                                                     <div class="card-body">
-                                                        <div class="d-flex">
-                                                            <div class="ms-auto">
-                                                                <div class="dropdown show">
-                                                                    <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
-                                                                        <span class=""><i class="fe fe-more-vertical"></i></span>
-                                                                    </a>
-                                                                    <div class="dropdown-menu dropdown-menu-end">
-                                                                        <a onclick="EditPost(${post.UserPostId})" class="dropdown-item" href="#">Edit Post</a>
-                                                                        <a onclick="DeletePost(${post.UserPostId})" class="dropdown-item" href="#"> Delete Post</a>
+                                                                 <div class="card-body">
+                                                                    <div class="d-flex">
+                                                                        <div class="ms-auto">
+                                                                            <div class="dropdown show">
+                                                                                <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
+                                                                                    <span class=""><i class="fe fe-more-vertical"></i></span>
+                                                                                </a>
+                                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                                    <a onclick="EditPost('${post.UserPostId}')" class="dropdown-item" href="#">Edit Post</a>
+                                                                                    <a onclick="DeletePost('${post.UserPostId}')" class="dropdown-item" href="#"> Delete Post</a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mt-4">
+                                                                        <p id="editDetailsPost${post.UserPostId}" class="mb-0 card-title fs-25">
+                                                                           ${post.PostDetails}
+                                                                        </p>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-4">
-                                                            <p id="editDetailsPost${post.UserPostId}" class="mb-0 card-title fs-25">
-                                                               ${post.PostDetails}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="card-footer">
-                                                        <div class="media mt-0">
-                                                            <div class="media-body">
-                                                                <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
-                                                            </div>
-                                                            <div class="ms-auto">
-                                                                <div class="d-flex mt-1">
-                                                                    <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
+                                                                <div class="card-footer">
+                                                                    <div class="media mt-0">
+                                                                        <div class="media-body">
+                                                                            <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
+                                                                        </div>
+                                                                        <div class="ms-auto">
+                                                                            <div class="d-flex mt-1">
+                                                                                <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                            </div>`;
+                                                        </div>`;
 
 
 
@@ -348,8 +377,8 @@
                     e.preventDefault();
                     let postDetails = $(`#editDetailsPost${id}`).html();
                     let RequestCls = {
-                        id : id,
-                        postDetails : postDetails
+                        id: id,
+                        postDetails: postDetails
                     }
 
 

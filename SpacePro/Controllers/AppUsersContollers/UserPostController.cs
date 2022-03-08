@@ -26,7 +26,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             var user = db.Users.Find(userId);
 
             var posts = db.UserPosts.Where(p=>p.ApplicationUser_id == userId).Select(x=>new { x.UserPostId, x.PostDetails, x.PostLikes ,x.ApplicationUser_id});
-            //var posts = db.UserPosts.ToList();
+            
 
 
             return Json(new { data = posts }, JsonRequestBehavior.AllowGet);
