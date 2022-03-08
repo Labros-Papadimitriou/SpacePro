@@ -16,7 +16,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Add new Image</h5>
-                <button type="button" class="close btn btn-danger" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -25,9 +25,9 @@
                 {
 
                     <label class="col-md-3 form-label mb-4">File Upload :</label>
-                    <input id="demo" type="file" class="form-control btn btn-secondary" name="image" accept=".jpg, .png, image/jpeg, image/png" required>
+                    <input style="background-color:#414141b6" id="demo" type="file" class="form-control btn" name="image" accept=".jpg, .png, image/jpeg, image/png" required>
                     <br />
-                    <input class="btn btn-success" type="submit" value="Add Image" />
+                    <input class="btn btn-primary" type="submit" value="Add Image" />
 
                 }
             </div>
@@ -46,7 +46,14 @@
                             <div class="row">
                                 <div style="background-color:#58585858" class="text-center profile-img-1 rounded-3">
                                     <!-- Button trigger modal -->
-                                    <img src="@Model.UserImage.Url" alt="img" width="500" height="300" class="rounded-3">
+                                    @if (Model.UserImage == null)
+                                    {
+                                        <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" width="500" height="300" class="rounded-3">
+                                    }
+                                    else
+                                    {
+                                        <img src="@Model.UserImage.Url" alt="@Model.UserImage.AlternativeText" width="500" height="300" class="rounded-3">
+                                    }
                                     <i data-bs-toggle="modal" data-bs-target="#imageUserModal" class="fe fe-edit fs-20 text-white"></i>
                                 </div>
                                 <hr />

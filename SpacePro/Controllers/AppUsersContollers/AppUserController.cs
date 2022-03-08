@@ -24,7 +24,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             var user = db.Users
                 .Where(u => u.Id == userId)
                 .Include(u => u.UserPosts)
-                .Include(u=>u.UserImage)
+                .Include(u => u.UserImage)
                 .FirstOrDefault();
 
 
@@ -47,12 +47,18 @@ namespace SpacePro.Controllers.AppUsersContollers
             {
                 
                 image.SaveAs(Server.MapPath("/Content/UserImages/" + image.FileName));
-                var userImage = db.UserImages.Where(x => x.ApplicationUser.Id == user.Id).First();
+
+                db.Entry(user.UserImage).State = EntityState.Deleted;
+
+                UserImage userImage = new UserImage();
+
                 userImage.Name = image.FileName;
                 userImage.Url = "/Content/UserImages/" + image.FileName;
                 userImage.AlternativeText = (image.FileName).Split('.').First();
                 userImage.ApplicationUser = user;
-                db.Entry(userImage).State = EntityState.Modified;
+                db.Entry(userImage).State = EntityState.Added;
+
+                user.UserImage = userImage;
                 db.Entry(user).State = EntityState.Modified;
 
                 db.SaveChanges();
