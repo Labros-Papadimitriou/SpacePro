@@ -48,7 +48,16 @@
                 dataType: "json",
                 success: function (users) {
 
+                    let imgEle;
+
                     for (let i = 0; i < users.length; i++) {
+
+                        if (users[i].UserImage != null) {
+                            imgEle = `<img class="rounded-circle" src="${users[i].UserImage.Url}" alt="${users[i].UserImage.AlternativeText}" width="30">`;
+                        }
+                        else {
+                            imgEle = `<img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" width="30" class="rounded-circle">`;
+                        }
 
                         let date = users[i].DateOfBirth;
                         let postdate = moment.utc(date).format('DD-MM-YYYY');
@@ -56,7 +65,7 @@
                         let template = `
                                             <tr>
                                                 <td>
-                                                    <div class="d-flex align-items-center"><img class="rounded-circle" src="" alt="NotReady" width="30"></div>
+                                                    <div class="d-flex align-items-center">${imgEle}</div>
                                                 </td>
                                                 <td> <span class="ml-2">${users[i].UserName}</span></td>
                                                 <td class="font-weight-bold">${postdate}</td>

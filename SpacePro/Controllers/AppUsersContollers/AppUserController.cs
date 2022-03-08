@@ -48,7 +48,10 @@ namespace SpacePro.Controllers.AppUsersContollers
                 
                 image.SaveAs(Server.MapPath("/Content/UserImages/" + image.FileName));
 
-                db.Entry(user.UserImage).State = EntityState.Deleted;
+                if (user.UserImage != null)
+                {
+                    db.Entry(user.UserImage).State = EntityState.Deleted;
+                }
 
                 UserImage userImage = new UserImage();
 
