@@ -212,7 +212,7 @@
   <ItemGroup>
     <Content Include="Content\ArticlesImages\cometsmock.jpg" />
     <Content Include="Content\ArticlesImages\fermiparadox.jpg" />
-    <Content Include="Content\BodiesImages\Asteroids\300px-8405_asbolus.jpg" />
+    <Content Include="Content\BodiesImages\Asteroids\Asbolus.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Ceres.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Chiron.jpg" />
     <Content Include="Content\BodiesImages\Asteroids\Hector.jpg" />
@@ -228,9 +228,10 @@
     <Content Include="Content\BodiesImages\Asteroids\Varuna.png" />
     <Content Include="Content\BodiesImages\Asteroids\Vesta.jpg" />
     <Content Include="Content\BodiesImages\Comets\C2020F3%28NEOWISE%29.jpg" />
-    <Content Include="Content\BodiesImages\Comets\Comète de Halley.jpg" />
+    <Content Include="Content\BodiesImages\Comets\Halley.jpg" />
     <Content Include="Content\BodiesImages\Comets\Hyakutake.jpg" />
     <Content Include="Content\BodiesImages\Comets\Jupiter-and-comet-Shoemaker-Levy-9-as-imaged-by-the-Hubble-Space-Telescope-HST-on-May.png" />
+    <Content Include="Content\BodiesImages\Comets\Levy.png" />
     <Content Include="Content\BodiesImages\Moons\Adrastea.jpg" />
     <Content Include="Content\BodiesImages\Moons\Amalthea.jpg" />
     <Content Include="Content\BodiesImages\Moons\Ariel.jpg" />
