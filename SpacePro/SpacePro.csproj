@@ -205,6 +205,7 @@
     <Compile Include="Controllers\BroadsControllers\GalleryController.cs" />
     <Compile Include="Controllers\BroadsControllers\PaymentControllers\PaymentController.cs" />
     <Compile Include="Controllers\BroadsControllers\SocialController.cs" />
+    <Compile Include="Controllers\HelperClasses\BodiesHelper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\BroadsControllers\PaymentControllers\PaypalController.cs" />
