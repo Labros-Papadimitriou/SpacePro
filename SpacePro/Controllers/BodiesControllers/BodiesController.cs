@@ -82,7 +82,6 @@ namespace SpacePro.Controllers.BodiesControllers
                 BodyType = "Star"
             });
             bodies.AddRange(stars);
-
             return Json(new { data = bodies },JsonRequestBehavior.AllowGet);
         }
     }
