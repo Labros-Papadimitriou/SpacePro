@@ -4,6 +4,7 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
+
 <!--app-content open-->
 <div class="main-content app-content mt-0">
     <div class="side-app">
@@ -125,9 +126,9 @@
                                     <label class="form-label">Education</label>
                                     <input name="Education" class="form-control" rows="6" value="@Model.Education">
                                 </div>
-                                <div class="datepicker-calendar">
-                                    <label class="form-label">Date Of Birth</label>
-                                    <input  type="date" name="DateOfBirth" value="@Model.DateOfBirth" />
+                                <div class="form-group">
+                                    <label>Date Of Birth</label>
+                                    <input type="date" class="form-control" name="DateOfBirth" value="2018-05-28" />
                                 </div>
                                 @*<div class="form-group">
                                     <label class="form-label">Date Of Birth</label>
