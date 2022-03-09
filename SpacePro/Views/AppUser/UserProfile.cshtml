@@ -10,6 +10,7 @@
         backdrop-filter: blur(5px);
     }
 </style>
+
 @* MOdal *@
 <div class="modal" id="imageUserModal" aria-labelledby="imageUserModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -23,12 +24,10 @@
             <div class="modal-body">
                 @using (Html.BeginForm("AddUserImage", "AppUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-
                     <label class="col-md-3 form-label mb-4">File Upload :</label>
                     <input style="background-color:#414141b6" id="demo" type="file" class="form-control btn" name="image" accept=".jpg, .png, image/jpeg, image/png" required>
                     <br />
                     <input class="btn btn-primary" type="submit" value="Add Image" />
-
                 }
             </div>
         </div>
@@ -48,11 +47,11 @@
                                     <!-- Button trigger modal -->
                                     @if (Model.UserImage == null)
                                     {
-                                        <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" width="500" height="300" class="rounded-3">
+                                        <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3 w-30">
                                     }
                                     else
                                     {
-                                        <img src="@Model.UserImage.Url" alt="@Model.UserImage.AlternativeText" width="500" height="300" class="rounded-3">
+                                        <img src="@Model.UserImage.Url" alt="@Model.UserImage.AlternativeText" class="rounded-3 w-30">
                                     }
                                     <i data-bs-toggle="modal" data-bs-target="#imageUserModal" class="fe fe-edit fs-20 text-white"></i>
                                 </div>
