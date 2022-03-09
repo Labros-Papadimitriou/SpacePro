@@ -59,7 +59,7 @@
   <ItemGroup>
     <Compile Include="IRepositories\IAsteroidRepository.cs" />
     <Compile Include="IRepositories\ICometRepository.cs" />
-    <Compile Include="IRepositories\IMoon.cs" />
+    <Compile Include="IRepositories\IMoonRepository.cs" />
     <Compile Include="IRepositories\IPlanetRepository.cs" />
     <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="IRepositories\IStarRepository.cs" />
