@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SpacePro.Controllers.HelperClasses
 {
-    public static class BodiesHelper
+    public static class BodiesHelperCls
     {
         public static IEnumerable<object> TransformListOfMoonsToListOfObjects(this IEnumerable<Moon> moons)
         {
