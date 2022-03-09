@@ -99,6 +99,14 @@ namespace SpacePro.Controllers.AppUsersContollers
             db.SaveChanges();
             return View(user);
         }
+        public ActionResult GetUserImage()
+        {
+            var userId = User.Identity.GetUserId();
+            var user = db.Users.Where(x=>x.Id == userId).Select(x => new {x.UserImage.Url,x.UserImage.AlternativeText}).SingleOrDefault();
+
+            return Json( new { data = user },JsonRequestBehavior.AllowGet);
+        }
+
 
         private void DeleteImageFromFolder(string imageName)
         {
