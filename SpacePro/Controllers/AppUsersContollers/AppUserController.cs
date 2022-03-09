@@ -100,7 +100,8 @@ namespace SpacePro.Controllers.AppUsersContollers
             
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
-            return View(user);
+
+            return RedirectToAction("UserProfile");
         }
         public ActionResult GetUserImage()
         {
