@@ -7,16 +7,17 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Entities.BroadClasses;
 using SpacePro.Models.Dtos;
+using Persistance_UnitOfWork;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
     public class ArticleController : Controller
     {
-        ApplicationDbContext db;
+        UnitOfWork unitOfWork;
 
         public ArticleController()
         {
-            db = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
         [HttpGet]
         public ActionResult ShowArticles()
@@ -27,8 +28,8 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetAllArticles()
         {
-            var article = db.Articles
-                            .Select(x => new {
+            var article = unitOfWork.Articles
+                            .GetArticlesWithImageAndCategory().Select(x => new {
                                 x.ArticleId,
                                 x.Title,
                                 x.ShortDescription,
@@ -61,7 +62,7 @@ namespace SpacePro.Controllers.BroadsControllers
             articleImage.Name = image.FileName;
             articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
             articleImage.AlternativeText = (image.FileName).Split('.')[0];
-            db.Entry(articleImage).State = EntityState.Added;
+            unitOfWork.ArticleImages.Add(articleImage);
 
             Article article = new Article();
             article.Title = articleDto.Title;
@@ -72,9 +73,9 @@ namespace SpacePro.Controllers.BroadsControllers
             article.PostDate = DateTime.Now;
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
             article.ArticleImage = articleImage;
-            db.Entry(article).State = EntityState.Added;
+            unitOfWork.Articles.Add(article);
 
-            db.SaveChanges();
+            unitOfWork.Complete();
 
             return RedirectToAction("ShowArticles");
         }
@@ -82,7 +83,7 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpPost]
         public ActionResult EditArticle(int? articleId, CreateArticleDto articleDto, HttpPostedFileBase image)
         {
-            var article = db.Articles.Include(x=>x.ArticleImage).FirstOrDefault(x => x.ArticleId == articleId);
+            var article = unitOfWork.Articles.GetArticlesWithImage().FirstOrDefault(x => x.ArticleId == articleId);
 
             if (image != null)
             {
@@ -92,8 +93,8 @@ namespace SpacePro.Controllers.BroadsControllers
                 articleImage.Name = image.FileName;
                 articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
                 articleImage.AlternativeText = (image.FileName).Split('.')[0];
-                db.Entry(articleImage).State = EntityState.Added;
-                db.Entry(article.ArticleImage).State = EntityState.Deleted;
+                unitOfWork.ArticleImages.Add(articleImage);
+                unitOfWork.ArticleImages.Remove(article.ArticleImage);
 
                 article.ArticleImage = articleImage;
             }
@@ -105,9 +106,8 @@ namespace SpacePro.Controllers.BroadsControllers
             article.PostDate = DateTime.Now;
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
 
-            db.Entry(article).State = EntityState.Modified;
-
-            db.SaveChanges();
+            unitOfWork.Articles.ModifyEntity(article);
+            unitOfWork.Complete();
 
             return RedirectToAction("ShowArticles");
         }
@@ -115,14 +115,14 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpDelete]
         public ActionResult DeleteArticle(int? articleId, int? imageId)
         {
-            var article = db.Articles.Find(articleId);
-            var articleImage = db.ArticleImages.Find(imageId);
+            var article = unitOfWork.Articles.Get((int)articleId);
+            var articleImage = unitOfWork.ArticleImages.Get((int)imageId);
             var imageName = articleImage.Name;
 
-            db.Entry(articleImage).State = EntityState.Deleted;
-            db.Entry(article).State = EntityState.Deleted;
+            unitOfWork.ArticleImages.Remove(articleImage);
+            unitOfWork.Articles.Remove(article);
 
-            db.SaveChanges();
+            unitOfWork.Complete();
 
             DeleteImageFromFolder(imageName);
 
@@ -149,8 +149,7 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetArticleDetails(int? id)
         {
-            var article = db.Articles.Include(x=>x.ArticleCategory).Include(x=>x.ArticleImage).FirstOrDefault(x=>x.ArticleId==id);
-
+            var article = unitOfWork.Articles.GetArticlesWithImageAndCategory().FirstOrDefault(x=>x.ArticleId==id);
             return View(article);
         }
 
@@ -158,10 +157,10 @@ namespace SpacePro.Controllers.BroadsControllers
 
         [HttpGet]
         public JsonResult GiveLike(int? id)
-        {
-            var article = db.Articles.Find(id);
+        {   
+            var article = unitOfWork.Articles.Get((int)id);
             article.PostLikes++;
-            db.SaveChanges();
+            unitOfWork.Complete();
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
@@ -169,9 +168,9 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public JsonResult RemoveLike(int? id)
         {
-            var article = db.Articles.Find(id);
+            var article = unitOfWork.Articles.Get((int)id);
             article.PostLikes--;
-            db.SaveChanges();
+            unitOfWork.Complete();
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }

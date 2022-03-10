@@ -1,4 +1,5 @@
 ﻿using MyDatabase;
+using Persistance_UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,22 +10,22 @@ namespace SpacePro.Controllers.BroadsControllers
 {
     public class GalleryController : Controller
     {
-        ApplicationDbContext db;
+        UnitOfWork unitOfWork;
         public GalleryController()
         {
-            db = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
         // GET: Gallery
         public ActionResult ShowGallery()
         {
-            var images = db.BodyImages;
+            var images = unitOfWork.BodyImages.GetAll();
             return View(images);
         }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

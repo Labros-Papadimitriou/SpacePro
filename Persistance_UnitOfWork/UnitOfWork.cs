@@ -28,6 +28,7 @@ namespace Persistance_UnitOfWork
             ApplicationUsers = new ApplicationUserRepository(_context);
             UserImages = new UserImageRepository(_context);
             UserPosts = new UserPostRepository(_context);
+            BodyImages = new BodyImageRepository(_context);
          }
 
         #region IUnitOfWork Members
@@ -36,6 +37,7 @@ namespace Persistance_UnitOfWork
         public ICometRepository Comets { get; private set; }
         public IAsteroidRepository Asteroids { get; private set; }
         public IPlanetRepository Planets { get; private set; }
+        public IBodyImageRepository BodyImages { get; private set; }
         public IArticleRepository Articles { get; private set; }
         public IArticleImageRepository ArticleImages { get; private set; }
         public IArticleCategoryRepository ArticleCategories { get; private set; }
