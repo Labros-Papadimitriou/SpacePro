@@ -67,7 +67,6 @@
     <Compile Include="BroadClasses\ArticleCategory.cs" />
     <Compile Include="BroadClasses\ArticleImage.cs" />
     <Compile Include="BroadClasses\Event.cs" />
-    <Compile Include="BroadClasses\Image.cs" />
     <Compile Include="IdentityUsers\ApplicationUser.cs" />
     <Compile Include="IdentityUsers\UserImage.cs" />
     <Compile Include="IdentityUsers\UserPost.cs" />

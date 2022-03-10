@@ -25,7 +25,6 @@ namespace Persistance_UnitOfWork
             ArticleImages = new ArticleImageRepository(_context);
             ArticleCategories = new ArticleCategoryRepository(_context);
             Events = new EventRepository(_context);
-            Images = new ImageRepository(_context);
             ApplicationUsers = new ApplicationUserRepository(_context);
             UserImages = new UserImageRepository(_context);
             UserPosts = new UserPostRepository(_context);
@@ -41,7 +40,6 @@ namespace Persistance_UnitOfWork
         public IArticleImageRepository ArticleImages { get; private set; }
         public IArticleCategoryRepository ArticleCategories { get; private set; }
         public IEventRepository Events { get; private set; }
-        public IImageRepository Images { get; private set; }
         public IApplicationUserRepository ApplicationUsers { get; private set; }
         public IUserImageRepository UserImages { get; private set; }
         public IUserPostRepository UserPosts { get; private set; }

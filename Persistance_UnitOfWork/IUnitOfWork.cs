@@ -14,7 +14,6 @@ namespace Persistance_UnitOfWork
         IPlanetRepository Planets { get; }
         IAsteroidRepository Asteroids { get; }
         IMoonRepository Moons { get; }
-        IImageRepository Images { get; }
         IEventRepository Events { get; }
         IArticleCategoryRepository ArticleCategories { get; }
         IArticleImageRepository ArticleImages { get; }
