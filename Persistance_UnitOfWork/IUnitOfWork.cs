@@ -19,7 +19,9 @@ namespace Persistance_UnitOfWork
         IArticleCategoryRepository ArticleCategories { get; }
         IArticleImageRepository ArticleImages { get; }
         IArticleRepository Articles { get; }
-
+        IApplicationUserRepository ApplicationUsers { get; }
+        IUserImageRepository UserImages { get; }
+        IUserPostRepository UserPosts { get; }
         int Complete();
     }
 }
