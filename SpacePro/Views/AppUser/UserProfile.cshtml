@@ -33,7 +33,21 @@
         </div>
     </div>
 </div>
-
+@* mODAL N2 *@
+<div class="modal" id="openImg" aria-labelledby="imageUserModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            @if (Model.UserImage == null)
+            {
+                <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3">
+            }
+            else
+            {
+                <img src="@Model.UserImage.Url" alt="@Model.UserImage.AlternativeText" class="rounded-3">
+            }
+        </div>
+    </div>
+</div>
 
 <div class="row" id="user-profile">
     <div class="col-lg-12">
@@ -44,15 +58,15 @@
                         <div class="col-lg-12 col-md-12">
                             <div class="row">
                                 <div style="background-color:#58585858" class="text-center profile-img-1 rounded-3">
-                                    <!-- Button trigger modal -->
                                     @if (Model.UserImage == null)
                                     {
-                                        <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3 w-30">
+                                        <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3 w-30" data-bs-toggle="modal" data-bs-target="#openImg">
                                     }
                                     else
                                     {
-                                        <img src="@Model.UserImage.Url" alt="@Model.UserImage.AlternativeText" class="rounded-3 w-30">
+                                        <img src="@Model.UserImage.Url" alt="@Model.UserImage.AlternativeText" class="rounded-3 w-30" data-bs-toggle="modal" data-bs-target="#openImg">
                                     }
+                                    <!-- Button trigger modal -->
                                     <i data-bs-toggle="modal" data-bs-target="#imageUserModal" class="fe fe-edit fs-20 text-white"></i>
                                 </div>
                                 <hr />
@@ -239,14 +253,19 @@
             HideNewPost();
 
             AllPosts();
-            $("#delPost").click(function () {
-                console.log("geua");
-            });
+
+
             $("#editPostBtn").click(ShowNewPost)
 
             $("#btnCreatePost").click(CreateNewPost);
 
         })
+    </script>
+
+    <script type="text/javascript">
+
+
+
     </script>
 
     @* Create Post Func *@
@@ -273,9 +292,9 @@
                 HideNewPost();
 
                 let template = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                          <strong>Created!</strong>
-                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
-                                                        </div>`;
+                                                                          <strong>Created!</strong>
+                                                                          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                                                                        </div>`;
 
 
                 $("#success").prepend(template);
@@ -329,39 +348,39 @@
                 for (var post of posts) {
 
                     let template = `<div class="card border p-0 shadow-none">
-                                                                 <div class="card-body">
-                                                                    <div class="d-flex">
-                                                                        <div class="ms-auto">
-                                                                            <div class="dropdown show">
-                                                                                <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
-                                                                                    <span class=""><i class="fe fe-more-vertical"></i></span>
-                                                                                </a>
-                                                                                <div class="dropdown-menu dropdown-menu-end">
-                                                                                    <a onclick="EditPost('${post.UserPostId}')" class="dropdown-item" href="#">Edit Post</a>
-                                                                                    <a onclick="DeletePost('${post.UserPostId}')" class="dropdown-item" href="#"> Delete Post</a>
+                                                                                 <div class="card-body">
+                                                                                    <div class="d-flex">
+                                                                                        <div class="ms-auto">
+                                                                                            <div class="dropdown show">
+                                                                                                <a class="new option-dots" href="JavaScript:void(0);" data-bs-toggle="dropdown">
+                                                                                                    <span class=""><i class="fe fe-more-vertical"></i></span>
+                                                                                                </a>
+                                                                                                <div class="dropdown-menu dropdown-menu-end">
+                                                                                                    <a onclick="EditPost('${post.UserPostId}')" class="dropdown-item" href="#">Edit Post</a>
+                                                                                                    <a onclick="DeletePost('${post.UserPostId}')" class="dropdown-item" href="#"> Delete Post</a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mt-4">
+                                                                                        <p id="editDetailsPost${post.UserPostId}" class="mb-0 card-title fs-25">
+                                                                                           ${post.PostDetails}
+                                                                                        </p>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="mt-4">
-                                                                        <p id="editDetailsPost${post.UserPostId}" class="mb-0 card-title fs-25">
-                                                                           ${post.PostDetails}
-                                                                        </p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="card-footer">
-                                                                    <div class="media mt-0">
-                                                                        <div class="media-body">
-                                                                            <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
-                                                                        </div>
-                                                                        <div class="ms-auto">
-                                                                            <div class="d-flex mt-1">
-                                                                                <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                        </div>`;
+                                                                                <div class="card-footer">
+                                                                                    <div class="media mt-0">
+                                                                                        <div class="media-body">
+                                                                                            <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikes} people like your post</h6>
+                                                                                        </div>
+                                                                                        <div class="ms-auto">
+                                                                                            <div class="d-flex mt-1">
+                                                                                                <a class="new me-2 text-muted fs-16" href="JavaScript:void(0);"><span class=""><i class="fe fe-heart"></i></span></a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                        </div>`;
 
 
 
