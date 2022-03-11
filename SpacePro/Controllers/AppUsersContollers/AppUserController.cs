@@ -1,6 +1,7 @@
 ﻿using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
 using MyDatabase;
+using SpacePro.Models;
 using SpacePro.Models.Dtos;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,14 @@ namespace SpacePro.Controllers.AppUsersContollers
 {
     public class AppUserController : Controller
     {
+
         private ApplicationDbContext db;
+
         public AppUserController()
         {
             db = new ApplicationDbContext();
         }
+
         public ActionResult UserProfile()
         {
             var userId = User.Identity.GetUserId();
@@ -30,7 +34,6 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             return View(user);
         }
-
 
         [HttpPost]
         public ActionResult AddUserImage(HttpPostedFileBase image)
@@ -72,6 +75,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             return RedirectToAction("UserProfile");
 
         }
+
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
@@ -80,7 +84,6 @@ namespace SpacePro.Controllers.AppUsersContollers
                 .Include(u => u.UserPosts)
                 .Include(u => u.UserImage)
                 .FirstOrDefault();
-
 
             return View(user);
         }
@@ -97,12 +100,13 @@ namespace SpacePro.Controllers.AppUsersContollers
             user.DateOfBirth = editUserDto.DateOfBirth;
             user.Work = editUserDto.Work;
             user.Education = editUserDto.Education;
-            
+
             db.Entry(user).State = EntityState.Modified;
             db.SaveChanges();
 
             return RedirectToAction("UserProfile");
         }
+
         public ActionResult GetUserImage()
         {
             var userId = User.Identity.GetUserId();
@@ -110,7 +114,6 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             return Json( new { data = user },JsonRequestBehavior.AllowGet);
         }
-
 
         private void DeleteImageFromFolder(string imageName)
         {
@@ -121,6 +124,7 @@ namespace SpacePro.Controllers.AppUsersContollers
                 System.IO.File.Delete(filePath);
             }
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

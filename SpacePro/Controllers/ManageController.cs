@@ -228,7 +228,7 @@ namespace SpacePro.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("EditProfile", "AppUser", new { Message = "no valid pass" });
             }
             var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
             if (result.Succeeded)
@@ -238,10 +238,10 @@ namespace SpacePro.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("UserProfile","AppUser", new { Message = ManageMessageId.ChangePasswordSuccess });
             }
             AddErrors(result);
-            return View(model);
+            return RedirectToAction("EditProfile", "AppUser", new { Message = "no valid pass" });
         }
 
         //
