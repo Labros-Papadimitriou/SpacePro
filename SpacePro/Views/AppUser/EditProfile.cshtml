@@ -8,7 +8,6 @@
         background-color: lightgrey;
         color: black
     }
-
 </style>
 
 <!--app-content open-->
@@ -17,6 +16,47 @@
 
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
+
+            <!--Delete Modal Starts-->
+            <div class="modal" id="deletePostModal" aria-labelledby="deletePostModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Are you sure you want to delete this post</h5>
+                            <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="header" id="postDetailsModal"></p>
+                            <br />
+                            <button id="delBtn" data-bs-dismiss="modal" class="btn btn-danger">Delete Post</button>
+                            <button data-bs-dismiss="modal" class="btn btn-primary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Delete Modal Ends -->
+            <!--Edit Modal Starts-->
+            <div class="modal" id="editPostModal" aria-labelledby="editPostModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Edit Post</h5>
+                            <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="header" id="postDetailsEditModal"></div>
+                            <br />
+                            <button id="saveEditBtn" data-bs-dismiss="modal" class="btn btn-danger">Edit Post</button>
+                            <button data-bs-dismiss="modal" class="btn btn-primary">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Edit Modal Ends -->
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <h1 class="page-title">Edit Profile</h1>
@@ -28,9 +68,8 @@
                 </div>
             </div>
             <!-- PAGE-HEADER END -->
-            <!-- ROW-1 OPEN -->
+            <!-- ROW-1 OPEN EDIT PROFILE/EDIT PASSWORD-->
             <div class="row">
-
                 <div class="col-lg-4">
                     @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
@@ -84,7 +123,6 @@
                                 <button id="updPass" class="btn btn-success" type="submit" value="Change Password">Update Password</button>
                                 <a href="#" class="btn btn-danger">Cancel</a>
                             </div>
-
                         </div>
                         <div class="card">
                             <div class="card-header">
@@ -96,8 +134,6 @@
                         </div>
                     }
                 </div>
-
-
 
                 <div class="col-xl-8">
                     <div class="card">
@@ -163,46 +199,151 @@
                 </div>
             </div>
             <!-- ROW-1 CLOSED -->
+            <!-- ROW-2 DataTable with Posts Starts -->
+            <div class="row">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit Posts</h3>
+                    </div>
+                    <table id="bodiesTable" class="table table-bordered align-content-center">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Post Details</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- ROW-2 CLOSED -->
+
         </div>
         <!--CONTAINER CLOSED -->
-
     </div>
 </div>
-<!--app-content open-->
-@*@section scripts{
-        <script>
-            $(document).ready(function () {
+@section scripts{
 
-                $("#updPass").click(function () {
+    @* DATATABLE *@
+    <script type="text/javascript">
 
+        openDataTable();
 
-                    let requestCls = {
-                        OldPassword:$("#curPass").val(),
-                        NewPassword:$("#newPass").val(),
-                        ConfirmPassword: $("#conPass").val()
-                    };
-                    console.log(requestCls);
+        function openDataTable() {
+            $('#bodiesTable').DataTable({
+                ajax: {
+                    url: "/UserPost/GetPosts",
+                    type: "GET",
+                    dataType: "json"
+                },
+                columns: [
+                    {
+                        data: "UserPostId"
+                    },
+                    {
+                        data: "PostDetails"
+                    },
+                    {
+                        data: "UserPostId", render: function (UserPostId) {
 
-                    $.ajax({
-                        url: "/Manage/ChangePassword",
-                        type: 'POST',
-                        dataType: "JSON",
-                        data: JSON.stringify(requestCls),
+                            let template = `
+                                                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPostModal" onclick="MyEdit(${UserPostId})" >Edit</button>
+                                                      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal" onclick="MyDelete(${UserPostId})">Delete</button>
+                                                   `;
 
-                        success: function (response) {
-                            console.log(response);
-                        },
-                        error: function () {
-                            console.log("errror");
+                            return template;
                         }
-                    })
-                })
+                    }
 
-
-
-
-
+                ]
 
             })
-        </script>
-    }*@
+        }
+
+        function reloadDataTable() {
+            $('#bodiesTable').DataTable().ajax.reload();
+        }
+
+    </script>
+
+    @* EDIT DELETE *@
+    <script type="text/javascript">
+
+        function MyDelete(UserPostId) {
+
+            var settings = {
+                "url": "/UserPost/GetPost?" + "UserPostId=" + UserPostId,
+                "method": "GET",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+
+                $("#postDetailsModal").text(`"` + response.data.PostDetails + `"`);
+            });
+
+            $("#delBtn").click(function () {
+
+                let RequestCls = {
+                    id: UserPostId
+                }
+
+                var settings = {
+                    "url": "/Userpost/deletepost",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify(RequestCls),
+                };
+
+                $.ajax(settings).done(function (response) {
+                    UserPostId = 0;
+                    reloadDataTable();
+                });
+            })
+        }
+
+        function MyEdit(UserPostId) {
+
+            var settings = {
+                "url": "/UserPost/GetPost?" + "UserPostId=" + UserPostId,
+                "method": "GET",
+                "timeout": 0,
+            };
+
+            $.ajax(settings).done(function (response) {
+
+                $("#postDetailsEditModal").text(response.data.PostDetails).attr('contenteditable', "true").css("background-color", "#3e3d3dcc");
+            });
+
+            $("#saveEditBtn").click(function () {
+
+                let RequestCls = {
+                    id: UserPostId,
+                    postDetails: $("#postDetailsEditModal").text()
+                }
+
+                var settings = {
+                    "url": "/Userpost/EditPost",
+                    "method": "POST",
+                    "timeout": 0,
+                    "headers": {
+                        "Content-Type": "application/json"
+                    },
+                    "data": JSON.stringify(RequestCls),
+                };
+
+                $.ajax(settings).done(function (response) {
+                    UserPostId = 0;
+                    reloadDataTable();
+                });
+            })
+        }
+
+    </script>
+
+}

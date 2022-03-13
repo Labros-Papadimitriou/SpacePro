@@ -42,8 +42,12 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpDelete]
         public ActionResult DeleteUser(string id)
         {
-            var user = db.Users.FirstOrDefault(x => x.Id == id);
+            var user = db.Users.Where(x => x.Id == id).Include(x=>x.UserImage).FirstOrDefault();
 
+            var imgId = user.UserImage.UserImageId;
+            var img = db.UserImages.Find(imgId);
+            
+            db.Entry(img).State = EntityState.Deleted;
             foreach (var post in user.UserPosts)
             {
                 db.Entry(post).State = EntityState.Deleted;
