@@ -3,7 +3,13 @@
     ViewBag.Title = "EditProfile";
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
+<style>
+    .date .form-control {
+        background-color: lightgrey;
+        color: black
+    }
 
+</style>
 
 <!--app-content open-->
 <div class="main-content app-content mt-0">
@@ -11,7 +17,6 @@
 
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
-
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <h1 class="page-title">Edit Profile</h1>
@@ -25,65 +30,75 @@
             <!-- PAGE-HEADER END -->
             <!-- ROW-1 OPEN -->
             <div class="row">
-                <div class="col-xl-4">
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Edit Password</div>
-                        </div>
-                        <div class="card-body">
-                            <div class="text-center chat-image mb-5">
-                                <div class="main-chat-msg-name">
-                                    <a href="profile.html">
-                                        <h5 class="mb-1 text-dark fw-semibold">@Model.UserName</h5>
-                                    </a>
-                                    <p class="text-muted mt-0 mb-0 pt-0 fs-13">@Model.Work</p>
+
+                <div class="col-lg-4">
+                    @using (Html.BeginForm("ChangePassword", "Manage", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Edit Password</div>
+                            </div>
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <div class="card-body">
+                                <div class="text-center chat-image mb-5">
+                                    <div class="main-chat-msg-name">
+                                        <a href="profile.html">
+                                            <h5 class="mb-1 text-dark fw-semibold">@Model.UserName</h5>
+                                        </a>
+                                        <p class="text-muted mt-0 mb-0 pt-0 fs-13">@Model.Work</p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Current Password</label>
+                                    <div class="wrap-input100 validate-input input-group" id="Password-toggle">
+                                        @Html.AntiForgeryToken()
+                                        <a href="#" class="input-group-text bg-white text-muted">
+                                            <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                        </a>
+                                        <input id="curPass" class="input100 form-control" name="OldPassword" type="password" value="" placeholder="Current Password" minlength="6" required>
+                                    </div>
+                                    <!-- <input type="password" class="form-control" value="password"> -->
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">New Password</label>
+                                    <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
+                                        <a href="#" class="input-group-text bg-white text-muted">
+                                            <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                        </a>
+                                        <input id="newPass" class="input100 form-control" name="NewPassword" type="password" value="" placeholder="New Password" minlength="6" required>
+                                    </div>
+                                    <!-- <input type="password" class="form-control" value="password"> -->
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Confirm Password</label>
+                                    <div class="wrap-input100 validate-input input-group" id="Password-toggle2">
+                                        <a href="#" class="input-group-text bg-white text-muted">
+                                            <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
+                                        </a>
+                                        <input id="conPass" class="input100 form-control" name="ConfirmPassword" type="password" value="" placeholder="Confirm Password" minlength="6" required>
+                                    </div>
+                                    <!-- <input type="password" class="form-control" value="password"> -->
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Current Password</label>
-                                <div class="wrap-input100 validate-input input-group" id="Password-toggle">
-                                    <a href="#" class="input-group-text bg-white text-muted">
-                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
-                                    </a>
-                                    <input class="input100 form-control" type="password" placeholder="Current Password">
-                                </div>
-                                <!-- <input type="password" class="form-control" value="password"> -->
+                            <div class="card-footer text-end">
+                                <button id="updPass" class="btn btn-success" type="submit" value="Change Password">Update Password</button>
+                                <a href="#" class="btn btn-danger">Cancel</a>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">New Password</label>
-                                <div class="wrap-input100 validate-input input-group" id="Password-toggle1">
-                                    <a href="#" class="input-group-text bg-white text-muted">
-                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
-                                    </a>
-                                    <input class="input100 form-control" type="password" placeholder="New Password">
-                                </div>
-                                <!-- <input type="password" class="form-control" value="password"> -->
+
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="card-title">Delete Account</div>
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Confirm Password</label>
-                                <div class="wrap-input100 validate-input input-group" id="Password-toggle2">
-                                    <a href="#" class="input-group-text bg-white text-muted">
-                                        <i class="zmdi zmdi-eye text-muted" aria-hidden="true"></i>
-                                    </a>
-                                    <input class="input100 form-control" type="password" placeholder="Confirm Password">
-                                </div>
-                                <!-- <input type="password" class="form-control" value="password"> -->
+                            <div class="card-footer text-start">
+                                <a href="#" class="btn btn-danger my-1">Delete Account</a>
                             </div>
                         </div>
-                        <div class="card-footer text-end">
-                            <a href="#" class="btn btn-primary">Update</a>
-                            <a href="#" class="btn btn-danger">Cancel</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Delete Account</div>
-                        </div>
-                        <div class="card-footer text-start">
-                            <a href="#" class="btn btn-danger my-1">Delete Account</a>
-                        </div>
-                    </div>
+                    }
                 </div>
+
+
+
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-header">
@@ -126,7 +141,7 @@
                                     <label class="form-label">Education</label>
                                     <input name="Education" class="form-control" rows="6" value="@Model.Education">
                                 </div>
-                                <div class="form-group" style="">
+                                <div class="form-group date">
                                     <label>Date Of Birth</label>
                                     @if (@Model.DateOfBirth == null)
                                     {
@@ -135,7 +150,7 @@
                                     else
                                     {
                                         <input type="date" class="form-control" name="DateOfBirth" value="@String.Join("-", Model.DateOfBirth.Value.ToShortDateString().Split('/').Select(x=>x.Length==1?"0"+x:x).Reverse())" />
-                                        
+
                                     }
                                 </div>
                             </div>
@@ -154,3 +169,40 @@
     </div>
 </div>
 <!--app-content open-->
+@*@section scripts{
+        <script>
+            $(document).ready(function () {
+
+                $("#updPass").click(function () {
+
+
+                    let requestCls = {
+                        OldPassword:$("#curPass").val(),
+                        NewPassword:$("#newPass").val(),
+                        ConfirmPassword: $("#conPass").val()
+                    };
+                    console.log(requestCls);
+
+                    $.ajax({
+                        url: "/Manage/ChangePassword",
+                        type: 'POST',
+                        dataType: "JSON",
+                        data: JSON.stringify(requestCls),
+
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function () {
+                            console.log("errror");
+                        }
+                    })
+                })
+
+
+
+
+
+
+            })
+        </script>
+    }*@
