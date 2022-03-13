@@ -31,7 +31,6 @@ namespace SpacePro.Controllers.AppUsersContollers
                 .Include(u => u.UserImage)
                 .FirstOrDefault();
 
-
             return View(user);
         }
 
@@ -69,11 +68,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
                 db.SaveChanges();
             }
-
-
-
             return RedirectToAction("UserProfile");
-
         }
 
         public ActionResult EditProfile()
@@ -87,6 +82,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             return View(user);
         }
+
         [HttpPost]
         public ActionResult EditProfile(EditUserDto editUserDto)
         {

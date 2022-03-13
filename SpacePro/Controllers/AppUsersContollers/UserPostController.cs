@@ -23,13 +23,21 @@ namespace SpacePro.Controllers.AppUsersContollers
         public ActionResult GetPosts()
         {
             var userId = User.Identity.GetUserId();
-            var user = db.Users.Find(userId);
 
-            var posts = db.UserPosts.Where(p=>p.ApplicationUser_id == userId).Select(x=>new { x.UserPostId, x.PostDetails, x.PostLikes ,x.ApplicationUser_id});
-            
-
+            var posts = db.UserPosts
+                .Where(p=>p.ApplicationUser_id == userId)
+                .Select(x=>new { x.UserPostId, x.PostDetails, x.PostLikes ,x.ApplicationUser_id});
 
             return Json(new { data = posts }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetPost(int UserPostId)
+        {
+            var post = db.UserPosts
+                .Where(p => p.UserPostId == UserPostId)
+                .SingleOrDefault();
+
+            return Json(new { data = post }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
