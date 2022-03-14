@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Persistance_UnitOfWork.Repositories
 {
-    public class UserImageRepository:Repository<UserImage>,IUserImageRepository
+    public class UserImageRepository : Repository<UserImage>, IUserImageRepository
     {
         public UserImageRepository(ApplicationDbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;

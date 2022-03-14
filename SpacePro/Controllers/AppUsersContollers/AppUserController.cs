@@ -1,6 +1,7 @@
 ﻿using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
 using MyDatabase;
+using Persistance_UnitOfWork;
 using SpacePro.Models;
 using SpacePro.Models.Dtos;
 using System;
@@ -14,22 +15,17 @@ namespace SpacePro.Controllers.AppUsersContollers
 {
     public class AppUserController : Controller
     {
-
-        private ApplicationDbContext db;
-
+        private readonly UnitOfWork unitOfWork;
         public AppUserController()
         {
-            db = new ApplicationDbContext();
+            unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
 
         public ActionResult UserProfile()
         {
             var userId = User.Identity.GetUserId();
-            var user = db.Users
-                .Where(u => u.Id == userId)
-                .Include(u => u.UserPosts)
-                .Include(u => u.UserImage)
-                .FirstOrDefault();
+
+            var user = unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             return View(user);
         }
@@ -38,8 +34,9 @@ namespace SpacePro.Controllers.AppUsersContollers
         public ActionResult AddUserImage(HttpPostedFileBase image)
         {
             var userId = User.Identity.GetUserId();
-            var user = db.Users.Include(x=>x.UserImage).FirstOrDefault(a => a.Id == userId);
-            
+
+            var user = unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+
             if (user.UserImage != null)
             {
                 DeleteImageFromFolder(user.UserImage.Name);
@@ -47,12 +44,11 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             if (image != null)
             {
-                
                 image.SaveAs(Server.MapPath("/Content/UserImages/" + image.FileName));
 
                 if (user.UserImage != null)
                 {
-                    db.Entry(user.UserImage).State = EntityState.Deleted;
+                    unitOfWork.UserImages.Remove(user.UserImage);
                 }
 
                 UserImage userImage = new UserImage();
@@ -61,12 +57,12 @@ namespace SpacePro.Controllers.AppUsersContollers
                 userImage.Url = "/Content/UserImages/" + image.FileName;
                 userImage.AlternativeText = (image.FileName).Split('.').First();
                 userImage.ApplicationUser = user;
-                db.Entry(userImage).State = EntityState.Added;
+                unitOfWork.UserImages.Add(userImage);
 
                 user.UserImage = userImage;
-                db.Entry(user).State = EntityState.Modified;
+                unitOfWork.ApplicationUsers.ModifyEntity(user);
 
-                db.SaveChanges();
+                unitOfWork.Complete();
             }
             return RedirectToAction("UserProfile");
         }
@@ -74,11 +70,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         public ActionResult EditProfile()
         {
             var userId = User.Identity.GetUserId();
-            var user = db.Users
-                .Where(u => u.Id == userId)
-                .Include(u => u.UserPosts)
-                .Include(u => u.UserImage)
-                .FirstOrDefault();
+
+            var user = unitOfWork.ApplicationUsers.GetUser(userId);
 
             return View(user);
         }
@@ -86,8 +79,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpPost]
         public ActionResult EditProfile(EditUserDto editUserDto)
         {
-            var id = User.Identity.GetUserId();
-            var user = db.Users.Find(id);
+            var userId = User.Identity.GetUserId();
+            var user = unitOfWork.ApplicationUsers.GetUser(userId);
             user.FirstName = editUserDto.FirstName;
             user.LastName = editUserDto.LastName;
             user.PhoneNumber = editUserDto.PhoneNumber;
@@ -97,18 +90,35 @@ namespace SpacePro.Controllers.AppUsersContollers
             user.Work = editUserDto.Work;
             user.Education = editUserDto.Education;
 
-            db.Entry(user).State = EntityState.Modified;
-            db.SaveChanges();
+            unitOfWork.ApplicationUsers.ModifyEntity(user);
+            unitOfWork.Complete();
 
             return RedirectToAction("UserProfile");
         }
 
         public ActionResult GetUserImage()
         {
-            var userId = User.Identity.GetUserId();
-            var user = db.Users.Where(x=>x.Id == userId).Select(x => new {x.UserImage.Url,x.UserImage.AlternativeText}).SingleOrDefault();
+            if (User.Identity.GetUserId()==null)
+            {
+                return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
+            }
 
-            return Json( new { data = user },JsonRequestBehavior.AllowGet);
+            var userId = User.Identity.GetUserId();
+
+            if (unitOfWork.ApplicationUsers.GetUserWithImages(userId).UserImage == null)
+            {
+                return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
+            }
+
+            var imgId = unitOfWork.ApplicationUsers
+                .GetUserWithImages(userId).UserImage.UserImageId;
+
+            var userImg = unitOfWork.UserImages
+                .Find(x => x.UserImageId == imgId)
+                .Select(x=> new {x.Url,x.AlternativeText})
+                .FirstOrDefault();
+
+            return Json( new { data = userImg },JsonRequestBehavior.AllowGet);
         }
 
         private void DeleteImageFromFolder(string imageName)
@@ -125,7 +135,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

@@ -1,6 +1,7 @@
 ﻿using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
 using MyDatabase;
+using Persistance_UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -12,10 +13,10 @@ namespace SpacePro.Controllers.AppUsersContollers
 {
     public class UserPostController : Controller
     {
-        private readonly ApplicationDbContext db;
+        private readonly UnitOfWork unitOdWork;
         public UserPostController()
         {
-            db = new ApplicationDbContext();
+            unitOdWork =new UnitOfWork(new ApplicationDbContext());
         }
         // GET: UserPost
         [HttpGet]
@@ -24,7 +25,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             var userId = User.Identity.GetUserId();
 
-            var posts = db.UserPosts
+            var posts = unitOdWork.UserPosts.GetAll()
                 .Where(p=>p.ApplicationUser_id == userId)
                 .Select(x=>new { x.UserPostId, x.PostDetails, x.PostLikes ,x.ApplicationUser_id});
 
@@ -33,9 +34,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
         public ActionResult GetPost(int UserPostId)
         {
-            var post = db.UserPosts
-                .Where(p => p.UserPostId == UserPostId)
-                .SingleOrDefault();
+            var post = unitOdWork.UserPosts.Get(UserPostId);
 
             return Json(new { data = post }, JsonRequestBehavior.AllowGet);
         }
@@ -50,33 +49,34 @@ namespace SpacePro.Controllers.AppUsersContollers
             post.ApplicationUser_id = userId;
             post.PostDetails = postDetails;
             post.PostLikes = 0;
-            db.Entry(post).State = EntityState.Added;
-            db.SaveChanges();
+            unitOdWork.UserPosts.Add(post);
+            unitOdWork.Complete();
             return Json(post);
         }
         [HttpPost]
         public ActionResult DeletePost(int id)
         {
-            var post = db.UserPosts.Find(id);
-            db.Entry(post).State = EntityState.Deleted;
-            db.SaveChanges();
+            var post = unitOdWork.UserPosts.Get(id);
+            unitOdWork.UserPosts.Remove(post);
+            unitOdWork.Complete();
 
             return Json(post);
         }
+
         [HttpPost]
         public ActionResult EditPost(int id, string postDetails)
         {
-            var post = db.UserPosts.Find(id);
+            var post = unitOdWork.UserPosts.Get(id);
             post.PostDetails = postDetails;
-            db.Entry(post).State = EntityState.Modified;
-            db.SaveChanges();
+            unitOdWork.UserPosts.ModifyEntity(post);
+            unitOdWork.Complete();
             return Json(post);
         }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                unitOdWork.Dispose();
             }
             base.Dispose(disposing);
         }

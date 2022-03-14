@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Persistance_UnitOfWork.Repositories
 {
-    public class StarRepository:Repository<Star>,IStarRepository
+    public class StarRepository : Repository<Star>, IStarRepository
     {
         public StarRepository(ApplicationDbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
+
     }
 }

@@ -381,8 +381,8 @@
                                                                 <span class=""><i class="fe fe-more-vertical"></i></span>
                                                             </a>
                                                             <div class="dropdown-menu dropdown-menu-end">
-                                                                <a onclick="EditPost('${post.UserPostId}')" class="dropdown-item" href="#">Edit Post</a>
-                                                                <a onclick="DeletePost('${post.UserPostId}')" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePostModal" href="#"> Delete Post</a>
+                                                                <a onclick="EditPost('${post.UserPostId}')" class="dropdown-item" href="#!preventScrollTop()">Edit Post</a>
+                                                                <a onclick="DeletePost('${post.UserPostId}')" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#deletePostModal" href="#!"> Delete Post</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -449,9 +449,6 @@
                     $.ajax(settings).done(function (response) {
                         AllPosts();
                     });
-
-
-
                 }
             });
 

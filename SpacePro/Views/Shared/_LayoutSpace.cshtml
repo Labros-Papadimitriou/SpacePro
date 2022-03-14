@@ -231,11 +231,10 @@
         };
 
         $.ajax(settings).done(function (dataImg) {
-
             let temp =  `<img  src="/Template/sash/assets/images/users/7.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">`;
             
             
-            if (dataImg.data.Url != null) {
+            if (dataImg.data != "") {
                 temp = `<img  src="${dataImg.data.Url}" alt="${dataImg.data.AlternativeText}" class="avatar  profile-user brround cover-image">`;
             }
 
