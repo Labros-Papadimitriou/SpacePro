@@ -7,7 +7,10 @@ using System.Threading.Tasks;
 
 namespace Persistance_UnitOfWork.IRepositories
 {
-    public interface IApplicationUserRepository:IRepository<ApplicationUser>
+    public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
+        ApplicationUser GetUser(string id);
+        ApplicationUser GetUserWithPostsAndImages(string id);
+        ApplicationUser GetUserWithImages(string id);
     }
 }
