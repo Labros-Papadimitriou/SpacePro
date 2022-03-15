@@ -13,16 +13,24 @@
                 data: "Name"
             },
             {
-                data: "VolValue"
+                data: "VolValue", render: function (vol) {
+                    return vol != null ? vol : "No given volume";
+                }
             },
             {
-                data: "MassValue"
+                data: "MassValue", render: function (mass) {
+                    return mass != null ? mass : "No given mass";
+                }
             },
             {
-                data: "Dimension"
+                data: "Dimension", render: function (dim) {
+                    return dim != null ? dim : "No given dimension";
+                }
             },
             {
-                data: "DiscoveredBy"
+                data: "DiscoveredBy", render: function (name) {
+                    return name != null ? name : "No given name";
+                }
             },
             {
                 data: "DiscoveryDate", render: function (date) {
@@ -31,7 +39,7 @@
                         return mydate.format('DD-MM-YYYY');
                     }
                     else {
-                        return date;
+                        return "No given date";
                     }
                 }
             }
