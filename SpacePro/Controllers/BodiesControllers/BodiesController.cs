@@ -11,7 +11,7 @@ namespace SpacePro.Controllers.BodiesControllers
 {
     public class BodiesController : Controller
     {
-        UnitOfWork unitOfWork;
+       readonly UnitOfWork unitOfWork;
         public BodiesController()
         {
             unitOfWork = new UnitOfWork(new ApplicationDbContext());
