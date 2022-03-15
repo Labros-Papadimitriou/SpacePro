@@ -1,4 +1,4 @@
-﻿<table id="bodiesTable" class="table table-striped table-dark text-white table-hover table-bordered" style="width:100%">
+﻿<table id="bodiesTable" class="table table-striped table-dark text-white table-hover table-bordered display" style="width:100%">
     <thead>
         <tr>
             <th>Body Type</th>
@@ -10,6 +10,17 @@
             <th>Discovery Date</th>
         </tr>
     </thead>
+    <tfoot>
+        <tr class="bg-cyan-darker">
+            <th>Body Type</th>
+            <th>Name</th>
+            <th>Volume</th>
+            <th>Mass</th>
+            <th>Dimension</th>
+            <th>Discovered By</th>
+            <th>Discovery Date</th>
+        </tr>
+    </tfoot>
 </table>
 @section bodies{
     <script type="text/javascript" src="~/Scripts/BodiesScripts/PopulatingBodiesDatatable.js"></script>
