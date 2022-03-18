@@ -30,6 +30,14 @@ namespace SpacePro.Controllers.AppUsersContollers
             return View(user);
         }
 
+        [HttpGet]
+        public ActionResult AnyUserProfile(string id)
+        {
+            var user = unitOfWork.ApplicationUsers.GetUserWithImages(id);
+
+            return View("UserProfile",user);
+        }
+
         [HttpPost]
         public ActionResult AddUserImage(HttpPostedFileBase image)
         {

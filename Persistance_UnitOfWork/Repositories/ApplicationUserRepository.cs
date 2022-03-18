@@ -15,6 +15,29 @@ namespace Persistance_UnitOfWork.Repositories
         public ApplicationUserRepository(ApplicationDbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
 
+        public IEnumerable<ApplicationUser> GetAllUsers()
+        {
+            var users = ApplicationDbContext.Users.ToList();
+            return users;
+        }
+
+        public object GetAllUsersWithImagesAndRoles()
+        {
+            var users = ApplicationDbContext.Users
+                .Select(x => new
+                {
+                    x.Id,
+                    x.UserImage,
+                    x.UserName,
+                    x.DateOfBirth,
+                    Role = x.Roles.FirstOrDefault()
+                })
+                .ToList();
+                
+
+            return users;
+        }
+
         public ApplicationUser GetUser(string id)
         {
             var user = ApplicationDbContext.Users.Where(x=>x.Id==id)
@@ -36,6 +59,31 @@ namespace Persistance_UnitOfWork.Repositories
                 .Include(x => x.UserPosts)
                 .Include(x => x.UserImage)
                 .FirstOrDefault();
+
+            return user;
+        }
+
+        public ApplicationUser DeleteUserWithPostsAndImage(string id)
+        {
+            var user = ApplicationDbContext.Users.Where(x => x.Id == id).Include(x => x.UserImage).FirstOrDefault();
+            int imgId;
+            UserImage img;
+
+            if (user.UserImage != null)
+            {
+                imgId = user.UserImage.UserImageId;
+                img = ApplicationDbContext.UserImages.Find(imgId);
+                ApplicationDbContext.Entry(img).State = EntityState.Deleted;
+            }
+
+            foreach (var post in user.UserPosts)
+            {
+                ApplicationDbContext.Entry(post).State = EntityState.Deleted;
+                ApplicationDbContext.SaveChanges();
+            }
+
+            ApplicationDbContext.Entry(user).State = EntityState.Deleted;
+            ApplicationDbContext.SaveChanges();
 
             return user;
         }
