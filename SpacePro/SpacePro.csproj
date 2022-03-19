@@ -1874,7 +1874,6 @@
     <Content Include="Views\Gallery\ShowGallery.cshtml" />
     <Content Include="Views\Article\ShowArticles.cshtml" />
     <Content Include="Views\Social\ShowSocial.cshtml" />
-    <Content Include="Views\Article\DetailsArticles.cshtml" />
     <Content Include="Views\Article\CreateArticles.cshtml" />
     <Content Include="Views\Payment\ShowPaymentMethods.cshtml" />
     <Content Include="Views\Shared\_ProfilPartial.cshtml" />

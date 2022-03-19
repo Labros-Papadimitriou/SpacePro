@@ -139,13 +139,6 @@ namespace SpacePro.Controllers.BroadsControllers
             }
         }
 
-
-        [HttpGet]
-        public ActionResult DetailsArticles()
-        {
-            return View();
-        }
-
         [HttpGet]
         public ActionResult GetArticleDetails(int? id)
         {

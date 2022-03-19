@@ -30,54 +30,54 @@
                         </div>
                         @using (Html.BeginForm("CreateNewArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                            <div class="card-body">
-                                <div class="row mb-4">
-                                    <label class="col-md-3 form-label">Article Title :</label>
-                                    <div class="">
-                                        <input type="text" name="Title" class="form-control" placeholder="Enter Article Title (3-50 characters)" minlength="3" maxlength="50" required>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-md-3 form-label mb-4">Author Name :</label>
-                                    <div class="mb-4">
-                                        <input class="content form-control" name="AuthorName" placeholder="Enter Article Title (3-50 characters)" required />
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-md-3 form-label mb-4">Short Description :</label>
-                                    <div class="mb-4">
-                                        <textarea rows="5" class="content form-control" name="ShortDescription" placeholder="Enter Short Description (5-5000 characters)" minlength="5" maxlength="5000" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <label class="col-md-3 form-label mb-4">Full Description :</label>
-                                    <div class="mb-4">
-                                        <textarea rows="10" class="content form-control" name="FullDescription" placeholder="Enter Full Description (10-10000 characters)" minlength="10" maxlength="10000" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mb-4">
-                                    <label class="col-md-3 form-label">Categories :</label>
-                                    <div class="">
-                                        <select name="ArticleCategoryId" class="form-control form-select select2" data-bs-placeholder="Select Country" required>
-                                            <option value="1">BigBang</option>
-                                            <option value="2">Planets</option>
-                                            <option value="3">Moons</option>
-                                            <option value="4">Comets</option>
-                                            <option value="5">Asteroids</option>
-                                            <option value="6">Stars</option>
-                                            <option value="7">Theory</option>
-                                            <option value="8" selected>Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-0">
-                                    <label class="col-md-3 form-label mb-4">File Upload :</label>
-                                    <input id="demo" type="file" class="form-control" name="image" accept=".jpg, .png, image/jpeg, image/png" required>
-                                </div>
+                    <div class="card-body" style="border: solid 1px #0d1d40; background:linear-gradient(to bottom, #0d1d40, black)">
+                        <div class="row mb-4">
+                            <label class="col-md-3 form-label">Article Title :</label>
+                            <div class="">
+                                <input type="text" name="Title" class="form-control" placeholder="Enter Article Title (3-50 characters)" minlength="3" maxlength="50" required>
                             </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-3 form-label mb-4">Author Name :</label>
+                            <div class="mb-4">
+                                <input class="content form-control" name="AuthorName" placeholder="Enter Article Title (3-50 characters)" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-3 form-label mb-4">Short Description :</label>
+                            <div class="mb-4">
+                                <textarea rows="5" class="content form-control" name="ShortDescription" placeholder="Enter Short Description (5-5000 characters)" minlength="5" maxlength="5000" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-3 form-label mb-4">Full Description :</label>
+                            <div class="mb-4">
+                                <textarea rows="10" class="content form-control" name="FullDescription" placeholder="Enter Full Description (10-10000 characters)" minlength="10" maxlength="10000" required></textarea>
+                            </div>
+                        </div>
+                        <div class="row mb-4">
+                            <label class="col-md-3 form-label">Categories :</label>
+                            <div class="">
+                                <select name="ArticleCategoryId" class="form-control form-select select2" data-bs-placeholder="Select Country" required>
+                                    <option value="1">BigBang</option>
+                                    <option value="2">Planets</option>
+                                    <option value="3">Moons</option>
+                                    <option value="4">Comets</option>
+                                    <option value="5">Asteroids</option>
+                                    <option value="6">Stars</option>
+                                    <option value="7">Theory</option>
+                                    <option value="8" selected>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label class="col-md-3 form-label mb-4">File Upload :</label>
+                            <input id="demo" type="file" class="form-control" name="image" accept=".jpg, .png, image/jpeg, image/png" required>
+                        </div>
+                    </div>
                             <div class="card-footer">
                                 <input type="submit" class="btn btn-success" value="Create"/>
-                                <button class="btn btn-warning float-end">Clear</button>
+                                <button type="reset" class="btn btn-warning float-end">Clear</button>
                             </div>
                         }
                     </div>
