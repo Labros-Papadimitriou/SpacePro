@@ -25,7 +25,7 @@
             //ArticleCategory ac6 = new ArticleCategory() { Title = "Stars" };
             //ArticleCategory ac7 = new ArticleCategory() { Title = "Theory" };
             //ArticleCategory ac8 = new ArticleCategory() { Title = "Other" };
-            //List<ArticleCategory> articleCategories = new List<ArticleCategory> { ac1, ac2, ac3, ac4, ac5, ac6, ac7 };
+            //List<ArticleCategory> articleCategories = new List<ArticleCategory> { ac1, ac2, ac3, ac4, ac5, ac6, ac7, ac8 };
 
             //db.ArticleCategories.AddRange(articleCategories);
             //db.SaveChanges();
@@ -48,6 +48,7 @@
             //    ArticleImage = ai1
             //};
             //db.Articles.Add(a1);
+            //db.SaveChanges();
 
             //ArticleImage ai2 = new ArticleImage() { Name = "cometsmock.jpg", Url = "/Content/ArticlesImages/cometsmock.jpg", AlternativeText = "Comets" };
             //db.ArticleImages.Add(ai2);
