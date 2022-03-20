@@ -45,7 +45,7 @@
     <link href="~/Template/sash/assets/plugins/sidebar/sidebar.css" rel="stylesheet">
 
     <!-- COLOR SKIN CSS -->
-    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/sash/assets/colors/color1.css" />
+    <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/Template/sash/assets/colors/color1.css" />
 
     <!--Scroll Bar-->
     <style>
@@ -105,7 +105,7 @@
                 <div class="app-sidebar">
                     <div class="side-header">
                         <a class="header-brand1" href="index.html">
-                            <img src="~/sash/assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
+                            <img src="~/Template/sash/assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
                         </a>
                     </div>
                     <div class="main-sidemenu">
@@ -221,31 +221,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.4/js/dataTables.bootstrap4.min.js"></script>
+
     <!--User Image-->
-    <script>
-
-        var settings = {
-            "url": "/AppUser/GetUserImage",
-            "method": "GET",
-            "timeout": 0,
-        };
-
-        $.ajax(settings).done(function (dataImg) {
-            let temp =  `<img  src="/Template/sash/assets/images/users/7.jpg" alt="profile-user" class="avatar  profile-user brround cover-image">`;
-            
-            
-            if (dataImg.data != "") {
-                temp = `<img  src="${dataImg.data.Url}" alt="${dataImg.data.AlternativeText}" class="avatar  profile-user brround cover-image">`;
-            }
-
-            let img = $(temp);
-
-            $("#userImgImg").append(img);
-        });
-
-
-
-    </script>
+    <script src="~/Scripts/LayoutScripts/UserImageSeed.js"></script>
 
     @RenderSection("social", required: false)
     @RenderSection("scripts", required: false)
