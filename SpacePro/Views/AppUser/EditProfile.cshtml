@@ -8,6 +8,15 @@
         background-color: lightgrey;
         color: black
     }
+    .card {
+        background: linear-gradient(to left, #0c092ef2, black 80%);
+        box-shadow: rgb(55, 55, 55) 3px 3px 4px 3px;
+    }
+    input.form-control.date {
+        color: white !important;
+        background: linear-gradient(to right,black 90%,#b0aeae) !important;
+        border-left: none !important;
+    }
 </style>
 
 <!--app-content open-->
@@ -181,11 +190,11 @@
                                     <label>Date Of Birth</label>
                                     @if (@Model.DateOfBirth == null)
                                     {
-                                        <input type="date" class="form-control" name="DateOfBirth" value="" />
+                                        <input type="date" class="form-control date" name="DateOfBirth" value="" />
                                     }
                                     else
                                     {
-                                        <input type="date" class="form-control" name="DateOfBirth" value="@String.Join("-", Model.DateOfBirth.Value.ToShortDateString().Split('/').Select(x=>x.Length==1?"0"+x:x).Reverse())" />
+                                        <input type="date" class="form-control date" name="DateOfBirth" value="@String.Join("-", Model.DateOfBirth.Value.ToShortDateString().Split('/').Select(x=>x.Length==1?"0"+x:x).Reverse())" />
 
                                     }
                                 </div>
@@ -234,7 +243,7 @@
         function openDataTable() {
             $('#bodiesTable').DataTable({
                 ajax: {
-                    url: "/UserPost/GetPosts",
+                    url: "/UserPost/GetPosts?id=@Model.Id",
                     type: "GET",
                     dataType: "json"
                 },
