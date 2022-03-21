@@ -29,7 +29,7 @@ namespace Persistance_UnitOfWork
             UserImages = new UserImageRepository(_context);
             UserPosts = new UserPostRepository(_context);
             BodyImages = new BodyImageRepository(_context);
-            Likes = new PostLikeRepository(_context);
+            PostLikes = new PostLikeRepository(_context);
          }
 
         #region IUnitOfWork Members
@@ -46,7 +46,7 @@ namespace Persistance_UnitOfWork
         public IApplicationUserRepository ApplicationUsers { get; private set; }
         public IUserImageRepository UserImages { get; private set; }
         public IUserPostRepository UserPosts { get; private set; }
-        public IPostLikeRepository Likes { get; private set; }
+        public IPostLikeRepository PostLikes { get; private set; }
         #endregion
 
         public int Complete()
