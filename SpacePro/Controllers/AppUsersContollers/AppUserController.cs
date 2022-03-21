@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,29 +22,31 @@ namespace SpacePro.Controllers.AppUsersContollers
             unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
 
-        public ActionResult UserProfile()
+        public async Task<ActionResult> UserProfile()
         {
-            var userId = User.Identity.GetUserId();
+            Task<string> task = new Task<string>(User.Identity.GetUserId);
+            task.Start();
+            var userId = await task;
 
-            var user = unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var user =await unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             return View(user);
         }
 
         [HttpGet]
-        public ActionResult AnyUserProfile(string id)
+        public async Task<ActionResult> AnyUserProfile(string id)
         {
-            var user = unitOfWork.ApplicationUsers.GetUserWithImages(id);
+            var user = await unitOfWork.ApplicationUsers.GetUserWithImages(id);
 
             return View("UserProfile",user);
         }
 
         [HttpPost]
-        public ActionResult AddUserImage(HttpPostedFileBase image)
+        public async Task<ActionResult> AddUserImage(HttpPostedFileBase image)
         {
             var userId = User.Identity.GetUserId();
 
-            var user = unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var user =await unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             if (user.UserImage != null)
             {
@@ -75,20 +78,20 @@ namespace SpacePro.Controllers.AppUsersContollers
             return RedirectToAction("UserProfile");
         }
 
-        public ActionResult EditProfile()
+        public async Task<ActionResult> EditProfile()
         {
             var userId = User.Identity.GetUserId();
 
-            var user = unitOfWork.ApplicationUsers.GetUser(userId);
+            var user =await unitOfWork.ApplicationUsers.GetUser(userId);
 
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditProfile(EditUserDto editUserDto)
+        public async Task<ActionResult> EditProfile(EditUserDto editUserDto)
         {
             var userId = User.Identity.GetUserId();
-            var user = unitOfWork.ApplicationUsers.GetUser(userId);
+            var user = await unitOfWork.ApplicationUsers.GetUser(userId);
             user.FirstName = editUserDto.FirstName;
             user.LastName = editUserDto.LastName;
             user.PhoneNumber = editUserDto.PhoneNumber;
@@ -104,7 +107,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             return RedirectToAction("UserProfile");
         }
 
-        public ActionResult GetUserImage()
+        public async Task<ActionResult> GetUserImage()
         {
             if (User.Identity.GetUserId()==null)
             {
@@ -113,13 +116,13 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             var userId = User.Identity.GetUserId();
 
-            if (unitOfWork.ApplicationUsers.GetUserWithImages(userId).UserImage == null)
+            if ((await unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
             {
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
 
-            var imgId = unitOfWork.ApplicationUsers
-                .GetUserWithImages(userId).UserImage.UserImageId;
+            var imgId = (await unitOfWork.ApplicationUsers
+                .GetUserWithImages(userId)).UserImage.UserImageId;
 
             var userImg = unitOfWork.UserImages
                 .Find(x => x.UserImageId == imgId)

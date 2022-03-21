@@ -54,5 +54,6 @@ namespace MyDatabase
         public DbSet<UserPost> UserPosts { get; set; }
         public DbSet<UserImage> UserImages { get; set; }
         public DbSet<BodyImage> BodyImages { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
     }
 }

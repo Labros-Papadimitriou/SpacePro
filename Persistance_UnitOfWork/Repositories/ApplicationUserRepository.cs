@@ -38,18 +38,18 @@ namespace Persistance_UnitOfWork.Repositories
             return users;
         }
 
-        public ApplicationUser GetUser(string id)
-        {
-            var user = ApplicationDbContext.Users.Where(x=>x.Id==id)
-                .FirstOrDefault();
+        public async Task<ApplicationUser> GetUser(string id)
+        {            
+            var user =await ApplicationDbContext.Users.Where(x=>x.Id==id)
+                .FirstOrDefaultAsync();
 
             return user;
         }
-        public ApplicationUser GetUserWithImages(string id)
+        public async Task<ApplicationUser> GetUserWithImages(string id)
         {
-            var user = ApplicationDbContext.Users.Where(x => x.Id == id)
+            var user = await ApplicationDbContext.Users.Where(x => x.Id == id)
                 .Include(x => x.UserImage)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return user;
         }
