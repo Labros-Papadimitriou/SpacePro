@@ -16,8 +16,8 @@ namespace Persistance_UnitOfWork.Repositories
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
         public IEnumerable<PostLike> GetUserPostsLikes(int userPostId)
         {
-            var likes = ApplicationDbContext.PostLikes.Where(x => x.UserPostId == userPostId).ToList();
-            return likes;
+            var postLikes = ApplicationDbContext.PostLikes.Where(x => x.UserPostId == userPostId).ToList();
+            return postLikes;
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Persistance_UnitOfWork
         IApplicationUserRepository ApplicationUsers { get; }
         IUserImageRepository UserImages { get; }
         IUserPostRepository UserPosts { get; }
-        IPostLikeRepository Likes { get; }
+        IPostLikeRepository PostLikes { get; }
         int Complete();
     }
 }

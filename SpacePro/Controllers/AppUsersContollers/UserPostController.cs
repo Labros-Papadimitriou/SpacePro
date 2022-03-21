@@ -33,13 +33,13 @@ namespace SpacePro.Controllers.AppUsersContollers
 
         public ActionResult AddOrRemoveLike(int postId, string userId)
         {
-            var likess = unitOfWork.Likes.GetUserPostsLikes(postId);
+            var postLikes = unitOfWork.PostLikes.GetUserPostsLikes(postId);
 
-            if (likess.Any(x => x.LikedUser.Equals(userId)))
+            if (postLikes.Any(x => x.LikedUser.Equals(userId)))
             {
 
-                var oldLike = likess.Where(x => x.LikedUser == userId && x.UserPostId == postId).First();
-                unitOfWork.Likes.Remove(oldLike);
+                var oldLike = postLikes.Where(x => x.LikedUser == userId && x.UserPostId == postId).First();
+                unitOfWork.PostLikes.Remove(oldLike);
 
                 unitOfWork.Complete();
                 return Json(new { data = oldLike, text = "like removed" }, JsonRequestBehavior.AllowGet);
@@ -49,7 +49,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             like.LikedUser = userId;
             like.UserPostId = postId;
 
-            unitOfWork.Likes.Add(like);
+            unitOfWork.PostLikes.Add(like);
             unitOfWork.Complete();
 
             return Json(new { data = like, text = "Like added" }, JsonRequestBehavior.AllowGet);

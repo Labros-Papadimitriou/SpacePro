@@ -18,9 +18,9 @@ namespace Persistance_UnitOfWork.Repositories
         public IEnumerable<UserPost> GetPostWithLikes()
         {
 
-            var post = ApplicationDbContext.UserPosts.Include(x => x.PostLikes).ToList();
+            var userPost = ApplicationDbContext.UserPosts.Include(x => x.PostLikes).ToList();
 
-            return post;
+            return userPost;
         }
     }
 }
