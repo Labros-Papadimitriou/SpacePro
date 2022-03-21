@@ -60,6 +60,7 @@
     <Compile Include="IRepositories\IApplicationUserRepository.cs" />
     <Compile Include="IRepositories\IArticleCategoryRepository.cs" />
     <Compile Include="IRepositories\IArticleImageRepository.cs" />
+    <Compile Include="IRepositories\IArticleLikeRepository.cs" />
     <Compile Include="IRepositories\IArticleRepository.cs" />
     <Compile Include="IRepositories\IAsteroidRepository.cs" />
     <Compile Include="IRepositories\IBodyImageRepository.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\ArticleCategoryRepository.cs" />
     <Compile Include="Repositories\ArticleImageRepository.cs" />
+    <Compile Include="Repositories\ArticleLikeRepository.cs" />
     <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Repositories\AsteroidRepository.cs" />
     <Compile Include="Repositories\BodyImageRepository.cs" />
