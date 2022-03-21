@@ -65,6 +65,7 @@
     <Compile Include="IRepositories\IBodyImageRepository.cs" />
     <Compile Include="IRepositories\ICometRepository.cs" />
     <Compile Include="IRepositories\IEventRepository.cs" />
+    <Compile Include="IRepositories\ILikeRepository.cs" />
     <Compile Include="IRepositories\IMoonRepository.cs" />
     <Compile Include="IRepositories\IPlanetRepository.cs" />
     <Compile Include="IRepositories\IRepository.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Repositories\BodyImageRepository.cs" />
     <Compile Include="Repositories\CometRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
+    <Compile Include="Repositories\LikeRepository.cs" />
     <Compile Include="Repositories\MoonRepository.cs" />
     <Compile Include="Repositories\PlanetRepository.cs" />
     <Compile Include="Repositories\Repository.cs" />

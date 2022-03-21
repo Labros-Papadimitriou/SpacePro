@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Persistance_UnitOfWork.IRepositories
 {
-    public interface IUserPostRepository:IRepository<UserPost>
+    public interface IPostLikeRepository : IRepository<PostLike>
     {
-        IEnumerable<UserPost> GetPostWithLikes();
+        IEnumerable<PostLike> GetUserPostsLikes(int userPostId);
     }
 }

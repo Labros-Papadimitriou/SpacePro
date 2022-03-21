@@ -3,24 +3,21 @@ using MyDatabase;
 using Persistance_UnitOfWork.IRepositories;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
 
 namespace Persistance_UnitOfWork.Repositories
 {
-    public class UserPostRepository : Repository<UserPost>, IUserPostRepository
+    public class PostLikeRepository : Repository<PostLike>, IPostLikeRepository
     {
-        public UserPostRepository(ApplicationDbContext context) : base(context) { }
+        public PostLikeRepository(DbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
-
-        public IEnumerable<UserPost> GetPostWithLikes()
+        public IEnumerable<PostLike> GetUserPostsLikes(int userPostId)
         {
-
-            var post = ApplicationDbContext.UserPosts.Include(x => x.PostLikes).ToList();
-
-            return post;
+            var likes = ApplicationDbContext.PostLikes.Where(x => x.UserPostId == userPostId).ToList();
+            return likes;
         }
     }
 }

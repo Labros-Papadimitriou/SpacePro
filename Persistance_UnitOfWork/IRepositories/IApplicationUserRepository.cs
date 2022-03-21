@@ -11,9 +11,9 @@ namespace Persistance_UnitOfWork.IRepositories
     {
         IEnumerable<ApplicationUser> GetAllUsers();
         object GetAllUsersWithImagesAndRoles();
-        ApplicationUser GetUser(string id);
+        Task<ApplicationUser> GetUser(string id);
         ApplicationUser GetUserWithPostsAndImages(string id);
-        ApplicationUser GetUserWithImages(string id);
+        Task<ApplicationUser> GetUserWithImages(string id);
         ApplicationUser DeleteUserWithPostsAndImage(string id);
     }
 }

@@ -13,28 +13,51 @@ namespace SpacePro.Controllers.AppUsersContollers
 {
     public class UserPostController : Controller
     {
-        private readonly UnitOfWork unitOdWork;
+        private readonly UnitOfWork unitOfWork;
         public UserPostController()
         {
-            unitOdWork =new UnitOfWork(new ApplicationDbContext());
+            unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
         // GET: UserPost
         [HttpGet]
 
-        public ActionResult GetPosts()
+        public ActionResult GetPosts(string id)
         {
-            var userId = User.Identity.GetUserId();
-
-            var posts = unitOdWork.UserPosts.GetAll()
-                .Where(p=>p.ApplicationUser_id == userId)
-                .Select(x=>new { x.UserPostId, x.PostDetails, x.PostLikes ,x.ApplicationUser_id});
+            var posts = unitOfWork.UserPosts.GetPostWithLikes()
+                .Where(p => p.ApplicationUser_id == id)
+                .Select(x => new { x.UserPostId, x.PostDetails, x.PostLikesCount, x.ApplicationUser_id, PostLikes = x.PostLikes.Select(a => new { a.LikedUser, a.UserPostId }) });
 
             return Json(new { data = posts }, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+
+        public ActionResult AddOrRemoveLike(int postId, string userId)
+        {
+            var likess = unitOfWork.Likes.GetUserPostsLikes(postId);
+
+            if (likess.Any(x => x.LikedUser.Equals(userId)))
+            {
+
+                var oldLike = likess.Where(x => x.LikedUser == userId && x.UserPostId == postId).First();
+                unitOfWork.Likes.Remove(oldLike);
+
+                unitOfWork.Complete();
+                return Json(new { data = oldLike, text = "like removed" }, JsonRequestBehavior.AllowGet);
+            }
+
+            PostLike like = new PostLike();
+            like.LikedUser = userId;
+            like.UserPostId = postId;
+
+            unitOfWork.Likes.Add(like);
+            unitOfWork.Complete();
+
+            return Json(new { data = like, text = "Like added" }, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult GetPost(int UserPostId)
         {
-            var post = unitOdWork.UserPosts.Get(UserPostId);
+            var post = unitOfWork.UserPosts.Get(UserPostId);
 
             return Json(new { data = post }, JsonRequestBehavior.AllowGet);
         }
@@ -48,17 +71,17 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             post.ApplicationUser_id = userId;
             post.PostDetails = postDetails;
-            post.PostLikes = 0;
-            unitOdWork.UserPosts.Add(post);
-            unitOdWork.Complete();
+            post.PostLikesCount = 0;
+            unitOfWork.UserPosts.Add(post);
+            unitOfWork.Complete();
             return Json(post);
         }
         [HttpPost]
         public ActionResult DeletePost(int id)
         {
-            var post = unitOdWork.UserPosts.Get(id);
-            unitOdWork.UserPosts.Remove(post);
-            unitOdWork.Complete();
+            var post = unitOfWork.UserPosts.Get(id);
+            unitOfWork.UserPosts.Remove(post);
+            unitOfWork.Complete();
 
             return Json(post);
         }
@@ -66,17 +89,17 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpPost]
         public ActionResult EditPost(int id, string postDetails)
         {
-            var post = unitOdWork.UserPosts.Get(id);
+            var post = unitOfWork.UserPosts.Get(id);
             post.PostDetails = postDetails;
-            unitOdWork.UserPosts.ModifyEntity(post);
-            unitOdWork.Complete();
+            unitOfWork.UserPosts.ModifyEntity(post);
+            unitOfWork.Complete();
             return Json(post);
         }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                unitOdWork.Dispose();
+                unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
