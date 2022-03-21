@@ -2,28 +2,88 @@
     ViewBag.Title = "Callendar";
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
-<div class="row ">
-    <div class="col-md-12">
-        <div class="card-header">
-            <h3 class="card-title">Calender</h3>
-        </div>
-        <div class="card-body rounded-3">
+<div class="main-content app-content mt-0">
+    <div class="side-app">
+
+        <!-- CONTAINER -->
+        <div class="main-container container-fluid">
+
+            <!-- PAGE-HEADER -->
+            <div class="page-header">
+                <h1 class="page-title">Full Calendar</h1>
+                <div>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Apps</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Full Calender</li>
+                    </ol>
+                </div>
+            </div>
+            <!-- PAGE-HEADER END -->
+            <!-- ROW OPEN -->
             <div class="row">
-                <div class="col-md-12 col-xl-3">
-                    <div id="external-events">
-                        <h4>Draggable Events</h4>
-                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-warning" data-class="bg-warning">
-                            <div id="subOfTheMonth" class="fc-event-main">Sub of the month</div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Calender With different Color Events</h3>
                         </div>
-                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-danger" data-class="bg-danger">
-                            <div id="authorOfTheMonth" class="fc-event-main">Author of the month</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 col-xl-3">
+                                    <div id="external-events">
+                                        <h4>Draggable Events</h4>
+                                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-warning" data-class="bg-warning">
+                                            <div class="fc-event-main">My Event 3</div>
+                                        </div>
+                                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-danger" data-class="bg-danger">
+                                            <div class="fc-event-main">My Event 5</div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-5">
+                                        <h4 class="card-title mb-4">Winners</h4>
+                                        <div class="card border p-0 pt-3">
+                                            <div class="card-footer">
+                                                <div class="media media-xs overflow-visible">
+                                                    <img class="avatar brround avatar-md me-3" src="~/Template/sash/assets/images/users/12.jpg" alt="avatar-img">
+                                                    <div class="media-body valign-middle">
+                                                        <a href="profile.html" class=" fw-semibold text-dark">John Paige</a><br>
+                                                        <a href="profile.html" class="text-muted mb-0"> View client profile</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card border p-0 pt-3">
+                                            <div class="card-footer">
+                                                <div class="media media-xs overflow-visible">
+                                                    <img class="avatar brround avatar-md me-3" src="~/Template/sash/assets/images/users/16.jpg" alt="avatar-img">
+                                                    <div class="media-body valign-middle">
+                                                        <a href="profile.html" class=" fw-semibold text-dark">Mozelle Belt</a><br>
+                                                        <a href="profile.html" class="text-muted mb-0"> View client profile</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12 col-xl-9">
+                                    <div id='calendar2'></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-10 col-xl-9" style="background-color:#383838d9">
-                    <div id='calendar2'></div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">List Calendar</h3>
+                        </div>
+                        <div class="card-body">
+                            <div id='calendar'></div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!-- ROW CLOSED -->
         </div>
+        <!-- CONTAINER CLOSED -->
     </div>
 </div>
