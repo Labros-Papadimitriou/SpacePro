@@ -146,8 +146,6 @@ namespace SpacePro.Controllers.BroadsControllers
             return View(article);
         }
 
-
-
         [HttpGet]
         public JsonResult GiveLike(int? id)
         {   

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Entities.IdentityUsers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -44,5 +45,6 @@ namespace Entities.BroadClasses
 
         [Display(Name = "Article Image")]
         public ArticleImage ArticleImage { get; set; }
+        public ICollection<ArticleLike> ArticleLikes { get; set; }
     }
 }
