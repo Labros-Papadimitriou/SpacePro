@@ -9,9 +9,8 @@ namespace Entities.IdentityUsers
 {
     public class PostLike
     {
-        public int PostLikeId { get; set; }
+        public int PostLikeId { get; set; } 
         public string LikedUser { get; set; }
-
         [ForeignKey("UserPost")]
         public int UserPostId { get; set; }
         public UserPost UserPost { get; set; }

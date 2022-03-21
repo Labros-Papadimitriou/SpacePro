@@ -69,6 +69,7 @@
     <Compile Include="BroadClasses\Event.cs" />
     <Compile Include="IdentityUsers\ApplicationUser.cs" />
     <Compile Include="IdentityUsers\ArticleLike.cs" />
+    <Compile Include="IdentityUsers\PostLike.cs" />
     <Compile Include="IdentityUsers\UserImage.cs" />
     <Compile Include="IdentityUsers\UserPost.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
