@@ -14,6 +14,9 @@
         backdrop-filter: blur(5px);
     }
 
+    .photo img:hover{
+        cursor:pointer;
+    }
 
     .card {
         /*background: linear-gradient(to left, #0c092ef2, black);*/
@@ -73,10 +76,10 @@
     @*Zoom Image Modal Starts*@
     <div class="modal" id="openImg" aria-labelledby="imageUserModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
-            <div class="modal-content">
+            <div class="modal-content photo ">
                 @if (Model.UserImage == null)
                 {
-                    <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3">
+                    <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3" >
                 }
                 else
                 {
@@ -95,7 +98,7 @@
                         <div class="row">
                             <div class="col-lg-12 col-md-12">
                                 <div class="row">
-                                    <div class="text-center profile-img-1 rounded-3">
+                                    <div class="text-center profile-img-1 rounded-3 photo">
                                         @if (Model.UserImage == null)
                                         {
                                             <!--Zoom Image Button trigger modal -->
