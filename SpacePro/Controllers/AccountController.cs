@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MyDatabase;
+using Persistance_UnitOfWork;
 using SpacePro.Models;
 
 namespace SpacePro.Controllers
@@ -19,9 +20,11 @@ namespace SpacePro.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private ApplicationDbContext context;
+
         public AccountController()
         {
+            context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -78,7 +81,7 @@ namespace SpacePro.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
 
-            var user = db.Users.Where(u => u.Email.Equals(model.Email)).SingleOrDefault();
+            var user = context.Users.Where(u => u.Email.Equals(model.Email)).SingleOrDefault();
             // where db is ApplicationDbContext instance
             var userName = user==null?model.Email:user.UserName;
                 var result = await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);
@@ -148,6 +151,8 @@ namespace SpacePro.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                                    .ToList(), "Name", "Name");
             return View();
         }
 
@@ -171,12 +176,13 @@ namespace SpacePro.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles); 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-
+            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
+                               .ToList(), "Name", "Name");
             // If we got this far, something failed, redisplay form
             return View(model);
         }

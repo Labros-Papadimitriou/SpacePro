@@ -23,7 +23,7 @@ namespace SpacePro.Controllers.BroadsControllers
         public ActionResult GetEvents()
         {
            var events= unitOfWork.Events.GetAll();
-            return Json(new { data = events });
+            return Json(new { data = events },JsonRequestBehavior.AllowGet);
         }
         protected override void Dispose(bool disposing)
         {

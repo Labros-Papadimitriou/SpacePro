@@ -87,3 +87,20 @@
         <!-- CONTAINER CLOSED -->
     </div>
 </div>
+@section calendar{
+    <script type="text/javascript">
+            GetEvents();
+            function GetEvents() {
+                var settings = {
+                    "url": "/Calendar/GetEvents",
+                    "method": "GET",
+                    "timeout": 0,
+                    "dataType": "json"
+                };
+
+                $.ajax(settings).done(function (response) {
+                    console.log(response);
+                });
+            }
+    </script>
+} 
