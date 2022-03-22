@@ -3,20 +3,16 @@
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-<ul class="nav navbar-nav navbar-right">
-    <li><a href="/Manage/Index" style="margin-top:20px" class="btn btn-dark">Hello @User.Identity.GetUserName() !</a></li>
-</ul>
     }
 }
 else
 {
-<ul class="nav navbar-nav navbar-right">
-    <li><a id="registerLink" href="/Account/Register" style="margin-top:20px" class="btn btn-dark">Register</a></li>
-    <li style="width:120px"></li>
-    @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
-    <li><a id="loginLink" href="/Account/Login" style="margin-top:20px" class="btn btn-dark">Log in</a></li>
-
-</ul>
+    <ul class="nav navbar-nav navbar-right">
+        <li><a id="registerLink" href="/Account/Register" style="margin-top:20px" class="btn btn-dark">Register</a></li>
+        <li style="width:120px"></li>
+        @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
+        <li><a id="loginLink" href="/Account/Login" style="margin-top:20px" class="btn btn-dark">Log in</a></li>
+    </ul>
 }

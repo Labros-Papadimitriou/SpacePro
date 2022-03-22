@@ -8,10 +8,12 @@
         background-color: lightgrey;
         color: black
     }
+
     .card {
         background: linear-gradient(to left, #0c092ef2, black 80%);
         box-shadow: rgb(55, 55, 55) 3px 3px 4px 3px;
     }
+
     input.form-control.date {
         color: white !important;
         background: linear-gradient(to right,black 90%,#b0aeae) !important;
@@ -134,6 +136,14 @@
                             </div>
                         </div>
                         <div class="card">
+
+                            <div class="card-header">
+                                <div class="card-title">Manage Account</div>
+                            </div>
+                            <div class="card-footer text-start">
+                                <a href="/Manage/Index" class="btn btn-secondary my-1">Manage Account</a>
+                            </div>
+
                             <div class="card-header">
                                 <div class="card-title">Delete Account</div>
                             </div>
@@ -258,7 +268,7 @@
                         data: "UserPostId", render: function (UserPostId) {
 
                             let template = `
-                                                      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editPostModal" onclick="MyEdit(${UserPostId})" >Edit</button>
+                                                      <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editPostModal" onclick="MyEdit(${UserPostId})" >Edit</button>
                                                       <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal" onclick="MyDelete(${UserPostId})">Delete</button>
                                                    `;
 
