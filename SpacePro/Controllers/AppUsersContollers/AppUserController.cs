@@ -33,6 +33,23 @@ namespace SpacePro.Controllers.AppUsersContollers
             return View(user);
         }
 
+        public async Task<ActionResult> GetUsers(string ids)
+        {
+            var idsArray = ids.Split(',');
+            List<ApplicationUser> users = new List<ApplicationUser>();
+            foreach (var id in idsArray)
+            {
+                var user = await unitOfWork.ApplicationUsers.GetUserWithImages(id);
+                
+                users.Add(user);
+            }
+
+            var filteredUsers =  users.Select( x =>  new { x.UserName, x.Id , UserImage = x.UserImage == null ? "/Template/sash/assets/images/faces/1.jpg" :   x.UserImage.Url  });
+
+            return Json(new { data = filteredUsers }, JsonRequestBehavior.AllowGet);
+        }
+
+
         [HttpGet]
         public async Task<ActionResult> AnyUserProfile(string id)
         {

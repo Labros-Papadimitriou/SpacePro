@@ -14,8 +14,8 @@
         backdrop-filter: blur(5px);
     }
 
-    .photo img:hover{
-        cursor:pointer;
+    .photo img:hover {
+        cursor: pointer;
     }
 
     .card {
@@ -24,10 +24,42 @@
         -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
         box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
     }
+
+    .likesList:hover {
+        color: white;
+    }
+
+        .likesList:hover:after {
+            margin-left: 10px;
+            content: 'Click me for more';
+            position: relative;
+            color: grey;
+        }
 </style>
 
 @if (Model.Id == User.Identity.GetUserId())
 {
+    <!--Modal ListOfLikes Starts-->
+    <div class="modal" id="ListOfLikes" aria-labelledby="ListOfLikesModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Users that Liked this Post</h5>
+                    <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group " id="ListOfLikedUsers">
+                    </div>
+                    <br />
+                    <button data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal ListOfLikes Ends-->
+
     <!--Delete Modal Starts-->
     <div class="modal" id="deletePostModal" aria-labelledby="deletePostModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -79,7 +111,7 @@
             <div class="modal-content photo ">
                 @if (Model.UserImage == null)
                 {
-                    <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3" >
+                    <img src="~/Template/sash/assets/images/faces/10.jpg" alt="No Image" class="rounded-3">
                 }
                 else
                 {
@@ -189,7 +221,7 @@
             </div>
         </div>
         <div id="postsTable" class="col-xl-6">
-           
+
         </div>
         <div class="col-xl-3">
             <div class="card">
@@ -254,6 +286,27 @@
 }
 else
 {
+    <!--Modal ListOfLikes Starts-->
+    <div class="modal" id="ListOfLikes" aria-labelledby="ListOfLikesModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Users that Liked this Post</h5>
+                    <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="list-group " id="ListOfLikedUsers">
+                    </div>
+                    <br />
+                    <button data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Modal ListOfLikes Ends-->
+
     @*Zoom Image Modal Starts*@
     <div class="modal" id="openImg" aria-labelledby="imageUserModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -451,9 +504,9 @@ else
                 HideNewPost();
 
                 let template = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                                 <strong>Created!</strong>
-                                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
-                                                               </div>`;
+                                                 <strong>Created!</strong>
+                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                                               </div>`;
 
 
                 $("#success").prepend(template);
@@ -488,7 +541,7 @@ else
     </script>
 
     @* ALL POSTS FUNCTION *@
-<script type="text/javascript">
+    <script type="text/javascript">
 
         function AllPosts() {
 
@@ -503,8 +556,8 @@ else
                 $("#postsTable").children().remove();
                 let postsCount = response.data.length;
                 let posts = response.data;
+
                 for (var post of posts) {
-                    
 
                     let template = `<div class="card border p-0 ">
                                              <div class="card-body">
@@ -533,7 +586,7 @@ else
                                             <div class="card-footer">
                                                 <div class="media mt-0">
                                                     <div class="media-body">
-                                                        <h6 class="mb-0 mt-2 ms-2"> ${post.PostLikesCount} people like your post</h6>
+                                                        <h6><a onclick="LoadLikedUsers('${post.PostLikes.map(x => x.LikedUser)}')" href="#!" class="likesList mb-0 mt-2 ms-2" data-bs-toggle="modal" data-bs-target="#ListOfLikes"> ${post.PostLikes.length} people like your post</a></h6>
                                                     </div>
                                                     <div class="ms-auto">
                                                         <div class="d-flex mt-1">
@@ -558,7 +611,28 @@ else
             });
         }
 
-        
+        function LoadLikedUsers(likedUsersIds) {
+
+            var settings = {
+                "url": "/AppUser/GetUsers?ids=" + likedUsersIds,
+                "method": "GET",
+                "timeout": 0,
+            };
+            $.ajax(settings).done(function (response) {
+
+                $("#ListOfLikedUsers").empty();
+
+                let users = response.data;
+                console.log(users);
+                for (var user of users) {
+                    let template = `<a style="color:white; margin:4px;" href="/AppUser/AnyUserProfile/${user.Id}"><img src=${user.UserImage} alt="Kostis-murtos" class="avatar  profile-user brround cover-image"> ${user.UserName}</a>`
+                    $("#ListOfLikedUsers").append(template);
+                }
+            });
+
+
+
+        }
 
         function PostLikedUser(bool,postId) {
             if (bool) {
@@ -581,14 +655,13 @@ else
         }
 
 
-</script>
+    </script>
 
     @* EDIT & DELETE FUNCS *@
     <script type="text/javascript">
 
         function EditPost(id) {
             $(`#editDetailsPost${id}`).attr('contenteditable', "true").css("background-color", "#3e3d3dcc");
-
             $(document).on('keypress', function (e) {
                 if (e.which == 13) {
                     e.preventDefault();
@@ -655,6 +728,7 @@ else
             })
         }
     </script>
+
     <script type="text/javascript">
 
         function LikedOrNot(list) {
