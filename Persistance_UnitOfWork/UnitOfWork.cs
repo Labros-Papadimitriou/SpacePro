@@ -31,7 +31,8 @@ namespace Persistance_UnitOfWork
             BodyImages = new BodyImageRepository(_context);
             PostLikes = new PostLikeRepository(_context);
             ArticleLikes = new ArticleLikeRepository(_context);
-         }
+            UserRoles = new UserRolesRepository(_context);
+        }
 
         #region IUnitOfWork Members
         public IStarRepository Stars { get; private set; }
@@ -47,6 +48,7 @@ namespace Persistance_UnitOfWork
         public IApplicationUserRepository ApplicationUsers { get; private set; }
         public IUserImageRepository UserImages { get; private set; }
         public IUserPostRepository UserPosts { get; private set; }
+        public IUserRolesRepository UserRoles { get; private set; }
         public IPostLikeRepository PostLikes { get; private set; }
         public IArticleLikeRepository ArticleLikes { get; private set; }
         #endregion

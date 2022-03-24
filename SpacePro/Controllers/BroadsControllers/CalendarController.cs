@@ -25,6 +25,23 @@ namespace SpacePro.Controllers.BroadsControllers
            var events= unitOfWork.Events.GetAll();
             return Json(new { data = events },JsonRequestBehavior.AllowGet);
         }
+        [HttpGet]
+        public ActionResult GetAuthorOfTheMonth()
+        {
+            var users = unitOfWork.ApplicationUsers.GetAll();
+            var roles = unitOfWork.UserRoles.GetAll();
+            var winner = HelperClasses.ApplicationUserHelper.GetAuthorOfTheMonth(users, roles);
+            return Json(winner, JsonRequestBehavior.AllowGet);
+        }
+        [HttpGet]
+        public ActionResult GetSubOfTheMonth()
+        {
+            var users = unitOfWork.ApplicationUsers.GetAll();
+            var roles = unitOfWork.UserRoles.GetAll();
+            var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
+            return Json(winner, JsonRequestBehavior.AllowGet);
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

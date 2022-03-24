@@ -88,19 +88,35 @@
     </div>
 </div>
 @section calendar{
-    <script type="text/javascript">
-            GetEvents();
-            function GetEvents() {
-                var settings = {
-                    "url": "/Calendar/GetEvents",
-                    "method": "GET",
-                    "timeout": 0,
-                    "dataType": "json"
-                };
 
-                $.ajax(settings).done(function (response) {
-                    console.log(response);
-                });
-            }
+    <script type="text/javascript">
+        GetSubOfTheMonth();
+        function GetSubOfTheMonth() {
+            var settings = {
+                "url": "/Calendar/GetSubOfTheMonth",
+                "method": "GET",
+                "timeout": 0,
+                "dataType": "json"
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        }
+    </script>
+    <script type="text/javascript">
+        GetAuthorOfTheMonth();
+        function GetAuthorOfTheMonth() {
+            var settings = {
+                "url": "/Calendar/GetAuthorOfTheMonth",
+                "method": "GET",
+                "timeout": 0,
+                "dataType": "json"
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
+        }
     </script>
 } 
