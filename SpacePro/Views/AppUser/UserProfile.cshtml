@@ -9,6 +9,10 @@
         background-color: grey !important;
     }
 
+    .fe-mail,.fe-phone{
+        color:white;
+    }
+
     .modal {
         background-color: #58585824;
         backdrop-filter: blur(5px);
@@ -504,9 +508,9 @@ else
                 HideNewPost();
 
                 let template = `<div class="alert alert-success alert-dismissible fade show" role="alert">
-                                                 <strong>Created!</strong>
-                                                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
-                                               </div>`;
+                                                     <strong>Created!</strong>
+                                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">x</button>
+                                                   </div>`;
 
 
                 $("#success").prepend(template);
