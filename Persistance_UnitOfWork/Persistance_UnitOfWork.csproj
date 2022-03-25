@@ -73,6 +73,7 @@
     <Compile Include="IRepositories\IStarRepository.cs" />
     <Compile Include="IRepositories\IUserImageRepository.cs" />
     <Compile Include="IRepositories\IUserPostRepository.cs" />
+    <Compile Include="IRepositories\IUserRolesRepository.cs" />
     <Compile Include="IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Repositories\StarRepository.cs" />
     <Compile Include="Repositories\UserImageRepository.cs" />
     <Compile Include="Repositories\UserPostRepository.cs" />
+    <Compile Include="Repositories\UserRolesRepository.cs" />
     <Compile Include="UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>

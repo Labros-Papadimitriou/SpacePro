@@ -23,6 +23,7 @@ namespace Persistance_UnitOfWork
         IUserImageRepository UserImages { get; }
         IUserPostRepository UserPosts { get; }
         IPostLikeRepository PostLikes { get; }
+        IUserRolesRepository UserRoles { get; }
         int Complete();
     }
 }

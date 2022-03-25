@@ -217,6 +217,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Dtos\CreateArticleDto.cs" />
     <Compile Include="Models\Dtos\EditUserDto.cs" />
+    <Compile Include="Models\Dtos\WinnersDto.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="PaymentMethod\PaypalConfiguration.cs" />
@@ -290,6 +291,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\AuthorAndSubScripts\GetAuthorOfTheMonth.js" />
+    <Content Include="Scripts\AuthorAndSubScripts\GetSubOfTheMonth.js" />
     <Content Include="Scripts\BodiesScripts\PopulatingBodiesDatatable.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
