@@ -22,7 +22,7 @@ namespace Persistance_UnitOfWork.Repositories
         }
        public IEnumerable<ApplicationUser> GetAllUsersWithRolesAndPosts()
         {
-            return ApplicationDbContext.Users.Include(x => x.Roles).Include(x=>x.UserPosts).ToList();
+            return ApplicationDbContext.Users.Include(x => x.Roles).Include(x=>x.UserPosts).Include(x=>x.UserImage).ToList();
         }
         public object GetAllUsersWithImagesAndRoles()
         {

@@ -19,7 +19,7 @@ namespace SpacePro.Controllers.HelperClasses
             {
                 var randomIndex = GetRandomIndex(count);
                 var winner = GetWinner(subs, randomIndex);
-                return new WinnersDto(winner.Id,winner.UserName,winner.UserImage != null ? winner.UserImage.Url : "../sash/assets/images/users/1.jpg");
+                return new WinnersDto(winner.Id,winner.UserName,winner.UserImage != null ? winner.UserImage.Url : @"\Template\sash\assets\images\users\1.jpg");
             }
             return null;
         }
@@ -64,7 +64,7 @@ namespace SpacePro.Controllers.HelperClasses
             var author= authors.Where(x => x.UserPosts.Select(s => new { s.UserPostId }).Count() > 0)
                 .Select(x => new { auth = x, likes = x.UserPosts.OrderByDescending(z => z.PostLikes.Count()).First().PostLikes.Count() })
                 .OrderByDescending(x => x.likes).First().auth;
-            return new WinnersDto(author.Id, author.UserName, author.UserImage != null ? author.UserImage.Url : "../sash/assets/images/users/1.jpg");
+            return new WinnersDto(author.Id, author.UserName, author.UserImage != null ? author.UserImage.Url : @"\Template\sash\assets\images\users\1.jpg");
 
         }
         #endregion

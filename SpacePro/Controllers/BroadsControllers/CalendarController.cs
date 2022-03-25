@@ -45,7 +45,7 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetSubOfTheMonth()
         {
-            var users = unitOfWork.ApplicationUsers.GetAll();
+            var users = unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
             var roles = unitOfWork.UserRoles.GetAll();
             var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
 
