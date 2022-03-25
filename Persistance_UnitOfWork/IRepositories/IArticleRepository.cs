@@ -10,6 +10,6 @@ namespace Persistance_UnitOfWork.IRepositories
     public interface IArticleRepository:IRepository<Article>
     {
         IEnumerable<Article> GetArticlesWithImage();
-        IEnumerable<Article> GetArticlesWithImageAndCategory();
+        IEnumerable<Article> GetArticlesFullModel();
     }
 }

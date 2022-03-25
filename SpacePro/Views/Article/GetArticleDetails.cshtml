@@ -1,5 +1,5 @@
 ﻿@model Entities.BroadClasses.Article
-
+@using Microsoft.AspNet.Identity;
 @{
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
@@ -129,7 +129,14 @@
                                     <div id="article-likes" class="mb-0 mt-2 ms-2" style="color:grey;">@Model.PostLikes people like this article</div>
                                 </div>
                                 <div class="ms-auto mt-3">
-                                    <button id="like-btn" class="btn btn-success">Like</button>
+                                    @if (Model.ArticleLikes.Any(x => x.LikedUser == User.Identity.GetUserId()))
+                                    {
+                                        <button id="like-btn" class="btn btn-danger">Unlike</button>
+                                    }
+                                    else
+                                    {
+                                        <button id="like-btn" class="btn btn-success">Like</button>
+                                    }
                                 </div>
                             </div>
                         </div>
@@ -158,7 +165,7 @@
                     $("#like-btn").attr('class', "btn btn-danger");
 
                     $.ajax({
-                    url: `/Article/GiveLike?id=@Model.ArticleId`,
+                        url: `/Article/GiveLike?articleId=@Model.ArticleId`,
                     dataType: 'json',
                     type: 'get',
                     success: function (articleLikes) {
@@ -172,7 +179,7 @@
 
 
                     $.ajax({
-                    url: `/Article/RemoveLike?id=@Model.ArticleId`,
+                        url: `/Article/RemoveLike?articleId=@Model.ArticleId`,
                     dataType: 'json',
                     type: 'get',
                     success: function (articleLikes) {

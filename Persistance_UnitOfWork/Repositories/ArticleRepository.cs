@@ -19,9 +19,12 @@ namespace Persistance_UnitOfWork.Repositories
         {
             return ApplicationDbContext.Articles.Include(x => x.ArticleImage);
         }
-        public IEnumerable<Article> GetArticlesWithImageAndCategory()
+        public IEnumerable<Article> GetArticlesFullModel()
         {
-            return ApplicationDbContext.Articles.Include(x => x.ArticleCategory).Include(x => x.ArticleImage);
+            return ApplicationDbContext.Articles
+                .Include(x => x.ArticleCategory)
+                .Include(x => x.ArticleImage)
+                .Include(x => x.ArticleLikes);
         }
     }
 }
