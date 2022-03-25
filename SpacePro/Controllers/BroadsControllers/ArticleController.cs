@@ -8,6 +8,8 @@ using System.Data.Entity;
 using Entities.BroadClasses;
 using SpacePro.Models.Dtos;
 using Persistance_UnitOfWork;
+using Entities.IdentityUsers;
+using Microsoft.AspNet.Identity;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
@@ -29,7 +31,7 @@ namespace SpacePro.Controllers.BroadsControllers
         public ActionResult GetAllArticles()
         {
             var article = unitOfWork.Articles
-                            .GetArticlesWithImageAndCategory().Select(x => new {
+                            .GetArticlesFullModel().Select(x => new {
                                 x.ArticleId,
                                 x.Title,
                                 x.ShortDescription,
@@ -142,24 +144,38 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetArticleDetails(int? id)
         {
-            var article = unitOfWork.Articles.GetArticlesWithImageAndCategory().FirstOrDefault(x=>x.ArticleId==id);
+            var article = unitOfWork.Articles.GetArticlesFullModel().FirstOrDefault(x=>x.ArticleId==id);
             return View(article);
         }
 
         [HttpGet]
-        public JsonResult GiveLike(int? id)
+        public JsonResult GiveLike(int? articleId)
         {   
-            var article = unitOfWork.Articles.Get((int)id);
-            article.PostLikes++;
-            unitOfWork.Complete();
+            var article = unitOfWork.Articles.Get((int)articleId);
+            var likedUserId = User.Identity.GetUserId();
+            var userNotYetLikedThisArticle = unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == article.ArticleId).Count() == 0;
 
+            if (userNotYetLikedThisArticle)
+            {
+                ArticleLike articleLike = new ArticleLike();
+                articleLike.LikedUser = unitOfWork.ApplicationUsers.Find(x => x.Id == likedUserId).FirstOrDefault().Id;
+                articleLike.ArticleId = article.ArticleId;
+                unitOfWork.ArticleLikes.Add(articleLike);
+                article.ArticleLikes.Add(articleLike);
+                article.PostLikes++;
+                unitOfWork.Complete();
+            }  
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult RemoveLike(int? id)
+        public JsonResult RemoveLike(int? articleId)
         {
-            var article = unitOfWork.Articles.Get((int)id);
+            var article = unitOfWork.Articles.Get((int)articleId);
+            var likedUserId = User.Identity.GetUserId();
+
+            var articleLike = unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == articleId).FirstOrDefault();
+            unitOfWork.ArticleLikes.Remove(articleLike);
             article.PostLikes--;
             unitOfWork.Complete();
 
