@@ -2,6 +2,7 @@
     #author-div {
         background: linear-gradient(to top,#233ac5,black) !important;
     }
+
     #sub-div {
         background: linear-gradient(to top,#233ac5,black) !important;
     }
@@ -21,7 +22,6 @@
         </div>
     </div>
     <div id="author" class="card-body text-center">
-      
     </div>
 </div>
 <div id="sub-div" class="card border p-0">
@@ -33,7 +33,6 @@
         </div>
     </div>
     <div id="sub" class="card-body text-center">
-        
     </div>
 </div>
 @section calendar{
@@ -42,14 +41,20 @@
         $("#author-div").hide();
 
         $(".getSubBtn").click(function () {
-            GetSubOfTheMonth();
+            if ($("#sub").children().length == 0) {
+                GetSubOfTheMonth();
+            }
+            $("#sub-div").show();
         })
         $(".getAuthorBtn").click(function () {
-            GetAuthorOfTheMonth();
+            if ($("#author").children().length == 0) {
+                GetAuthorOfTheMonth();
+            }
+            $("#author-div").show();
         })
-       
-     
-        
+
+
+
         function GetAuthorOfTheMonth() {
             let settings = {
                 "url": "/Calendar/GetAuthorOfTheMonth",
@@ -60,12 +65,11 @@
 
             $.ajax(settings).done(function (response) {
                 let template = `
-                                  <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
-                                 <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
-                                 <p class="card-text">Author Of The Month</p>
-                                `;
+                                      <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
+                                     <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
+                                     <p class="card-text">Author Of The Month</p>
+                                    `;
                 $("#author").append(template);
-                $("#author-div").show();
             });
         }
 
@@ -79,12 +83,11 @@
 
             $.ajax(settings).done(function (response) {
                 let template = `
-                                   <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
-                                <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
-                                 <p class="card-text">Subscriber Of The Month</p>
-                                `;
+                                       <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
+                                    <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
+                                     <p class="card-text">Subscriber Of The Month</p>
+                                    `;
                 $("#sub").append(template);
-                $("#sub-div").show();
             });
         }
     </script>
