@@ -10,7 +10,7 @@ namespace Persistance_UnitOfWork.IRepositories
     public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
         IEnumerable<ApplicationUser> GetAllUsers();
-        IEnumerable<ApplicationUser> GetAllUsersWithRoles();
+        IEnumerable<ApplicationUser> GetAllUsersWithRolesAndPosts();
         object GetAllUsersWithImagesAndRoles();
         Task<ApplicationUser> GetUser(string id);
         ApplicationUser GetUserWithPostsAndImages(string id);

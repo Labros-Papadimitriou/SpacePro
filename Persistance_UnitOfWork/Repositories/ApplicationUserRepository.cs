@@ -20,9 +20,9 @@ namespace Persistance_UnitOfWork.Repositories
             var users = ApplicationDbContext.Users.ToList();
             return users;
         }
-       public IEnumerable<ApplicationUser> GetAllUsersWithRoles()
+       public IEnumerable<ApplicationUser> GetAllUsersWithRolesAndPosts()
         {
-            return ApplicationDbContext.Users.Include(x => x.Roles).ToList();
+            return ApplicationDbContext.Users.Include(x => x.Roles).Include(x=>x.UserPosts).ToList();
         }
         public object GetAllUsersWithImagesAndRoles()
         {

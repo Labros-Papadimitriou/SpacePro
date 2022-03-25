@@ -1,113 +1,57 @@
-﻿@{
-    ViewBag.Title = "Callendar";
-    Layout = "~/Views/Shared/_LayoutSpace.cshtml";
-}
-<div class="main-content app-content mt-0">
-    <div class="side-app">
+﻿<style>
+    #author-div {
+        background: linear-gradient(to top,#233ac5,black) !important;
+    }
+    #sub-div {
+        background: linear-gradient(to top,#233ac5,black) !important;
+    }
+</style>
 
-        <!-- CONTAINER -->
-        <div class="main-container container-fluid">
 
-            <!-- PAGE-HEADER -->
-            <div class="page-header">
-                <h1 class="page-title">Full Calendar</h1>
-                <div>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Apps</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Full Calender</li>
-                    </ol>
-                </div>
-            </div>
-            <!-- PAGE-HEADER END -->
-            <!-- ROW OPEN -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Calender With different Color Events</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-12 col-xl-3">
-                                    <div id="external-events">
-                                        <h4>Draggable Events</h4>
-                                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-warning" data-class="bg-warning">
-                                            <div class="fc-event-main">My Event 3</div>
-                                        </div>
-                                        <div class="fc-event fc-h-event fc-daygrid-event fc-daygrid-block-event bg-danger" data-class="bg-danger">
-                                            <div class="fc-event-main">My Event 5</div>
-                                        </div>
-                                    </div>
-                                    <div class="mt-5">
-                                        <h4 class="card-title mb-4">Winners</h4>
-                                        <div class="card border p-0 pt-3">
-                                            <div class="card-footer">
-                                                <div class="media media-xs overflow-visible">
-                                                    <img class="avatar brround avatar-md me-3" src="~/Template/sash/assets/images/users/12.jpg" alt="avatar-img">
-                                                    <div class="media-body valign-middle">
-                                                        <a href="profile.html" class=" fw-semibold text-dark">John Paige</a><br>
-                                                        <a href="profile.html" class="text-muted mb-0"> View client profile</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card border p-0 pt-3">
-                                            <div class="card-footer">
-                                                <div class="media media-xs overflow-visible">
-                                                    <img class="avatar brround avatar-md me-3" src="~/Template/sash/assets/images/users/16.jpg" alt="avatar-img">
-                                                    <div class="media-body valign-middle">
-                                                        <a href="profile.html" class=" fw-semibold text-dark">Mozelle Belt</a><br>
-                                                        <a href="profile.html" class="text-muted mb-0"> View client profile</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 col-xl-9">
-                                    <div id='calendar2'></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">List Calendar</h3>
-                        </div>
-                        <div class="card-body">
-                            <div id='calendar'></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- ROW CLOSED -->
+
+<button class="getSubBtn btn-info-gradient">Get Sub Of The Month</button>
+<button class="getAuthorBtn btn-danger-gradient">Get Author Of The Month</button>
+
+<div id="author-div" class="card border p-0">
+    <div class="card-header">
+        <h3 class="card-title">Contact card</h3>
+        <div class="card-options">
+            <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+            <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
         </div>
-        <!-- CONTAINER CLOSED -->
+    </div>
+    <div id="author" class="card-body text-center">
+      
+    </div>
+</div>
+<div id="sub-div" class="card border p-0">
+    <div class="card-header">
+        <h3 class="card-title">Contact card</h3>
+        <div class="card-options">
+            <a href="#" class="card-options-collapse" data-bs-toggle="card-collapse"><i class="fe fe-chevron-up"></i></a>
+            <a href="#" class="card-options-remove" data-bs-toggle="card-remove"><i class="fe fe-x"></i></a>
+        </div>
+    </div>
+    <div id="sub" class="card-body text-center">
+      
     </div>
 </div>
 @section calendar{
-
     <script type="text/javascript">
-        GetSubOfTheMonth();
-        function GetSubOfTheMonth() {
-            var settings = {
-                "url": "/Calendar/GetSubOfTheMonth",
-                "method": "GET",
-                "timeout": 0,
-                "dataType": "json"
-            };
+        $("#sub-div").hide();
+        $("#author-div").hide();
 
-            $.ajax(settings).done(function (response) {
-                console.log(response);
-            });
-        }
-    </script>
-    <script type="text/javascript">
-        GetAuthorOfTheMonth();
+        $(".getSubBtn").click(function () {
+            GetSubOfTheMonth();
+        })
+        $(".getAuthorBtn").click(function () {
+            GetAuthorOfTheMonth();
+        })
+       
+     
+        
         function GetAuthorOfTheMonth() {
-            var settings = {
+            let settings = {
                 "url": "/Calendar/GetAuthorOfTheMonth",
                 "method": "GET",
                 "timeout": 0,
@@ -115,7 +59,32 @@
             };
 
             $.ajax(settings).done(function (response) {
-                console.log(response);
+                let template = `
+                                  <span class="avatar avatar-xxl brround cover-image" data-bs-image-src="${response.data.Photo}" ></span>
+                                 <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
+                                 <p class="card-text">Author Of The Month</p>
+                                `;
+                $("#author").append(template);
+                $("#author-div").show();
+            });
+        }
+
+        function GetSubOfTheMonth() {
+            let settings = {
+                "url": "/Calendar/GetSubOfTheMonth",
+                "method": "GET",
+                "timeout": 0,
+                "dataType": "json"
+            };
+
+            $.ajax(settings).done(function (response) {
+                let template = `
+                                  <span class="avatar avatar-xxl brround cover-image" data-bs-image-src="${response.data.Photo}" ></span>
+                                <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
+                                 <p class="card-text">Subscriber Of The Month</p>
+                                `;
+                $("#sub").append(template);
+                $("#sub-div").show();
             });
         }
     </script>

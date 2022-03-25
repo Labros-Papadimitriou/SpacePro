@@ -28,10 +28,19 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetAuthorOfTheMonth()
         {
-            var users = unitOfWork.ApplicationUsers.GetAll();
+            var users = unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
             var roles = unitOfWork.UserRoles.GetAll();
             var winner = HelperClasses.ApplicationUserHelper.GetAuthorOfTheMonth(users, roles);
-            return Json(winner, JsonRequestBehavior.AllowGet);
+
+            if(winner != null)
+            {
+                var userToModify = users.Where(x => x.Id.Equals(winner.Id)).Single();
+                userToModify.IsAuthorOfTheMonth = true;
+                unitOfWork.ApplicationUsers.ModifyEntity(userToModify);
+                unitOfWork.Complete();
+                return Json(new {data= winner }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { data = "No Authors Found" }, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult GetSubOfTheMonth()
@@ -39,7 +48,17 @@ namespace SpacePro.Controllers.BroadsControllers
             var users = unitOfWork.ApplicationUsers.GetAll();
             var roles = unitOfWork.UserRoles.GetAll();
             var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
-            return Json(winner, JsonRequestBehavior.AllowGet);
+
+            if (winner != null)
+            {
+                var userToModify = users.Where(x => x.Id.Equals(winner.Id)).Single();
+                userToModify.IsWinnerSub = true;
+                unitOfWork.ApplicationUsers.ModifyEntity(userToModify);
+                unitOfWork.Complete();
+                return Json(new { data = winner }, JsonRequestBehavior.AllowGet);
+            }
+
+            return Json(new { data = "No Subscribers Found" }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
