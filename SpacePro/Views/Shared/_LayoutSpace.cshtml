@@ -44,6 +44,11 @@
     <!-- COLOR SKIN CSS -->
     <link id="theme" rel="stylesheet" type="text/css" media="all" href="~/Template/sash/assets/colors/color1.css" />
 
+    <!--LEAFLET CSS-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin="" />
+
     <!--Scroll Bar-->
     <style>
         /* width */
@@ -88,7 +93,7 @@
                         <a class="logo-horizontal " href="/Home/Index">
                             <img src="~/Template/sash/assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
                         </a>
-                        
+
                         <!--HOME-->
                         <div>
                             <a class="side-menu__item" data-bs-toggle="slide" href="/Home/Index"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Home</span></a>
@@ -220,6 +225,11 @@
 
     <!--User Image-->
     <script src="~/Scripts/LayoutScripts/UserImageSeed.js"></script>
+
+    <!--LEAFLET JS-->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
 
     @RenderSection("social", required: false)
     @RenderSection("scripts", required: false)
