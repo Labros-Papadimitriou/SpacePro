@@ -1,4 +1,5 @@
-﻿using Entities.Bodies;
+﻿using Entities;
+using Entities.Bodies;
 using Entities.BroadClasses;
 using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -56,5 +57,6 @@ namespace MyDatabase
         public DbSet<BodyImage> BodyImages { get; set; }
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<ArticleLike> ArticleLikes { get; set; }
+        public DbSet<ChatMessage> ChatMessages { get; set; }
     }
 }

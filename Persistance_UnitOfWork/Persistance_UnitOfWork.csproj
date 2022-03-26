@@ -64,6 +64,7 @@
     <Compile Include="IRepositories\IArticleRepository.cs" />
     <Compile Include="IRepositories\IAsteroidRepository.cs" />
     <Compile Include="IRepositories\IBodyImageRepository.cs" />
+    <Compile Include="IRepositories\IChatMessageRepository.cs" />
     <Compile Include="IRepositories\ICometRepository.cs" />
     <Compile Include="IRepositories\IEventRepository.cs" />
     <Compile Include="IRepositories\IPostLikeRepository.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Repositories\ArticleRepository.cs" />
     <Compile Include="Repositories\AsteroidRepository.cs" />
     <Compile Include="Repositories\BodyImageRepository.cs" />
+    <Compile Include="Repositories\ChatMessageRepository.cs" />
     <Compile Include="Repositories\CometRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\PostLikeRepository.cs" />
