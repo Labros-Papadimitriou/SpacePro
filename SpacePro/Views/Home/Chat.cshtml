@@ -21,6 +21,8 @@
     .chat-box {
         background-color: #242424;
         border-radius: 5px;
+        -webkit-box-shadow: 1px 1px 1px 1px rgba(143,143,143,0.62);
+        box-shadow: 1px 1px 1px 1px rgba(143,143,143,0.62);
     }
 
     img {
@@ -33,6 +35,8 @@
         margin: 0px 3px;
         color: #808080;
     }
+
+
 </style>
 
 <div style="margin:50px auto; width:50%">
@@ -105,8 +109,6 @@
                     chat.server.send($('#displayname').val(), $('#message').val(), '@Model.UserImage.Url');
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
-
-
                 });
             });
         });
