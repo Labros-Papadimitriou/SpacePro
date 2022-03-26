@@ -66,6 +66,7 @@
     <Compile Include="BroadClasses\Article.cs" />
     <Compile Include="BroadClasses\ArticleCategory.cs" />
     <Compile Include="BroadClasses\ArticleImage.cs" />
+    <Compile Include="ChatMessage.cs" />
     <Compile Include="BroadClasses\Event.cs" />
     <Compile Include="IdentityUsers\ApplicationUser.cs" />
     <Compile Include="IdentityUsers\ArticleLike.cs" />

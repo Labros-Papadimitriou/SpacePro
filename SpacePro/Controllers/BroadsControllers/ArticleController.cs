@@ -21,6 +21,7 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             unitOfWork = new UnitOfWork(new ApplicationDbContext());
         }
+
         [HttpGet]
         public ActionResult ShowArticles()
         {
@@ -180,6 +181,15 @@ namespace SpacePro.Controllers.BroadsControllers
             unitOfWork.Complete();
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
