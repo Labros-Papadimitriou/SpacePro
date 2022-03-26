@@ -1,14 +1,59 @@
-﻿@{
-    ViewBag.Title = "Chat";
-}
-<h2>Chat</h2>
-<div class="container">
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" />
-    <ul id="discussion">
-    </ul>
+﻿@model Entities.IdentityUsers.ApplicationUser
+
+<style>
+
+    .chat-header {
+        font-size: 20px;
+    }
+
+    textarea {
+        background-color: #808080;
+        border-radius: 5px;
+        height: 50px;
+        resize: none;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+        cursor: pointer;
+    }
+
+    .chat-box {
+        background-color: #242424;
+        border-radius: 5px;
+    }
+
+    img {
+        width: 40px;
+        height: 40px;
+        margin: 10px 10px 10px 0px;
+    }
+
+    .bullet {
+        margin: 0px 3px;
+        color: #808080;
+    }
+</style>
+
+<div style="margin:50px auto; width:50%">
+    <div class="message-div">
+        <div class="row chat-header" style="text-align:center">
+            <h2 class="fa fa-comment">&ensp; Discourse</h2>
+        </div>
+        <div class="row chat-input">
+            <textarea id="message"></textarea>
+            <input type="button" id="sendmessage" value="Send" class="btn btn-github" style="border-radius:5px" />
+            <input type="hidden" id="displayname" />
+        </div>
+        <div class="row chat-box">
+        </div>
+    </div>
 </div>
+
+<style>
+    .chat-box:last-child {
+    }
+</style>
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
@@ -20,30 +65,54 @@
     <script>
         $(function () {
             // Reference the auto-generated proxy for the hub.
-            var chat = $.connection.chatHub;
+            let chat = $.connection.chatHub;
+
+            let template = `
+                                <div class="chat-div">
+                                    <img src="" alt="No Image" />
+                                    <span class="name"></span>
+                                    <span class="bullet">&#8226;</span>
+                                    <span class="time"></span><br />
+                                    <div class="discussion" style="margin-left:55px; padding-right:50px; display:inline-block" class="col">
+                                    </div>
+                                    <hr />
+                                </div>
+                            `;
+
             // Create a function that the hub can call back to display messages.
-            chat.client.addNewMessageToPage = function (name, message) {
+            chat.client.addNewMessageToPage = function (name, message, userImage) {
                 // Add the message to the page.
-                $('#discussion').append('<li><strong>' + htmlEncode(name)
-                    + '</strong>: ' + htmlEncode(message) + '</li>');
+                if (message) {
+
+                    let ele = $(template);
+
+                    ele.find('.time').html(new Date().toUTCString().replace("GMT", ""));
+                    ele.find('.name').html(htmlEncode(name));
+                    ele.find('.discussion').html(htmlEncode(message));
+                    ele.find('img').attr("src", userImage);
+                    $(".chat-box").append(ele);
+                }
             };
             // Get the user name and store it to prepend to messages.
-            $('#displayname').val(prompt('Enter your name:', ''));
+            $('#displayname').val("@User.Identity.Name");
             // Set initial focus to message input box.
             $('#message').focus();
             // Start the connection.
             $.connection.hub.start().done(function () {
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
+
+                    chat.server.send($('#displayname').val(), $('#message').val(), '@Model.UserImage.Url');
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
+
+
                 });
             });
         });
         // This optional function html-encodes messages for display in the page.
         function htmlEncode(value) {
-            var encodedValue = $('<div />').text(value).html();
+            let encodedValue = $('<div />').text(value).html();
             return encodedValue;
         }
     </script>
