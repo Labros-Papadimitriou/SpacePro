@@ -33,6 +33,22 @@
         </table>
     </div>
 </div>
+<div class="modal fade" id="modaldemo2">
+    <div id="set-role-modal" class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title">Notice</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body">
+                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button class="btn btn-primary">Save changes</button> <button class="btn btn-light" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section social{
     <script type="text/javascript">
         $(document).ready(function () {
@@ -46,10 +62,11 @@
                 url: "/Social/GetUsersTable",
                 type: "get",
                 dataType: "json",
-                success: function (users) {
+                success: function (response) {
 
                     let imgEle;
-
+                    let users = response.users;
+                    let roles = response.roles;
                     for (let i = 0; i < users.length; i++) {
 
                         if (users[i].UserImage != null) {
@@ -63,18 +80,18 @@
                         let postdate = moment.utc(date).format('DD-MM-YYYY');
 
                         let template = `
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex align-items-center">${imgEle}</div>
-                                                </td>
-                                                <td> <a style="color:inherit" href="/AppUser/AnyUserProfile/${users[i].Id}" class="ml-2">${users[i].UserName}</a></td>
-                                                <td class="font-weight-bold">${postdate}</td>
-                                                <td class="font-weight-bold">Not Set Yet</td>
-                                                <td><a class="btn btn-outline-success" >Set Role</a>&emsp;<a id="delete-btn" onclick="ValidDelete(${i})" class="btn btn-danger">Delete User</a>
-                                                    <div id="valid-delete${i}" style="display:inline-block">&nbsp;<input id="delete-input"  style="color:white; background-color:#000" type="text" placeholder="Type YES DELETE"/>&nbsp;<button onclick="DeleteUser(${i}, '${users[i].Id}')" class="btn btn-danger">Yes,Delete!</button></div>
-                                                </td>
-                                            </tr>
-                                            `;
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">${imgEle}</div>
+                                                        </td>
+                                                        <td> <a style="color:inherit" href="/AppUser/AnyUserProfile/${users[i].Id}" class="ml-2">${users[i].UserName}</a></td>
+                                                        <td class="font-weight-bold">${postdate}</td>
+                                                        <td class="font-weight-bold">${users[i].Role == null ? "Not Set Yet" : roles.filter(x => x.Users != null).filter(x => x.Users.map(s => s.UserId).includes(users[i].Id))[0].Name}</td>
+                                                        <td><a id="setUser-btn" class="btn btn-outline-success" >Set Role</a>&emsp;<a id="delete-btn" onclick="ValidDelete(${i})" class="btn btn-danger">Delete User</a>
+                                                            <div id="valid-delete${i}" style="display:inline-block">&nbsp;<input id="delete-input"  style="color:white; background-color:#000" type="text" placeholder="Type YES DELETE"/>&nbsp;<button onclick="DeleteUser(${i}, '${users[i].Id}')" class="btn btn-danger">Yes,Delete!</button></div>
+                                                        </td>
+                                                    </tr>
+                                                    `;
                         let row = $(template);
 
                         $("#social-table tbody").append(row);
@@ -90,7 +107,7 @@
         function ValidDelete(row) {
 
             $(`#valid-delete${row}`).toggle();
-            
+
         }
 
         function DeleteUser(row, id) {
@@ -100,13 +117,13 @@
 
             if (condition) {
                 $.ajax({
-                url: "/Social/DeleteUser?id="+id,
-                type: "delete",
-                dataType: "json",
-                success: function (user) {
-                    $("#social-table tbody").empty();
-                    FillUsersTable();
-                }
+                    url: "/Social/DeleteUser?id=" + id,
+                    type: "delete",
+                    dataType: "json",
+                    success: function (user) {
+                        $("#social-table tbody").empty();
+                        FillUsersTable();
+                    }
                 })
             }
         }

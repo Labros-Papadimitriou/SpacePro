@@ -29,8 +29,8 @@ namespace SpacePro.Controllers.BroadsControllers
         public ActionResult GetUsersTable()
         {
             var users = unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
-
-            return Json(users, JsonRequestBehavior.AllowGet);
+            var roles = unitOfWork.UserRoles.GetAll();
+            return Json(new { users,roles }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpDelete]
