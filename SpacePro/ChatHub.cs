@@ -8,10 +8,10 @@ namespace SpacePro
 {
     public class ChatHub : Hub
     {
-        public void Send(string name, string message)
+        public void Send(string userId, string name, string message, string userImage)
         {
             // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            Clients.All.addNewMessageToPage(userId, name, message, userImage);
         }
     }
 }

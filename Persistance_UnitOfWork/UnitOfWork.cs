@@ -32,6 +32,7 @@ namespace Persistance_UnitOfWork
             PostLikes = new PostLikeRepository(_context);
             ArticleLikes = new ArticleLikeRepository(_context);
             UserRoles = new UserRolesRepository(_context);
+            ChatMessages = new ChatMessageRepository(_context);
         }
 
         #region IUnitOfWork Members
@@ -51,6 +52,7 @@ namespace Persistance_UnitOfWork
         public IUserRolesRepository UserRoles { get; private set; }
         public IPostLikeRepository PostLikes { get; private set; }
         public IArticleLikeRepository ArticleLikes { get; private set; }
+        public IChatMessageRepository ChatMessages { get; private set; }
         #endregion
 
         public int Complete()

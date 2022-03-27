@@ -69,7 +69,7 @@
                                      <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
                                      <p class="card-text">Author Of The Month</p>
                                     `;
-                $("#author").append(template);
+                response == "No Authors Found" ? $("#author").append(response) : $("#author").append(template);
             });
         }
 
@@ -87,7 +87,7 @@
                                     <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
                                      <p class="card-text">Subscriber Of The Month</p>
                                     `;
-                $("#sub").append(template);
+                response == "No Subscribers Found" ? $("#sub").append(response) : $("#sub").append(template);
             });
         }
     </script>
