@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using MyDatabase;
 using Persistance_UnitOfWork;
+using SpacePro.Controllers.BroadsControllers;
 using SpacePro.Models;
 
 namespace SpacePro.Controllers
@@ -176,17 +177,20 @@ namespace SpacePro.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                     await this.UserManager.AddToRoleAsync(user.Id, model.UserRoles); 
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-            ViewBag.Name = new SelectList(context.Roles.Where(u => !u.Name.Contains("Admin"))
-                               .ToList(), "Name", "Name");
             // If we got this far, something failed, redisplay form
             return View(model);
         }
-
+        [HttpPatch]
+        [Authorize(Roles ="Admin")]
+        public async Task<ActionResult> AddUserRole(string userId, string roleName)
+        {
+            await this.UserManager.AddToRoleAsync(userId, roleName);
+            return RedirectToAction("ShowSocial","Social");
+        }
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
