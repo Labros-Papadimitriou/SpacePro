@@ -1,5 +1,6 @@
 ﻿using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using MyDatabase;
 using Persistance_UnitOfWork;
 using SpacePro.Models;
@@ -148,7 +149,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             return Json( new { data = userImg },JsonRequestBehavior.AllowGet);
         }
-
+    
         private void DeleteImageFromFolder(string imageName)
         {
             var filePath = Server.MapPath("/Content/UserImages/" + imageName);
