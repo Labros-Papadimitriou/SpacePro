@@ -69,6 +69,8 @@ namespace Persistance_UnitOfWork.Repositories
         public ApplicationUser DeleteUserWithPostsAndImage(string id)
         {
             var user = ApplicationDbContext.Users.Where(x => x.Id == id).Include(x => x.UserImage).FirstOrDefault();
+            var UserLikes = ApplicationDbContext.PostLikes.Where(x => x.LikedUser == id).ToList();
+            var ArticleLikes = ApplicationDbContext.ArticleLikes.Where(x=>x.LikedUser == id).ToList();
             int imgId;
             UserImage img;
 
@@ -83,6 +85,23 @@ namespace Persistance_UnitOfWork.Repositories
             {
                 ApplicationDbContext.Entry(post).State = EntityState.Deleted;
                 ApplicationDbContext.SaveChanges();
+            }
+            
+            if (UserLikes != null)
+            {
+                foreach (var like in UserLikes)
+                {
+                    ApplicationDbContext.Entry(like).State = EntityState.Deleted;
+                    ApplicationDbContext.SaveChanges();
+                }
+            }
+            if (ArticleLikes != null)
+            {
+                foreach (var like in ArticleLikes)
+                {
+                    ApplicationDbContext.Entry(like).State = EntityState.Deleted;
+                    ApplicationDbContext.SaveChanges();
+                }
             }
 
             ApplicationDbContext.Entry(user).State = EntityState.Deleted;

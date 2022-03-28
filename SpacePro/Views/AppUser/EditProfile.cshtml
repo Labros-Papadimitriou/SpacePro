@@ -28,7 +28,50 @@
         <!-- CONTAINER -->
         <div class="main-container container-fluid">
 
-            <!--Delete Modal Starts-->
+            <!--Delete Account Modal Starts-->
+            <div class="modal" id="deleteAccountModal" aria-labelledby="deleteAccountModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Are you sure you want to delete your Account?</h5>
+                            <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                            {
+
+                                @Html.AntiForgeryToken()
+                                <div class="card-header">
+                                    <div class="card-title">Delete Account</div>
+                                </div>
+                                <div class="card-footer text-start">
+                                    <input hidden type="text" name="id" value="@Model.Id" />
+                                    <input onclick="DeleteUserAccount()" type="submit" value="Delete Account" class="btn btn-danger my-1" />
+                                </div>
+                            }
+
+                            @*@if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="card-header">
+                                            <div class="card-title">Delete Account</div>
+                                        </div>
+                                        <div class="card-footer text-start">
+                                            <input hidden type="text" name="id" value="@Model.Id" />
+                                            <input type="submit" value="Delete Account" class="btn btn-danger my-1" />
+                                        </div>
+                                    }
+                                }*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--Delete Account Modal Ends -->
+            <!--Delete Post Modal Starts-->
             <div class="modal" id="deletePostModal" aria-labelledby="deletePostModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
@@ -47,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <!--Delete Modal Ends -->
+            <!--Delete Post Modal Ends -->
             <!--Edit Modal Starts-->
             <div class="modal" id="editPostModal" aria-labelledby="editPostModalLabel" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
@@ -135,23 +178,20 @@
                                 <a href="#" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
-                        <div class="card">
-
-                            <div class="card-header">
-                                <div class="card-title">Manage Account</div>
-                            </div>
-                            <div class="card-footer text-start">
-                                <a href="/Manage/Index" class="btn btn-secondary my-1">Manage Account</a>
-                            </div>
-
-                            <div class="card-header">
-                                <div class="card-title">Delete Account</div>
-                            </div>
-                            <div class="card-footer text-start">
-                                <a href="#" class="btn btn-danger my-1">Delete Account</a>
-                            </div>
-                        </div>
                     }
+                    <div class="card">
+
+                        <div class="card-header">
+                            <div class="card-title">Manage Account</div>
+                        </div>
+                        <div class="card-footer text-start">
+                            <a href="/Manage/Index" class="btn btn-secondary my-1">Manage Account</a>
+                        </div>
+                        <div class="card-footer text-start">
+                            <button data-bs-toggle="modal" data-bs-target="#deleteAccountModal" class="btn btn-danger my-1">Delete Account</button>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="col-xl-8">
@@ -249,7 +289,6 @@
     <script type="text/javascript">
 
         openDataTable();
-
         function openDataTable() {
             $('#bodiesTable').DataTable({
                 ajax: {
@@ -361,6 +400,25 @@
                     reloadDataTable();
                 });
             })
+        }
+
+        function DeleteUserAccount() {
+            console.log("ko");
+            var settings = {
+                "url": "/AppUser/DeleteUser",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "id": "@Model.Id"
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+            });
         }
 
     </script>
