@@ -12,11 +12,11 @@ namespace SpacePro.Controllers.BroadsControllers
     public class SocialController : Controller
     {
 
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public SocialController()
+        public SocialController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -28,15 +28,15 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetUsersTable()
         {
-            var users = unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
-            var roles = unitOfWork.UserRoles.GetAll();
+            var users = _unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
+            var roles = _unitOfWork.UserRoles.GetAll();
             return Json(new { users,roles }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpDelete]
         public ActionResult DeleteUser(string id)
         {
-            var userDeleted = unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
+            var userDeleted = _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
 
             return Json(userDeleted, JsonRequestBehavior.AllowGet);
         }

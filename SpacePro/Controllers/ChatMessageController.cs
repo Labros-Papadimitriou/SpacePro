@@ -14,17 +14,17 @@ namespace SpacePro.Controllers
 {
     public class ChatMessageController : Controller
     {
-        private readonly UnitOfWork unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public ChatMessageController()
+        public ChatMessageController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork =unitOfWork;
         }
 
         [HttpGet]
         public ActionResult GetAllChatMessages()
         {
-            var chatMessages = unitOfWork.ChatMessages.GetAll();
+            var chatMessages = _unitOfWork.ChatMessages.GetAll();
 
             return Json(chatMessages, JsonRequestBehavior.AllowGet);
         }
@@ -35,8 +35,8 @@ namespace SpacePro.Controllers
             ChatMessage chatMessage = new ChatMessage() { MessageBox = newMessage };
             if (ModelState.IsValid)
             {
-                unitOfWork.ChatMessages.Add(chatMessage);
-                unitOfWork.Complete();
+                _unitOfWork.ChatMessages.Add(chatMessage);
+                _unitOfWork.Complete();
             }
 
             return Json(new { chatMessage }, JsonRequestBehavior.AllowGet);
@@ -46,7 +46,7 @@ namespace SpacePro.Controllers
         {
             if (disposing)
             {
-                unitOfWork.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

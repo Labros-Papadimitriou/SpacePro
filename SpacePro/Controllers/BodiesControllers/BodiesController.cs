@@ -11,10 +11,10 @@ namespace SpacePro.Controllers.BodiesControllers
 {
     public class BodiesController : Controller
     {
-       readonly UnitOfWork unitOfWork;
-        public BodiesController()
+        private readonly IUnitOfWork _unitOfWork;
+        public BodiesController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork = unitOfWork;
         }
         // GET: Bodies
         public ActionResult BodiesTable()
@@ -24,15 +24,15 @@ namespace SpacePro.Controllers.BodiesControllers
         public ActionResult GetBodies()
         {
             List<object> bodies = new List<object>();
-            var moons = unitOfWork.Moons.GetAll().TransformListOfMoonsToListOfObjects();
+            var moons = _unitOfWork.Moons.GetAll().TransformListOfMoonsToListOfObjects();
             bodies.AddRange(moons);
-            var planets = unitOfWork.Planets.GetAll().TransformListOfPlanetsToListOfObjects();
+            var planets = _unitOfWork.Planets.GetAll().TransformListOfPlanetsToListOfObjects();
             bodies.AddRange(planets);
-            var asteroids = unitOfWork.Asteroids.GetAll().TransformListOfAsteroidsToListOfObjects();
+            var asteroids = _unitOfWork.Asteroids.GetAll().TransformListOfAsteroidsToListOfObjects();
             bodies.AddRange(asteroids);
-            var comets = unitOfWork.Comets.GetAll().TransformListOfCometsToListOfObjects();
+            var comets = _unitOfWork.Comets.GetAll().TransformListOfCometsToListOfObjects();
             bodies.AddRange(comets);
-            var stars = unitOfWork.Stars.GetAll().TransformListOfStarsToListOfObjects();
+            var stars = _unitOfWork.Stars.GetAll().TransformListOfStarsToListOfObjects();
             bodies.AddRange(stars);
             return Json(new { data = bodies }, JsonRequestBehavior.AllowGet);
         }
@@ -40,7 +40,7 @@ namespace SpacePro.Controllers.BodiesControllers
         {
             if (disposing)
             {
-                unitOfWork.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

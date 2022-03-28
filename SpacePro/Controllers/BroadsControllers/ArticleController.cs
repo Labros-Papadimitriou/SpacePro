@@ -15,11 +15,11 @@ namespace SpacePro.Controllers.BroadsControllers
 {
     public class ArticleController : Controller
     {
-        UnitOfWork unitOfWork;
+      private readonly IUnitOfWork _unitOfWork;
 
-        public ArticleController()
+        public ArticleController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetAllArticles()
         {
-            var article = unitOfWork.Articles
+            var article = _unitOfWork.Articles
                             .GetArticlesFullModel().Select(x => new {
                                 x.ArticleId,
                                 x.Title,
@@ -65,7 +65,7 @@ namespace SpacePro.Controllers.BroadsControllers
             articleImage.Name = image.FileName;
             articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
             articleImage.AlternativeText = (image.FileName).Split('.')[0];
-            unitOfWork.ArticleImages.Add(articleImage);
+            _unitOfWork.ArticleImages.Add(articleImage);
 
             Article article = new Article();
             article.Title = articleDto.Title;
@@ -76,9 +76,9 @@ namespace SpacePro.Controllers.BroadsControllers
             article.PostDate = DateTime.Now;
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
             article.ArticleImage = articleImage;
-            unitOfWork.Articles.Add(article);
+            _unitOfWork.Articles.Add(article);
 
-            unitOfWork.Complete();
+            _unitOfWork.Complete();
 
             return RedirectToAction("ShowArticles");
         }
@@ -86,7 +86,7 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpPost]
         public ActionResult EditArticle(int? articleId, CreateArticleDto articleDto, HttpPostedFileBase image)
         {
-            var article = unitOfWork.Articles.GetArticlesWithImage().FirstOrDefault(x => x.ArticleId == articleId);
+            var article = _unitOfWork.Articles.GetArticlesWithImage().FirstOrDefault(x => x.ArticleId == articleId);
 
             if (image != null)
             {
@@ -96,8 +96,8 @@ namespace SpacePro.Controllers.BroadsControllers
                 articleImage.Name = image.FileName;
                 articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
                 articleImage.AlternativeText = (image.FileName).Split('.')[0];
-                unitOfWork.ArticleImages.Add(articleImage);
-                unitOfWork.ArticleImages.Remove(article.ArticleImage);
+                _unitOfWork.ArticleImages.Add(articleImage);
+                _unitOfWork.ArticleImages.Remove(article.ArticleImage);
 
                 article.ArticleImage = articleImage;
             }
@@ -109,8 +109,8 @@ namespace SpacePro.Controllers.BroadsControllers
             article.PostDate = DateTime.Now;
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
 
-            unitOfWork.Articles.ModifyEntity(article);
-            unitOfWork.Complete();
+            _unitOfWork.Articles.ModifyEntity(article);
+            _unitOfWork.Complete();
 
             return RedirectToAction("ShowArticles");
         }
@@ -118,14 +118,14 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpDelete]
         public ActionResult DeleteArticle(int? articleId, int? imageId)
         {
-            var article = unitOfWork.Articles.Get((int)articleId);
-            var articleImage = unitOfWork.ArticleImages.Get((int)imageId);
+            var article = _unitOfWork.Articles.Get((int)articleId);
+            var articleImage = _unitOfWork.ArticleImages.Get((int)imageId);
             var imageName = articleImage.Name;
 
-            unitOfWork.ArticleImages.Remove(articleImage);
-            unitOfWork.Articles.Remove(article);
+            _unitOfWork.ArticleImages.Remove(articleImage);
+            _unitOfWork.Articles.Remove(article);
 
-            unitOfWork.Complete();
+            _unitOfWork.Complete();
 
             DeleteImageFromFolder(imageName);
 
@@ -145,26 +145,26 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetArticleDetails(int? id)
         {
-            var article = unitOfWork.Articles.GetArticlesFullModel().FirstOrDefault(x=>x.ArticleId==id);
+            var article = _unitOfWork.Articles.GetArticlesFullModel().FirstOrDefault(x=>x.ArticleId==id);
             return View(article);
         }
 
         [HttpGet]
         public JsonResult GiveLike(int? articleId)
         {   
-            var article = unitOfWork.Articles.Get((int)articleId);
+            var article = _unitOfWork.Articles.Get((int)articleId);
             var likedUserId = User.Identity.GetUserId();
-            var userNotYetLikedThisArticle = unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == article.ArticleId).Count() == 0;
+            var userNotYetLikedThisArticle = _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == article.ArticleId).Count() == 0;
 
             if (userNotYetLikedThisArticle)
             {
                 ArticleLike articleLike = new ArticleLike();
-                articleLike.LikedUser = unitOfWork.ApplicationUsers.Find(x => x.Id == likedUserId).FirstOrDefault().Id;
+                articleLike.LikedUser = _unitOfWork.ApplicationUsers.Find(x => x.Id == likedUserId).FirstOrDefault().Id;
                 articleLike.ArticleId = article.ArticleId;
-                unitOfWork.ArticleLikes.Add(articleLike);
+                _unitOfWork.ArticleLikes.Add(articleLike);
                 article.ArticleLikes.Add(articleLike);
                 article.PostLikes++;
-                unitOfWork.Complete();
+                _unitOfWork.Complete();
             }  
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
@@ -172,13 +172,13 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public JsonResult RemoveLike(int? articleId)
         {
-            var article = unitOfWork.Articles.Get((int)articleId);
+            var article = _unitOfWork.Articles.Get((int)articleId);
             var likedUserId = User.Identity.GetUserId();
 
-            var articleLike = unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == articleId).FirstOrDefault();
-            unitOfWork.ArticleLikes.Remove(articleLike);
+            var articleLike = _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == articleId).FirstOrDefault();
+            _unitOfWork.ArticleLikes.Remove(articleLike);
             article.PostLikes--;
-            unitOfWork.Complete();
+            _unitOfWork.Complete();
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
@@ -187,7 +187,7 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             if (disposing)
             {
-                unitOfWork.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

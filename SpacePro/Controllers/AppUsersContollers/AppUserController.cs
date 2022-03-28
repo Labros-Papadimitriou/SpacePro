@@ -17,10 +17,10 @@ namespace SpacePro.Controllers.AppUsersContollers
 {
     public class AppUserController : Controller
     {
-        private readonly UnitOfWork unitOfWork;
-        public AppUserController()
+        private readonly IUnitOfWork _unitOfWork;
+        public AppUserController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ActionResult> UserProfile()
@@ -29,7 +29,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             task.Start();
             var userId = await task;
 
-            var user =await unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var user =await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             return View(user);
         }
@@ -40,7 +40,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             List<ApplicationUser> users = new List<ApplicationUser>();
             foreach (var id in idsArray)
             {
-                var user = await unitOfWork.ApplicationUsers.GetUserWithImages(id);
+                var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(id);
                 
                 users.Add(user);
             }
@@ -54,7 +54,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpGet]
         public async Task<ActionResult> AnyUserProfile(string id)
         {
-            var user = await unitOfWork.ApplicationUsers.GetUserWithImages(id);
+            var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(id);
 
             return View("UserProfile",user);
         }
@@ -64,7 +64,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             var userId = User.Identity.GetUserId();
 
-            var user =await unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var user =await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             if (user.UserImage != null)
             {
@@ -77,7 +77,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
                 if (user.UserImage != null)
                 {
-                    unitOfWork.UserImages.Remove(user.UserImage);
+                    _unitOfWork.UserImages.Remove(user.UserImage);
                 }
 
                 UserImage userImage = new UserImage();
@@ -86,12 +86,12 @@ namespace SpacePro.Controllers.AppUsersContollers
                 userImage.Url = "/Content/UserImages/" + image.FileName;
                 userImage.AlternativeText = (image.FileName).Split('.').First();
                 userImage.ApplicationUser = user;
-                unitOfWork.UserImages.Add(userImage);
+                _unitOfWork.UserImages.Add(userImage);
 
                 user.UserImage = userImage;
-                unitOfWork.ApplicationUsers.ModifyEntity(user);
+                _unitOfWork.ApplicationUsers.ModifyEntity(user);
 
-                unitOfWork.Complete();
+                _unitOfWork.Complete();
             }
             return RedirectToAction("UserProfile");
         }
@@ -100,7 +100,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             var userId = User.Identity.GetUserId();
 
-            var user =await unitOfWork.ApplicationUsers.GetUser(userId);
+            var user =await _unitOfWork.ApplicationUsers.GetUser(userId);
 
             return View(user);
         }
@@ -109,7 +109,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         public async Task<ActionResult> EditProfile(EditUserDto editUserDto)
         {
             var userId = User.Identity.GetUserId();
-            var user = await unitOfWork.ApplicationUsers.GetUser(userId);
+            var user = await _unitOfWork.ApplicationUsers.GetUser(userId);
             user.FirstName = editUserDto.FirstName;
             user.LastName = editUserDto.LastName;
             user.PhoneNumber = editUserDto.PhoneNumber;
@@ -119,8 +119,8 @@ namespace SpacePro.Controllers.AppUsersContollers
             user.Work = editUserDto.Work;
             user.Education = editUserDto.Education;
 
-            unitOfWork.ApplicationUsers.ModifyEntity(user);
-            unitOfWork.Complete();
+            _unitOfWork.ApplicationUsers.ModifyEntity(user);
+            _unitOfWork.Complete();
 
             return RedirectToAction("UserProfile");
         }
@@ -134,15 +134,15 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             var userId = User.Identity.GetUserId();
 
-            if ((await unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
+            if ((await _unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
             {
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
 
-            var imgId = (await unitOfWork.ApplicationUsers
+            var imgId = (await _unitOfWork.ApplicationUsers
                 .GetUserWithImages(userId)).UserImage.UserImageId;
 
-            var userImg = unitOfWork.UserImages
+            var userImg = _unitOfWork.UserImages
                 .Find(x => x.UserImageId == imgId)
                 .Select(x=> new {x.Url,x.AlternativeText})
                 .FirstOrDefault();
@@ -164,7 +164,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             if (disposing)
             {
-                unitOfWork.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }

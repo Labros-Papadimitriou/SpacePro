@@ -12,10 +12,10 @@ namespace SpacePro.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly UnitOfWork unitOfWork;
-        public HomeController()
+        private readonly IUnitOfWork _unitOfWork;
+        public HomeController(IUnitOfWork unitOfWork)
         {
-            unitOfWork = new UnitOfWork(new ApplicationDbContext());
+            _unitOfWork =unitOfWork;
         }
 
         public ActionResult Index()
@@ -29,8 +29,16 @@ namespace SpacePro.Controllers
             task.Start();
             var userId = await task;
 
-            var user = await unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
             return View(user);
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _unitOfWork.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

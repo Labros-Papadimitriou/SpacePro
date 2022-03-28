@@ -12,9 +12,9 @@ namespace SpacePro.Controllers
     public class SeedBodiesController : Controller
     {
         private readonly ApplicationDbContext db;
-        public SeedBodiesController()
+        public SeedBodiesController(ApplicationDbContext db)
         {
-            db = new ApplicationDbContext();
+            this.db = db;
         }
 
         public ActionResult Index()

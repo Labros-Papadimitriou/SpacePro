@@ -23,9 +23,9 @@ namespace SpacePro.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationDbContext context;
 
-        public AccountController()
+        public AccountController(ApplicationDbContext context)
         {
-            context = new ApplicationDbContext();
+            this.context = context;
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
