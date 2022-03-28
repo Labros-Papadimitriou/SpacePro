@@ -18,9 +18,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             _unitOfWork = unitOfWork;
         }
-        // GET: UserPost
-        [HttpGet]
 
+        [HttpGet]
         public ActionResult GetPosts(string id)
         {
             var posts = _unitOfWork.UserPosts.GetPostWithLikes()
@@ -29,8 +28,8 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             return Json(new { data = posts }, JsonRequestBehavior.AllowGet);
         }
-        [HttpGet]
 
+        [HttpGet]
         public ActionResult AddOrRemoveLike(int postId, string userId)
         {
             var postLikes = _unitOfWork.PostLikes.GetUserPostsLikes(postId);
@@ -76,6 +75,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             _unitOfWork.Complete();
             return Json(post);
         }
+
         [HttpPost]
         public ActionResult DeletePost(int id)
         {

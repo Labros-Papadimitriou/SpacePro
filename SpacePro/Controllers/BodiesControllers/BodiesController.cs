@@ -16,11 +16,14 @@ namespace SpacePro.Controllers.BodiesControllers
         {
             _unitOfWork = unitOfWork;
         }
-        // GET: Bodies
+
+        [HttpGet]
         public ActionResult BodiesTable()
         {
             return View();
         }
+
+        [HttpGet]
         public ActionResult GetBodies()
         {
             List<object> bodies = new List<object>();
@@ -36,6 +39,7 @@ namespace SpacePro.Controllers.BodiesControllers
             bodies.AddRange(stars);
             return Json(new { data = bodies }, JsonRequestBehavior.AllowGet);
         }
+ 
         protected override void Dispose(bool disposing)
         {
             if (disposing)

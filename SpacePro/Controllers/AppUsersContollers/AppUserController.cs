@@ -23,6 +23,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             _unitOfWork = unitOfWork;
         }
 
+        [HttpGet]
         public async Task<ActionResult> UserProfile()
         {
             Task<string> task = new Task<string>(User.Identity.GetUserId);
@@ -34,6 +35,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             return View(user);
         }
 
+        [HttpGet]
         public async Task<ActionResult> GetUsers(string ids)
         {
             var idsArray = ids.Split(',');
@@ -96,6 +98,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             return RedirectToAction("UserProfile");
         }
 
+        [HttpGet]
         public async Task<ActionResult> EditProfile()
         {
             var userId = User.Identity.GetUserId();
@@ -125,6 +128,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             return RedirectToAction("UserProfile");
         }
 
+        [HttpGet]
         public async Task<ActionResult> GetUserImage()
         {
             if (User.Identity.GetUserId()==null)

@@ -8,7 +8,7 @@ namespace SpacePro.Controllers.BroadsControllers
 {
     public class PaymentController : Controller
     {
-        // GET: Payment
+        [HttpGet]
         public ActionResult ShowPaymentMethods()
         {
             return View();

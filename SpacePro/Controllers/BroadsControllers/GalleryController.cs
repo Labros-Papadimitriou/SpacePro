@@ -10,17 +10,19 @@ namespace SpacePro.Controllers.BroadsControllers
 {
     public class GalleryController : Controller
     {
-       private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
         public GalleryController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
-        // GET: Gallery
+
+        [HttpGet]
         public ActionResult ShowGallery()
         {
             var images = _unitOfWork.BodyImages.GetAll();
             return View(images);
         }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

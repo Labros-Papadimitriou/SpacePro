@@ -15,16 +15,20 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             _unitOfWork = unitOfWork;
         }
+
+        [HttpGet]
         public ActionResult ShowCalendar()
         {
             return View();
         }
+
         [HttpGet]
         public ActionResult GetEvents()
         {
            var events= _unitOfWork.Events.GetAll();
             return Json(new { data = events },JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public ActionResult GetAuthorOfTheMonth()
         {
@@ -42,6 +46,7 @@ namespace SpacePro.Controllers.BroadsControllers
             }
             return Json(new { data = "No Authors Found" }, JsonRequestBehavior.AllowGet);
         }
+
         [HttpGet]
         public ActionResult GetSubOfTheMonth()
         {

@@ -17,6 +17,7 @@ namespace SpacePro.Controllers
             this.db = db;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View();

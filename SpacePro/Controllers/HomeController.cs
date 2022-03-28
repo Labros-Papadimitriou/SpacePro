@@ -18,11 +18,13 @@ namespace SpacePro.Controllers
             _unitOfWork =unitOfWork;
         }
 
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
         }
 
+        [HttpGet]
         public async Task<ActionResult> Chat()
         {
             Task<string> task = new Task<string>(User.Identity.GetUserId);
