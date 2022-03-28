@@ -167,7 +167,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpPost]
         public ActionResult DeleteUser(string id)
         {
-            var userDeleted = unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
+            var userDeleted = _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
 
             return RedirectToAction("Index", "Home");
         }
