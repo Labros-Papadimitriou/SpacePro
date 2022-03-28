@@ -10,28 +10,29 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
 using MyDatabase;
+using Persistance_UnitOfWork;
 
 namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
 {
     public class CometsController : ApiController
     {
-        private ApplicationDbContext db;
-        public CometsController()
+        private readonly IUnitOfWork _unitOfWork;
+        public CometsController(IUnitOfWork unitOfWork)
         {
-            db = new ApplicationDbContext();
+            _unitOfWork =unitOfWork;
         }
 
         // GET: api/Comets
-        public IQueryable<Comet> GetComets()
+        public IEnumerable<Comet> GetComets()
         {
-            return db.Comets;
+            return _unitOfWork.Comets.GetAll();
         }
 
         // GET: api/Comets/5
         [ResponseType(typeof(Comet))]
         public IHttpActionResult GetComet(int id)
         {
-            Comet comet = db.Comets.Find(id);
+            Comet comet = _unitOfWork.Comets.Get(id);
             if (comet == null)
             {
                 return NotFound();
@@ -54,11 +55,11 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest();
             }
 
-            db.Entry(comet).State = EntityState.Modified;
+            _unitOfWork.Comets.ModifyEntity(comet);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,8 +85,8 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest(ModelState);
             }
 
-            db.Comets.Add(comet);
-            db.SaveChanges();
+            _unitOfWork.Comets.Add(comet);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = comet.CometId }, comet);
         }
@@ -94,30 +95,29 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
         [ResponseType(typeof(Comet))]
         public IHttpActionResult DeleteComet(int id)
         {
-            Comet comet = db.Comets.Find(id);
+            Comet comet = _unitOfWork.Comets.Get(id);
             if (comet == null)
             {
                 return NotFound();
             }
 
-            db.Comets.Remove(comet);
-            db.SaveChanges();
+            _unitOfWork.Comets.Remove(comet);
+            _unitOfWork.Complete();
 
             return Ok(comet);
+        }
+        private bool CometExists(int id)
+        {
+            return _unitOfWork.Comets.GetAll().Count(e => e.CometId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool CometExists(int id)
-        {
-            return db.Comets.Count(e => e.CometId == id) > 0;
         }
     }
 }

@@ -10,28 +10,29 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
 using MyDatabase;
+using Persistance_UnitOfWork;
 
 namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
 {
     public class AsteroidsController : ApiController
     {
-        private ApplicationDbContext db;
-        public AsteroidsController()
+        private readonly IUnitOfWork _unitOfWork;
+        public AsteroidsController(IUnitOfWork unitOfWork)
         {
-            db = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Asteroids
-        public IQueryable<Asteroid> GetAsteroids()
+        public IEnumerable<Asteroid> GetAsteroids()
         {
-            return db.Asteroids;
+            return _unitOfWork.Asteroids.GetAll();
         }
 
         // GET: api/Asteroids/5
         [ResponseType(typeof(Asteroid))]
         public IHttpActionResult GetAsteroid(int id)
         {
-            Asteroid asteroid = db.Asteroids.Find(id);
+            Asteroid asteroid = _unitOfWork.Asteroids.Get(id);
             if (asteroid == null)
             {
                 return NotFound();
@@ -54,11 +55,11 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest();
             }
 
-            db.Entry(asteroid).State = EntityState.Modified;
+            _unitOfWork.Asteroids.ModifyEntity(asteroid);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,8 +85,8 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest(ModelState);
             }
 
-            db.Asteroids.Add(asteroid);
-            db.SaveChanges();
+            _unitOfWork.Asteroids.Add(asteroid);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = asteroid.AsteroidId }, asteroid);
         }
@@ -94,14 +95,14 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
         [ResponseType(typeof(Asteroid))]
         public IHttpActionResult DeleteAsteroid(int id)
         {
-            Asteroid asteroid = db.Asteroids.Find(id);
+            Asteroid asteroid = _unitOfWork.Asteroids.Get(id);
             if (asteroid == null)
             {
                 return NotFound();
             }
 
-            db.Asteroids.Remove(asteroid);
-            db.SaveChanges();
+            _unitOfWork.Asteroids.Remove(asteroid);
+            _unitOfWork.Complete();
 
             return Ok(asteroid);
         }
@@ -110,14 +111,14 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
         }
 
         private bool AsteroidExists(int id)
         {
-            return db.Asteroids.Count(e => e.AsteroidId == id) > 0;
+            return _unitOfWork.Asteroids.GetAll().Count(e => e.AsteroidId == id) > 0;
         }
     }
 }

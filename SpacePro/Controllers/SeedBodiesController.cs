@@ -1,5 +1,6 @@
 ﻿using Entities.Bodies;
 using MyDatabase;
+using Persistance_UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,10 +12,10 @@ namespace SpacePro.Controllers
 {
     public class SeedBodiesController : Controller
     {
-        private readonly ApplicationDbContext db;
-        public SeedBodiesController(ApplicationDbContext db)
+        private readonly IUnitOfWork _unitOfWork;
+        public SeedBodiesController(IUnitOfWork unitOfWork)
         {
-            this.db = db;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
@@ -28,28 +29,28 @@ namespace SpacePro.Controllers
         {
             foreach (var planet in planets)
             {
-                db.Entry(planet).State = EntityState.Added;
+                _unitOfWork.Planets.Add(planet);
             }
-            db.SaveChanges();
+            _unitOfWork.Complete();
         }
 
         [HttpPost]
         public void CreateMoons(List<Moon> apiMoons)
         {
-            var moons = apiMoons.Where(x => db.Planets.Any(p => x.aroundPlanet.ToLower() == p.Name.ToLower()));
+            var moons = apiMoons.Where(x => _unitOfWork.Planets.GetAll().Any(p => x.aroundPlanet.ToLower() == p.Name.ToLower()));
             moons = moons.Select(x=>new Moon{ 
                 Name = x.Name,
                 MassValue=x.MassValue,
                 VolValue=x.VolValue,
                 DiscoveredBy = x.DiscoveredBy,
                 DiscoveryDate=x.DiscoveryDate,
-                PlanetId=db.Planets.FirstOrDefault(p=>p.Name.ToLower()==x.aroundPlanet.ToLower()).PlanetId
+                PlanetId= _unitOfWork.Planets.GetAll().FirstOrDefault(p=>p.Name.ToLower()==x.aroundPlanet.ToLower()).PlanetId
             });
             foreach (var moon in moons)
             {
-                db.Entry(moon).State = EntityState.Added;
+                _unitOfWork.Moons.Add(moon);
             }
-            db.SaveChanges();
+            _unitOfWork.Complete();
         }
 
         [HttpPost]
@@ -57,9 +58,9 @@ namespace SpacePro.Controllers
         {
             foreach (var comet in comets)
             {
-                db.Entry(comet).State = EntityState.Added;
+                _unitOfWork.Comets.Add(comet);
             }
-            db.SaveChanges();
+            _unitOfWork.Complete();
         }
 
         [HttpPost]
@@ -67,9 +68,9 @@ namespace SpacePro.Controllers
         {
             foreach (var asteroid in asteroids)
             {
-                db.Entry(asteroid).State = EntityState.Added;
+                _unitOfWork.Asteroids.Add(asteroid);
             }
-            db.SaveChanges();
+            _unitOfWork.Complete();
         }
 
         [HttpPost]
@@ -77,16 +78,16 @@ namespace SpacePro.Controllers
         {
             foreach (var star in stars)
             {
-                db.Entry(star).State = EntityState.Added;
+                _unitOfWork.Stars.Add(star);
             }
-            db.SaveChanges();
+            _unitOfWork.Complete();
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
 
             base.Dispose(disposing);

@@ -10,28 +10,29 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
 using MyDatabase;
+using Persistance_UnitOfWork;
 
 namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
 {
     public class StarsController : ApiController
     {
-        private ApplicationDbContext db;
-        public StarsController()
+        private readonly IUnitOfWork _unitOfWork;
+        public StarsController(IUnitOfWork unitOfWork)
         {
-            db = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Stars
-        public IQueryable<Star> GetStars()
+        public IEnumerable<Star> GetStars()
         {
-            return db.Stars;
+            return _unitOfWork.Stars.GetAll();
         }
 
         // GET: api/Stars/5
         [ResponseType(typeof(Star))]
         public IHttpActionResult GetStar(int id)
         {
-            Star star = db.Stars.Find(id);
+            Star star = _unitOfWork.Stars.Get(id);
             if (star == null)
             {
                 return NotFound();
@@ -54,11 +55,11 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest();
             }
 
-            db.Entry(star).State = EntityState.Modified;
+            _unitOfWork.Stars.ModifyEntity(star);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,8 +85,8 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest(ModelState);
             }
 
-            db.Stars.Add(star);
-            db.SaveChanges();
+            _unitOfWork.Stars.Add(star);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = star.StarId }, star);
         }
@@ -94,30 +95,29 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
         [ResponseType(typeof(Star))]
         public IHttpActionResult DeleteStar(int id)
         {
-            Star star = db.Stars.Find(id);
+            Star star = _unitOfWork.Stars.Get(id);
             if (star == null)
             {
                 return NotFound();
             }
 
-            db.Stars.Remove(star);
-            db.SaveChanges();
+            _unitOfWork.Stars.Remove(star);
+            _unitOfWork.Complete();
 
             return Ok(star);
+        }
+        private bool StarExists(int id)
+        {
+            return _unitOfWork.Stars.GetAll().Count(e => e.StarId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool StarExists(int id)
-        {
-            return db.Stars.Count(e => e.StarId == id) > 0;
         }
     }
 }

@@ -10,28 +10,29 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
 using MyDatabase;
+using Persistance_UnitOfWork;
 
 namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
 {
     public class PlanetsController : ApiController
     {
-        private ApplicationDbContext db;
-        public PlanetsController()
+        private readonly IUnitOfWork _unitOfWork;
+        public PlanetsController(IUnitOfWork unitOfWork)
         {
-            db = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Planets
-        public IQueryable<Planet> GetPlanets()
+        public IEnumerable<Planet> GetPlanets()
         {
-            return db.Planets;
+            return _unitOfWork.Planets.GetAll();
         }
 
         // GET: api/Planets/5
         [ResponseType(typeof(Planet))]
         public IHttpActionResult GetPlanet(int id)
         {
-            Planet planet = db.Planets.Find(id);
+            Planet planet = _unitOfWork.Planets.Get(id);
             if (planet == null)
             {
                 return NotFound();
@@ -54,11 +55,11 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest();
             }
 
-            db.Entry(planet).State = EntityState.Modified;
+            _unitOfWork.Planets.ModifyEntity(planet);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,8 +85,8 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest(ModelState);
             }
 
-            db.Planets.Add(planet);
-            db.SaveChanges();
+            _unitOfWork.Planets.Add(planet);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = planet.PlanetId }, planet);
         }
@@ -94,30 +95,29 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
         [ResponseType(typeof(Planet))]
         public IHttpActionResult DeletePlanet(int id)
         {
-            Planet planet = db.Planets.Find(id);
+            Planet planet = _unitOfWork.Planets.Get(id);
             if (planet == null)
             {
                 return NotFound();
             }
 
-            db.Planets.Remove(planet);
-            db.SaveChanges();
+            _unitOfWork.Planets.Remove(planet);
+            _unitOfWork.Complete();
 
             return Ok(planet);
+        }
+        private bool PlanetExists(int id)
+        {
+            return _unitOfWork.Planets.GetAll().Count(e => e.PlanetId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool PlanetExists(int id)
-        {
-            return db.Planets.Count(e => e.PlanetId == id) > 0;
         }
     }
 }

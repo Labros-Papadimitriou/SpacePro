@@ -10,28 +10,29 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
 using MyDatabase;
+using Persistance_UnitOfWork;
 
 namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
 {
     public class MoonsController : ApiController
     {
-        private ApplicationDbContext db;
-        public MoonsController()
+        private readonly IUnitOfWork _unitOfWork;
+        public MoonsController(IUnitOfWork unitOfWork)
         {
-            db = new ApplicationDbContext();
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Moons
-        public IQueryable<Moon> GetMoons()
+        public IEnumerable<Moon> GetMoons()
         {
-            return db.Moons;
+            return _unitOfWork.Moons.GetAll();
         }
 
         // GET: api/Moons/5
         [ResponseType(typeof(Moon))]
         public IHttpActionResult GetMoon(int id)
         {
-            Moon moon = db.Moons.Find(id);
+            Moon moon = _unitOfWork.Moons.Get(id);
             if (moon == null)
             {
                 return NotFound();
@@ -54,11 +55,11 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest();
             }
 
-            db.Entry(moon).State = EntityState.Modified;
+            _unitOfWork.Moons.ModifyEntity(moon);
 
             try
             {
-                db.SaveChanges();
+                _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -84,8 +85,8 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 return BadRequest(ModelState);
             }
 
-            db.Moons.Add(moon);
-            db.SaveChanges();
+            _unitOfWork.Moons.Add(moon);
+            _unitOfWork.Complete();
 
             return CreatedAtRoute("DefaultApi", new { id = moon.MoonId }, moon);
         }
@@ -94,30 +95,29 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
         [ResponseType(typeof(Moon))]
         public IHttpActionResult DeleteMoon(int id)
         {
-            Moon moon = db.Moons.Find(id);
+            Moon moon = _unitOfWork.Moons.Get(id);
             if (moon == null)
             {
                 return NotFound();
             }
 
-            db.Moons.Remove(moon);
-            db.SaveChanges();
+            _unitOfWork.Moons.Remove(moon);
+            _unitOfWork.Complete();
 
             return Ok(moon);
+        }
+        private bool MoonExists(int id)
+        {
+            return _unitOfWork.Moons.GetAll().Count(e => e.MoonId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
-                db.Dispose();
+                _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool MoonExists(int id)
-        {
-            return db.Moons.Count(e => e.MoonId == id) > 0;
         }
     }
 }
