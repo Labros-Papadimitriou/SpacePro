@@ -12,7 +12,7 @@ using Entities.Bodies;
 using MyDatabase;
 using Persistance_UnitOfWork;
 
-namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
+namespace SpaceRestApi.Controllers.ApiBodiesControllers
 {
     public class PlanetsController : ApiController
     {

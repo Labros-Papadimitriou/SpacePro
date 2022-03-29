@@ -12,50 +12,50 @@ using Entities.Bodies;
 using MyDatabase;
 using Persistance_UnitOfWork;
 
-namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
+namespace SpaceRestApi.Controllers.ApiBodiesControllers
 {
-    public class CometsController : ApiController
+    public class AsteroidsController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
-        public CometsController(IUnitOfWork unitOfWork)
+        public AsteroidsController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork =unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Comets
-        public IEnumerable<Comet> GetComets()
+        // GET: api/Asteroids
+        public IEnumerable<Asteroid> GetAsteroids()
         {
-            return _unitOfWork.Comets.GetAll();
+            return _unitOfWork.Asteroids.GetAll();
         }
 
-        // GET: api/Comets/5
-        [ResponseType(typeof(Comet))]
-        public IHttpActionResult GetComet(int id)
+        // GET: api/Asteroids/5
+        [ResponseType(typeof(Asteroid))]
+        public IHttpActionResult GetAsteroid(int id)
         {
-            Comet comet = _unitOfWork.Comets.Get(id);
-            if (comet == null)
+            Asteroid asteroid = _unitOfWork.Asteroids.Get(id);
+            if (asteroid == null)
             {
                 return NotFound();
             }
 
-            return Ok(comet);
+            return Ok(asteroid);
         }
 
-        // PUT: api/Comets/5
+        // PUT: api/Asteroids/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutComet(int id, Comet comet)
+        public IHttpActionResult PutAsteroid(int id, Asteroid asteroid)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != comet.CometId)
+            if (id != asteroid.AsteroidId)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Comets.ModifyEntity(comet);
+            _unitOfWork.Asteroids.ModifyEntity(asteroid);
 
             try
             {
@@ -63,7 +63,7 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CometExists(id))
+                if (!AsteroidExists(id))
                 {
                     return NotFound();
                 }
@@ -76,39 +76,35 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Comets
-        [ResponseType(typeof(Comet))]
-        public IHttpActionResult PostComet(Comet comet)
+        // POST: api/Asteroids
+        [ResponseType(typeof(Asteroid))]
+        public IHttpActionResult PostAsteroid(Asteroid asteroid)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _unitOfWork.Comets.Add(comet);
+            _unitOfWork.Asteroids.Add(asteroid);
             _unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = comet.CometId }, comet);
+            return CreatedAtRoute("DefaultApi", new { id = asteroid.AsteroidId }, asteroid);
         }
 
-        // DELETE: api/Comets/5
-        [ResponseType(typeof(Comet))]
-        public IHttpActionResult DeleteComet(int id)
+        // DELETE: api/Asteroids/5
+        [ResponseType(typeof(Asteroid))]
+        public IHttpActionResult DeleteAsteroid(int id)
         {
-            Comet comet = _unitOfWork.Comets.Get(id);
-            if (comet == null)
+            Asteroid asteroid = _unitOfWork.Asteroids.Get(id);
+            if (asteroid == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Comets.Remove(comet);
+            _unitOfWork.Asteroids.Remove(asteroid);
             _unitOfWork.Complete();
 
-            return Ok(comet);
-        }
-        private bool CometExists(int id)
-        {
-            return _unitOfWork.Comets.GetAll().Count(e => e.CometId == id) > 0;
+            return Ok(asteroid);
         }
 
         protected override void Dispose(bool disposing)
@@ -118,6 +114,11 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
                 _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private bool AsteroidExists(int id)
+        {
+            return _unitOfWork.Asteroids.GetAll().Count(e => e.AsteroidId == id) > 0;
         }
     }
 }

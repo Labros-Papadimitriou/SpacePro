@@ -221,11 +221,6 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\AsteroidsController.cs" />
-    <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\CometsController.cs" />
-    <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\MoonsController.cs" />
-    <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\PlanetsController.cs" />
-    <Compile Include="Controllers\ApiControllers\ApiBodiesControllers\StarsController.cs" />
     <Compile Include="Controllers\AppUsersContollers\AppUserController.cs" />
     <Compile Include="Controllers\AppUsersContollers\UserPostController.cs" />
     <Compile Include="Controllers\BodiesControllers\BodiesController.cs" />
