@@ -12,50 +12,50 @@ using Entities.Bodies;
 using MyDatabase;
 using Persistance_UnitOfWork;
 
-namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
+namespace SpaceRestApi.Controllers.ApiBodiesControllers
 {
-    public class MoonsController : ApiController
+    public class StarsController : ApiController
     {
         private readonly IUnitOfWork _unitOfWork;
-        public MoonsController(IUnitOfWork unitOfWork)
+        public StarsController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
 
-        // GET: api/Moons
-        public IEnumerable<Moon> GetMoons()
+        // GET: api/Stars
+        public IEnumerable<Star> GetStars()
         {
-            return _unitOfWork.Moons.GetAll();
+            return _unitOfWork.Stars.GetAll();
         }
 
-        // GET: api/Moons/5
-        [ResponseType(typeof(Moon))]
-        public IHttpActionResult GetMoon(int id)
+        // GET: api/Stars/5
+        [ResponseType(typeof(Star))]
+        public IHttpActionResult GetStar(int id)
         {
-            Moon moon = _unitOfWork.Moons.Get(id);
-            if (moon == null)
+            Star star = _unitOfWork.Stars.Get(id);
+            if (star == null)
             {
                 return NotFound();
             }
 
-            return Ok(moon);
+            return Ok(star);
         }
 
-        // PUT: api/Moons/5
+        // PUT: api/Stars/5
         [ResponseType(typeof(void))]
-        public IHttpActionResult PutMoon(int id, Moon moon)
+        public IHttpActionResult PutStar(int id, Star star)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != moon.MoonId)
+            if (id != star.StarId)
             {
                 return BadRequest();
             }
 
-            _unitOfWork.Moons.ModifyEntity(moon);
+            _unitOfWork.Stars.ModifyEntity(star);
 
             try
             {
@@ -63,7 +63,7 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MoonExists(id))
+                if (!StarExists(id))
                 {
                     return NotFound();
                 }
@@ -76,39 +76,39 @@ namespace SpacePro.Controllers.ApiControllers.ApiBodiesControllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Moons
-        [ResponseType(typeof(Moon))]
-        public IHttpActionResult PostMoon(Moon moon)
+        // POST: api/Stars
+        [ResponseType(typeof(Star))]
+        public IHttpActionResult PostStar(Star star)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _unitOfWork.Moons.Add(moon);
+            _unitOfWork.Stars.Add(star);
             _unitOfWork.Complete();
 
-            return CreatedAtRoute("DefaultApi", new { id = moon.MoonId }, moon);
+            return CreatedAtRoute("DefaultApi", new { id = star.StarId }, star);
         }
 
-        // DELETE: api/Moons/5
-        [ResponseType(typeof(Moon))]
-        public IHttpActionResult DeleteMoon(int id)
+        // DELETE: api/Stars/5
+        [ResponseType(typeof(Star))]
+        public IHttpActionResult DeleteStar(int id)
         {
-            Moon moon = _unitOfWork.Moons.Get(id);
-            if (moon == null)
+            Star star = _unitOfWork.Stars.Get(id);
+            if (star == null)
             {
                 return NotFound();
             }
 
-            _unitOfWork.Moons.Remove(moon);
+            _unitOfWork.Stars.Remove(star);
             _unitOfWork.Complete();
 
-            return Ok(moon);
+            return Ok(star);
         }
-        private bool MoonExists(int id)
+        private bool StarExists(int id)
         {
-            return _unitOfWork.Moons.GetAll().Count(e => e.MoonId == id) > 0;
+            return _unitOfWork.Stars.GetAll().Count(e => e.StarId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)
