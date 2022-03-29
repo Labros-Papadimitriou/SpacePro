@@ -68,5 +68,10 @@ namespace SpacePro.Controllers.HelperClasses
 
         }
         #endregion
+
+        public static IEnumerable<object> AddUserImageIfNull(this List<ApplicationUser> users)
+        {
+            return users.Select(x => new { x.UserName, x.Id, UserImage = x.UserImage == null ? "/Template/sash/assets/images/faces/1.jpg" : x.UserImage.Url });
+        }
     }
 }

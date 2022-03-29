@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MyDatabase;
 using Persistance_UnitOfWork;
+using SpacePro.Controllers.HelperClasses;
 using SpacePro.Models;
 using SpacePro.Models.Dtos;
 using System;
@@ -28,8 +29,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             Task<string> task = new Task<string>(User.Identity.GetUserId);
             task.Start();
-            var userId = await task;
 
+            var userId = await task;
             var user =await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             return View(user);
@@ -47,7 +48,7 @@ namespace SpacePro.Controllers.AppUsersContollers
                 users.Add(user);
             }
 
-            var filteredUsers =  users.Select( x =>  new { x.UserName, x.Id , UserImage = x.UserImage == null ? "/Template/sash/assets/images/faces/1.jpg" :   x.UserImage.Url  });
+            var filteredUsers = users.AddUserImageIfNull();
 
             return Json(new { data = filteredUsers }, JsonRequestBehavior.AllowGet);
         }
