@@ -1,4 +1,4 @@
-﻿@model Entities.IdentityUsers.ApplicationUser
+﻿@model dynamic
 
 <style>
 
@@ -78,7 +78,7 @@
 
             let template = `
                                 <div class="chat-div">
-                                    <img src="" alt="No Image" />
+                                    <img class="rounded-circle" src="" alt="No Image" />
                                     <span class="name"></span>
                                     <span class="bullet">&#8226;</span>
                                     <span class="time"></span><br />
@@ -118,7 +118,6 @@
                             console.log(response);
                         });
                     }
-                    
                 }
             };
             $('#displayname').val("@User.Identity.Name");
@@ -126,7 +125,7 @@
             $.connection.hub.start().done(function () {
                 $('#sendmessage').click(function () {
 
-                    chat.server.send('@Model.Id', $('#displayname').val(), $('#message').val(), '@Model.UserImage.Url');
+                    chat.server.send('@Model.Id', $('#displayname').val(), $('#message').val(), '@Model.ImageUrl');
                     $('#message').val('').focus();
 
                 });
