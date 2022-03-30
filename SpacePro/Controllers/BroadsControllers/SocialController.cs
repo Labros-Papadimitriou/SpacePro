@@ -29,9 +29,14 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult GetUsersTable()
         {
+            
             var users = _unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
             var roles = _unitOfWork.UserRoles.GetAll();
-            return Json(new { users,roles }, JsonRequestBehavior.AllowGet);
+            if (users != null && roles!= null)
+            {
+                return Json(new { users, roles }, JsonRequestBehavior.AllowGet);
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.PreconditionFailed, "No Users Found");
         }
 
         [Authorize(Roles ="Admin")]
