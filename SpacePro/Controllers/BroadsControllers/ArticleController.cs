@@ -11,12 +11,13 @@ using Persistance_UnitOfWork;
 using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
     public class ArticleController : Controller
     {
-      private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
 
         public ArticleController(IUnitOfWork unitOfWork)
         {
@@ -33,7 +34,8 @@ namespace SpacePro.Controllers.BroadsControllers
         public async Task<ActionResult> GetAllArticles()
         {
             var article = (await _unitOfWork.Articles
-                            .GetArticlesFullModel()).Select(x => new {
+                            .GetArticlesFullModel())
+                            .Select(x => new {
                                 x.ArticleId,
                                 x.Title,
                                 x.ShortDescription,
@@ -62,11 +64,23 @@ namespace SpacePro.Controllers.BroadsControllers
                 image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
             }
 
+            if (articleDto is null)
+            {
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest,"Article wasn't in the right format");
+            }
+
             ArticleImage articleImage = new ArticleImage();
             articleImage.Name = image.FileName;
             articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
             articleImage.AlternativeText = (image.FileName).Split('.')[0];
-            _unitOfWork.ArticleImages.Add(articleImage);
+            try
+            {
+                _unitOfWork.ArticleImages.Add(articleImage);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, ex.Message);
+            }
 
             Article article = new Article();
             article.Title = articleDto.Title;
@@ -77,7 +91,14 @@ namespace SpacePro.Controllers.BroadsControllers
             article.PostDate = DateTime.Now;
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
             article.ArticleImage = articleImage;
-            _unitOfWork.Articles.Add(article);
+            try
+            {
+                _unitOfWork.Articles.Add(article);
+            }
+            catch (Exception ex)
+            {
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, ex.Message);
+            }
 
             await _unitOfWork.Complete();
 
