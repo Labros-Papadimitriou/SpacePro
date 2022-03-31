@@ -1,4 +1,5 @@
-﻿using Entities.IdentityUsers;
+﻿using AutoMapper;
+using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MyDatabase;
@@ -19,9 +20,12 @@ namespace SpacePro.Controllers.AppUsersContollers
     public class AppUserController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
-        public AppUserController(IUnitOfWork unitOfWork)
+        private readonly IMapper _mapper;
+
+        public AppUserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -107,15 +111,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         public async Task<ActionResult> EditProfile(EditUserDto editUserDto)
         {
             var user = await _unitOfWork.ApplicationUsers.GetUser(User.Identity.GetUserId());
-
-            user.FirstName = editUserDto.FirstName;
-            user.LastName = editUserDto.LastName;
-            user.PhoneNumber = editUserDto.PhoneNumber;
-            user.Email = editUserDto.Email;
-            user.AboutMe = editUserDto.AboutMe;
-            user.DateOfBirth = editUserDto.DateOfBirth;
-            user.Work = editUserDto.Work;
-            user.Education = editUserDto.Education;
+            _mapper.Map(editUserDto, user);
 
             _unitOfWork.ApplicationUsers.ModifyEntity(user);
             await _unitOfWork.Complete();
