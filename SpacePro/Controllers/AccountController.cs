@@ -178,23 +178,16 @@ namespace SpacePro.Controllers
         public async Task<ActionResult> AddUserRole(string userId,string[] roleName)
         {
             
+                foreach (var role in context.Roles.Select(x => x.Name).ToArray())
+                {
+                    await UserManager.RemoveFromRoleAsync(userId, role);
+                }
 
-            await UserManager.RemoveFromRolesAsync(userId, new string[] {"Admin", "Author", "Subscriber"} );
-            
-            
-
-            if (roleName.Length == 1)
-            {
-                await UserManager.AddToRoleAsync(userId, roleName[0]);
-            }
-            else
-            {
-                await UserManager.AddToRolesAsync(userId, roleName);
-            }
-
-            
-
-
+                foreach (var role in roleName)
+                {
+                    await UserManager.AddToRoleAsync(userId, roleName[0]);
+                }
+               
             return RedirectToAction("ShowSocial","Social");
         }
 
