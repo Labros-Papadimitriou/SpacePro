@@ -13,6 +13,7 @@ using MyDatabase;
 using Persistance_UnitOfWork;
 using SpacePro.Controllers.BroadsControllers;
 using SpacePro.Models;
+using System.Collections.Generic;
 
 namespace SpacePro.Controllers
 {
@@ -174,21 +175,23 @@ namespace SpacePro.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles ="Admin")]
-        public async Task<ActionResult> AddUserRole(string userId,string[] roleName)
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddUserRole(string userId, string[] roleName)
         {
-            
-                foreach (var role in context.Roles.Select(x => x.Name).ToArray())
-                {
-                    await UserManager.RemoveFromRoleAsync(userId, role);
-                }
+            List<Task> removeRoleTasks = new List<Task>();
+            List<Task> addRoleTasks = new List<Task>();
 
-                foreach (var role in roleName)
-                {
-                    await UserManager.AddToRoleAsync(userId, roleName[0]);
-                }
-               
-            return RedirectToAction("ShowSocial","Social");
+            foreach (var role in roleName)
+            {
+                addRoleTasks.Add(UserManager.AddToRoleAsync(userId, role));
+            }
+            foreach (var role in context.Roles.Select(x => x.Name))
+            {
+                removeRoleTasks.Add(UserManager.RemoveFromRoleAsync(userId, role));
+            }
+            await Task.WhenAll(removeRoleTasks);
+            await Task.WhenAll(addRoleTasks);
+            return RedirectToAction("ShowSocial", "Social");
         }
 
         [AllowAnonymous]
