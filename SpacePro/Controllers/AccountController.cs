@@ -173,11 +173,11 @@ namespace SpacePro.Controllers
             return View(model);
         }
 
-        [HttpPatch]
+        [HttpPost]
         [Authorize(Roles ="Admin")]
         public async Task<ActionResult> AddUserRole(string userId, string roleName)
         {
-            await UserManager.AddToRoleAsync(userId, roleName);
+            await UserManager.AddToRolesAsync(userId, roleName);
             return RedirectToAction("ShowSocial","Social");
         }
 
