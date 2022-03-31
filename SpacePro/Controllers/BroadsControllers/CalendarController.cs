@@ -39,7 +39,7 @@ namespace SpacePro.Controllers.BroadsControllers
 
             if(winner != null)
             {
-                var userToModify = users.Where(x => x.Id.Equals(winner.Id)).Single();
+                var userToModify = users.SingleOrDefault(x=>x.Id.Equals(winner.Id));
                 userToModify.IsAuthorOfTheMonth = true;
                 _unitOfWork.ApplicationUsers.ModifyEntity(userToModify);
                 await _unitOfWork.Complete();
@@ -57,7 +57,7 @@ namespace SpacePro.Controllers.BroadsControllers
 
             if (winner != null)
             {
-                var userToModify = users.Where(x => x.Id.Equals(winner.Id)).Single();
+                var userToModify = users.SingleOrDefault(x => x.Id.Equals(winner.Id));
                 userToModify.IsWinnerSub = true;
                 _unitOfWork.ApplicationUsers.ModifyEntity(userToModify);
                 await _unitOfWork.Complete();

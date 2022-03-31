@@ -19,7 +19,7 @@ namespace SpacePro.Controllers.HelperClasses
             {
                 var randomIndex = GetRandomIndex(count);
                 var winner = GetWinner(subs, randomIndex);
-                return new WinnersDto(winner.Id,winner.UserName,winner.UserImage != null ? winner.UserImage.Url : @"\Template\sash\assets\images\users\1.jpg");
+                return new WinnersDto(winner.Id,winner.UserName,winner.UserImage != null ? winner.UserImage.Url : @"\Template\sash\assets\images\users\2.jpg");
             }
             return null;
         }

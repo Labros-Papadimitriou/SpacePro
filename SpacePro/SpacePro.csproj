@@ -1912,6 +1912,7 @@
     <Content Include="Scripts\moment-with-locales.min.js.map" />
     <Content Include="Views\Article\GetArticleDetails.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
+    <Content Include="Views\Social\ShowSocialGeneralUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
