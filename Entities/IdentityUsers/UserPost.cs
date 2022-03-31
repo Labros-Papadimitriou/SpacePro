@@ -13,6 +13,7 @@ namespace Entities.IdentityUsers
         {
             PostLikes = new HashSet<PostLike>();
         }
+
         public int UserPostId { get; set; }
 
         public string PostDetails { get; set; }
