@@ -30,6 +30,10 @@ namespace Persistance_UnitOfWork.Repositories
         }
         public void ModifyEntity(TEntity entity)
         {
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
             Context.Entry(entity).State = EntityState.Modified;
         }
         public async Task<IEnumerable<TEntity>> Find(Expression<Func<TEntity, bool>> predicate)
@@ -43,6 +47,10 @@ namespace Persistance_UnitOfWork.Repositories
 
         public void Add(TEntity entity)
         {
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
             Context.Entry(entity).State = EntityState.Added;
         }
 
@@ -56,6 +64,10 @@ namespace Persistance_UnitOfWork.Repositories
 
         public void Remove(TEntity entity)
         {
+            if (entity is null)
+            {
+                throw new ArgumentNullException(nameof(entity));
+            }
             Context.Entry(entity).State = EntityState.Deleted;
         }
 
