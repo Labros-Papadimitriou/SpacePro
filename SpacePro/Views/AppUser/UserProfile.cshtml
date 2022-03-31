@@ -640,9 +640,9 @@ else
 
         function PostLikedUser(bool,postId) {
             if (bool) {
-                return `<a class="new me-2 text-muted fs-16" onclick="AddOrRemoveLike(${postId},'@User.Identity.GetUserId()')" href="#!"><span class=""><i class="fe fe-heart text-danger"></i></span></a>`;
+                return `<a class="new me-2 text-muted fs-16" onclick="AddOrRemoveLike(${postId},'@User.Identity.GetUserId()')" href="#!"><span ><i class="fe fe-heart text-danger"></i></span></a>`;
             }
-            return `<a class="new me-2 text-muted fs-16" onclick="AddOrRemoveLike(${postId},'@User.Identity.GetUserId()')" href="#!"><span class=""><i class="fe fe-heart "></i></span></a>`;
+            return `<a class="new me-2 text-muted fs-16" onclick="AddOrRemoveLike(${postId},'@User.Identity.GetUserId()')" href="#!"><span ><i class="fe fe-heart "></i></span></a>`;
         }
 
         function AddOrRemoveLike(postId, userId) {
