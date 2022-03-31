@@ -15,18 +15,18 @@ namespace Persistance_UnitOfWork.Repositories
         public ApplicationUserRepository(ApplicationDbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
 
-        public IEnumerable<ApplicationUser> GetAllUsers()
+        public async Task<IEnumerable<ApplicationUser>> GetAllUsers()
         {
-            var users = ApplicationDbContext.Users.ToList();
+            var users = await ApplicationDbContext.Users.ToListAsync();
             return users;
         }
-       public IEnumerable<ApplicationUser> GetAllUsersWithRolesAndPosts()
+       public async Task<IEnumerable<ApplicationUser>> GetAllUsersWithRolesAndPosts()
         {
-            return ApplicationDbContext.Users.Include(x => x.Roles).Include(x=>x.UserPosts).Include(x=>x.UserImage).ToList();
+            return await ApplicationDbContext.Users.Include(x => x.Roles).Include(x=>x.UserPosts).Include(x=>x.UserImage).ToListAsync();
         }
-        public object GetAllUsersWithImagesAndRoles()
+        public async Task<object> GetAllUsersWithImagesAndRoles()
         {
-            var users = ApplicationDbContext.Users
+            var users = await ApplicationDbContext.Users
                 .Select(x => new
                 {
                     x.Id,
@@ -35,7 +35,7 @@ namespace Persistance_UnitOfWork.Repositories
                     x.DateOfBirth,
                     Role = x.Roles.FirstOrDefault()
                 })
-                .ToList();
+                .ToListAsync();
                 
 
             return users;
@@ -56,35 +56,35 @@ namespace Persistance_UnitOfWork.Repositories
 
             return user;
         }
-        public ApplicationUser GetUserWithPostsAndImages(string id)
+        public async Task<ApplicationUser> GetUserWithPostsAndImages(string id)
         {
-            var user = ApplicationDbContext.Users.Where(x => x.Id == id)
+            var user = await ApplicationDbContext.Users.Where(x => x.Id == id)
                 .Include(x => x.UserPosts)
                 .Include(x => x.UserImage)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             return user;
         }
 
-        public ApplicationUser DeleteUserWithPostsAndImage(string id)
+        public async Task<ApplicationUser> DeleteUserWithPostsAndImage(string id)
         {
-            var user = ApplicationDbContext.Users.Where(x => x.Id == id).Include(x => x.UserImage).FirstOrDefault();
-            var UserLikes = ApplicationDbContext.PostLikes.Where(x => x.LikedUser == id).ToList();
-            var ArticleLikes = ApplicationDbContext.ArticleLikes.Where(x=>x.LikedUser == id).ToList();
+            var user = await ApplicationDbContext.Users.Where(x => x.Id == id).Include(x => x.UserImage).FirstOrDefaultAsync();
+            var UserLikes = await ApplicationDbContext.PostLikes.Where(x => x.LikedUser == id).ToListAsync();
+            var ArticleLikes = await ApplicationDbContext.ArticleLikes.Where(x=>x.LikedUser == id).ToListAsync();
             int imgId;
             UserImage img;
 
             if (user.UserImage != null)
             {
                 imgId = user.UserImage.UserImageId;
-                img = ApplicationDbContext.UserImages.Find(imgId);
+                img = await ApplicationDbContext.UserImages.FindAsync(imgId);
                 ApplicationDbContext.Entry(img).State = EntityState.Deleted;
             }
 
             foreach (var post in user.UserPosts)
             {
                 ApplicationDbContext.Entry(post).State = EntityState.Deleted;
-                ApplicationDbContext.SaveChanges();
+                await ApplicationDbContext.SaveChangesAsync();
             }
             
             if (UserLikes != null)
@@ -92,7 +92,7 @@ namespace Persistance_UnitOfWork.Repositories
                 foreach (var like in UserLikes)
                 {
                     ApplicationDbContext.Entry(like).State = EntityState.Deleted;
-                    ApplicationDbContext.SaveChanges();
+                    await ApplicationDbContext.SaveChangesAsync();
                 }
             }
             if (ArticleLikes != null)
@@ -100,12 +100,12 @@ namespace Persistance_UnitOfWork.Repositories
                 foreach (var like in ArticleLikes)
                 {
                     ApplicationDbContext.Entry(like).State = EntityState.Deleted;
-                    ApplicationDbContext.SaveChanges();
+                    await ApplicationDbContext.SaveChangesAsync();
                 }
             }
 
             ApplicationDbContext.Entry(user).State = EntityState.Deleted;
-            ApplicationDbContext.SaveChanges();
+            await ApplicationDbContext.SaveChangesAsync();
 
             return user;
         }

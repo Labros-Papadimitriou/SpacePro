@@ -9,7 +9,7 @@ namespace Persistance_UnitOfWork.IRepositories
 {
     public interface IArticleRepository:IRepository<Article>
     {
-        IEnumerable<Article> GetArticlesWithImage();
-        IEnumerable<Article> GetArticlesFullModel();
+        Task<IEnumerable<Article>> GetArticlesWithImage();
+        Task<IEnumerable<Article>> GetArticlesFullModel();
     }
 }

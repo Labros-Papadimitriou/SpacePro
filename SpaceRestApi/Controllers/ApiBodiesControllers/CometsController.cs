@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
@@ -19,20 +20,20 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
         private readonly IUnitOfWork _unitOfWork;
         public CometsController(IUnitOfWork unitOfWork)
         {
-            _unitOfWork =unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Comets
-        public IEnumerable<Comet> GetComets()
+        public async Task<IEnumerable<Comet>> GetComets()
         {
-            return _unitOfWork.Comets.GetAll();
+            return await _unitOfWork.Comets.GetAll();
         }
 
         // GET: api/Comets/5
         [ResponseType(typeof(Comet))]
-        public IHttpActionResult GetComet(int id)
+        public async Task<IHttpActionResult> GetComet(int id)
         {
-            Comet comet = _unitOfWork.Comets.Get(id);
+            Comet comet = await _unitOfWork.Comets.Get(id);
             if (comet == null)
             {
                 return NotFound();
@@ -63,14 +64,7 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!CometExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -93,22 +87,18 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
 
         // DELETE: api/Comets/5
         [ResponseType(typeof(Comet))]
-        public IHttpActionResult DeleteComet(int id)
+        public async Task<IHttpActionResult> DeleteComet(int id)
         {
-            Comet comet = _unitOfWork.Comets.Get(id);
+            Comet comet = await _unitOfWork.Comets.Get(id);
             if (comet == null)
             {
                 return NotFound();
             }
 
             _unitOfWork.Comets.Remove(comet);
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return Ok(comet);
-        }
-        private bool CometExists(int id)
-        {
-            return _unitOfWork.Comets.GetAll().Count(e => e.CometId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)

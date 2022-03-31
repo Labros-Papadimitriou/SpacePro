@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -27,11 +28,10 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpGet]
-        public ActionResult GetUsersTable()
+        public async Task<ActionResult> GetUsersTable()
         {
-            
-            var users = _unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
-            var roles = _unitOfWork.UserRoles.GetAll();
+            var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
+            var roles = await _unitOfWork.UserRoles.GetAll();
             if (users != null && roles!= null)
             {
                 return Json(new { users, roles }, JsonRequestBehavior.AllowGet);
@@ -41,16 +41,16 @@ namespace SpacePro.Controllers.BroadsControllers
 
         [Authorize(Roles ="Admin")]
         [HttpDelete]
-        public ActionResult DeleteUser(string id)
+        public async Task<ActionResult> DeleteUser(string id)
         {
             if (!User.IsInRole("Admin"))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Unauthorized,"Only Administrators can perform such tasks.");
             }
-            var user = _unitOfWork.ApplicationUsers.GetAll().SingleOrDefault(x=>x.Id==id);
+            var user = (await _unitOfWork.ApplicationUsers.GetAll()).SingleOrDefault(x=>x.Id==id);
             if (user != null)
             {
-                var userDeleted = _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
+                var userDeleted = await _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
                 return Json(userDeleted, JsonRequestBehavior.AllowGet);
             }
             return  new HttpStatusCodeResult(HttpStatusCode.BadRequest, "The user that you are trying to delete does not exist.");

@@ -29,9 +29,7 @@ namespace SpacePro.Controllers
         [HttpGet]
         public async Task<ActionResult> Chat()
         {
-            Task<string> task = new Task<string>(User.Identity.GetUserId);
-            task.Start();
-            var userId = await task;
+            var userId = User.Identity.GetUserId();
 
             var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 

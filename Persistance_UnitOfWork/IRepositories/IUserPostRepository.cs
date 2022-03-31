@@ -9,6 +9,6 @@ namespace Persistance_UnitOfWork.IRepositories
 {
     public interface IUserPostRepository:IRepository<UserPost>
     {
-        IEnumerable<UserPost> GetPostWithLikes();
+        Task<IEnumerable<UserPost>> GetPostWithLikes();
     }
 }

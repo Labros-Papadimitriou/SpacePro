@@ -14,9 +14,9 @@ namespace Persistance_UnitOfWork.Repositories
     {
         public PostLikeRepository(DbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
-        public IEnumerable<PostLike> GetUserPostsLikes(int userPostId)
+        public async Task<IEnumerable<PostLike>> GetUserPostsLikes(int userPostId)
         {
-            var postLikes = ApplicationDbContext.PostLikes.Where(x => x.UserPostId == userPostId).ToList();
+            var postLikes = await ApplicationDbContext.PostLikes.Where(x => x.UserPostId == userPostId).ToListAsync();
             return postLikes;
         }
     }

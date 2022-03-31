@@ -27,11 +27,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpGet]
         public async Task<ActionResult> UserProfile()
         {
-            Task<string> task = new Task<string>(User.Identity.GetUserId);
-            task.Start();
-
-            var userId = await task;
-            var user =await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var userId = User.Identity.GetUserId();
+            var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
 
             return View(user);
         }
@@ -65,9 +62,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpPost]
         public async Task<ActionResult> AddUserImage(HttpPostedFileBase image)
         {
-            var userId = User.Identity.GetUserId();
 
-            var user =await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
+            var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(User.Identity.GetUserId());
 
             if (user.UserImage != null)
             {
@@ -94,7 +90,7 @@ namespace SpacePro.Controllers.AppUsersContollers
                 user.UserImage = userImage;
                 _unitOfWork.ApplicationUsers.ModifyEntity(user);
 
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
             }
             return RedirectToAction("UserProfile");
         }
@@ -102,9 +98,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpGet]
         public async Task<ActionResult> EditProfile()
         {
-            var userId = User.Identity.GetUserId();
-
-            var user =await _unitOfWork.ApplicationUsers.GetUser(userId);
+            var user = await _unitOfWork.ApplicationUsers.GetUser(User.Identity.GetUserId());
 
             return View(user);
         }
@@ -112,8 +106,8 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpPost]
         public async Task<ActionResult> EditProfile(EditUserDto editUserDto)
         {
-            var userId = User.Identity.GetUserId();
-            var user = await _unitOfWork.ApplicationUsers.GetUser(userId);
+            var user = await _unitOfWork.ApplicationUsers.GetUser(User.Identity.GetUserId());
+
             user.FirstName = editUserDto.FirstName;
             user.LastName = editUserDto.LastName;
             user.PhoneNumber = editUserDto.PhoneNumber;
@@ -124,7 +118,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             user.Education = editUserDto.Education;
 
             _unitOfWork.ApplicationUsers.ModifyEntity(user);
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("UserProfile");
         }
@@ -132,14 +126,14 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpGet]
         public async Task<ActionResult> GetUserImage()
         {
-            if (User.Identity.GetUserId()==null)
+            var userId = User.Identity.GetUserId();
+
+            if (User.Identity.GetUserId() == null)
             {
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
 
-            var userId = User.Identity.GetUserId();
-
-            if ((await _unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
+            if ( (await _unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
             {
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
@@ -147,8 +141,8 @@ namespace SpacePro.Controllers.AppUsersContollers
             var imgId = (await _unitOfWork.ApplicationUsers
                 .GetUserWithImages(userId)).UserImage.UserImageId;
 
-            var userImg = _unitOfWork.UserImages
-                .Find(x => x.UserImageId == imgId)
+            var userImg = (await _unitOfWork.UserImages
+                .Find(x => x.UserImageId == imgId))
                 .Select(x=> new {x.Url,x.AlternativeText})
                 .FirstOrDefault();
 
@@ -166,9 +160,9 @@ namespace SpacePro.Controllers.AppUsersContollers
         }
 
         [HttpPost]
-        public ActionResult DeleteUser(string id)
+        public async Task<ActionResult> DeleteUser(string id)
         {
-            var userDeleted = _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
+            await _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
 
             return RedirectToAction("Index", "Home");
         }

@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
@@ -23,16 +24,16 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
         }
 
         // GET: api/Asteroids
-        public IEnumerable<Asteroid> GetAsteroids()
+        public async Task<IEnumerable<Asteroid>> GetAsteroids()
         {
-            return _unitOfWork.Asteroids.GetAll();
+            return await _unitOfWork.Asteroids.GetAll();
         }
 
         // GET: api/Asteroids/5
         [ResponseType(typeof(Asteroid))]
-        public IHttpActionResult GetAsteroid(int id)
+        public async Task<IHttpActionResult> GetAsteroid(int id)
         {
-            Asteroid asteroid = _unitOfWork.Asteroids.Get(id);
+            Asteroid asteroid = await _unitOfWork.Asteroids.Get(id);
             if (asteroid == null)
             {
                 return NotFound();
@@ -62,15 +63,8 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
                 _unitOfWork.Complete();
             }
             catch (DbUpdateConcurrencyException)
-            {
-                if (!AsteroidExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+            { 
+                return NotFound();   
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -93,16 +87,16 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
 
         // DELETE: api/Asteroids/5
         [ResponseType(typeof(Asteroid))]
-        public IHttpActionResult DeleteAsteroid(int id)
+        public async Task<IHttpActionResult> DeleteAsteroid(int id)
         {
-            Asteroid asteroid = _unitOfWork.Asteroids.Get(id);
+            Asteroid asteroid = await _unitOfWork.Asteroids.Get(id);
             if (asteroid == null)
             {
                 return NotFound();
             }
 
             _unitOfWork.Asteroids.Remove(asteroid);
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return Ok(asteroid);
         }
@@ -114,11 +108,6 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
                 _unitOfWork.Dispose();
             }
             base.Dispose(disposing);
-        }
-
-        private bool AsteroidExists(int id)
-        {
-            return _unitOfWork.Asteroids.GetAll().Count(e => e.AsteroidId == id) > 0;
         }
     }
 }

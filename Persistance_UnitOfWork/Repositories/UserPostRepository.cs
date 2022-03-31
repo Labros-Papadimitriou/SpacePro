@@ -15,10 +15,10 @@ namespace Persistance_UnitOfWork.Repositories
         public UserPostRepository(ApplicationDbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
 
-        public IEnumerable<UserPost> GetPostWithLikes()
+        public async Task<IEnumerable<UserPost>> GetPostWithLikes()
         {
 
-            var userPost = ApplicationDbContext.UserPosts.Include(x => x.PostLikes).ToList();
+            var userPost = await ApplicationDbContext.UserPosts.Include(x => x.PostLikes).ToListAsync();
 
             return userPost;
         }

@@ -10,6 +10,7 @@ using SpacePro.Models.Dtos;
 using Persistance_UnitOfWork;
 using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
+using System.Threading.Tasks;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
@@ -29,10 +30,10 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpGet]
-        public ActionResult GetAllArticles()
+        public async Task<ActionResult> GetAllArticles()
         {
-            var article = _unitOfWork.Articles
-                            .GetArticlesFullModel().Select(x => new {
+            var article = (await _unitOfWork.Articles
+                            .GetArticlesFullModel()).Select(x => new {
                                 x.ArticleId,
                                 x.Title,
                                 x.ShortDescription,
@@ -54,7 +55,7 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpPost]
-        public ActionResult CreateNewArticle(CreateArticleDto articleDto, HttpPostedFileBase image)
+        public async Task<ActionResult> CreateNewArticle(CreateArticleDto articleDto, HttpPostedFileBase image)
         {
             if (image != null)
             {
@@ -78,15 +79,15 @@ namespace SpacePro.Controllers.BroadsControllers
             article.ArticleImage = articleImage;
             _unitOfWork.Articles.Add(article);
 
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("ShowArticles");
         }
 
         [HttpPost]
-        public ActionResult EditArticle(int? articleId, CreateArticleDto articleDto, HttpPostedFileBase image)
+        public async Task<ActionResult> EditArticle(int? articleId, CreateArticleDto articleDto, HttpPostedFileBase image)
         {
-            var article = _unitOfWork.Articles.GetArticlesWithImage().FirstOrDefault(x => x.ArticleId == articleId);
+            var article = (await _unitOfWork.Articles.GetArticlesWithImage()).FirstOrDefault(x => x.ArticleId == articleId);
 
             if (image != null)
             {
@@ -110,22 +111,22 @@ namespace SpacePro.Controllers.BroadsControllers
             article.ArticleCategoryId = articleDto.ArticleCategoryId;
 
             _unitOfWork.Articles.ModifyEntity(article);
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return RedirectToAction("ShowArticles");
         }
 
         [HttpDelete]
-        public ActionResult DeleteArticle(int? articleId, int? imageId)
+        public async Task<ActionResult> DeleteArticle(int? articleId, int? imageId)
         {
-            var article = _unitOfWork.Articles.Get((int)articleId);
-            var articleImage = _unitOfWork.ArticleImages.Get((int)imageId);
+            var article = await _unitOfWork.Articles.Get((int)articleId);
+            var articleImage = await _unitOfWork.ArticleImages.Get((int)imageId);
             var imageName = articleImage.Name;
 
             _unitOfWork.ArticleImages.Remove(articleImage);
             _unitOfWork.Articles.Remove(article);
 
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             DeleteImageFromFolder(imageName);
 
@@ -143,42 +144,45 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpGet]
-        public ActionResult GetArticleDetails(int? id)
+        public async Task<ActionResult> GetArticleDetails(int? id)
         {
-            var article = _unitOfWork.Articles.GetArticlesFullModel().FirstOrDefault(x=>x.ArticleId==id);
+            var article = (await _unitOfWork.Articles.GetArticlesFullModel()).FirstOrDefault(x=>x.ArticleId==id);
             return View(article);
         }
 
         [HttpGet]
-        public JsonResult GiveLike(int? articleId)
-        {   
-            var article = _unitOfWork.Articles.Get((int)articleId);
+        public async Task<JsonResult> GiveLike(int? articleId)
+        {
             var likedUserId = User.Identity.GetUserId();
-            var userNotYetLikedThisArticle = _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == article.ArticleId).Count() == 0;
+
+            var article = await _unitOfWork.Articles.Get((int)articleId);
+
+            var userNotYetLikedThisArticle = (await _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == article.ArticleId)).Count() == 0;
 
             if (userNotYetLikedThisArticle)
             {
                 ArticleLike articleLike = new ArticleLike();
-                articleLike.LikedUser = _unitOfWork.ApplicationUsers.Find(x => x.Id == likedUserId).FirstOrDefault().Id;
+                articleLike.LikedUser = (await _unitOfWork.ApplicationUsers.Find(x => x.Id == likedUserId)).FirstOrDefault().Id;
                 articleLike.ArticleId = article.ArticleId;
                 _unitOfWork.ArticleLikes.Add(articleLike);
                 article.ArticleLikes.Add(articleLike);
                 article.PostLikes++;
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
             }  
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public JsonResult RemoveLike(int? articleId)
+        public async Task<JsonResult> RemoveLike(int? articleId)
         {
-            var article = _unitOfWork.Articles.Get((int)articleId);
             var likedUserId = User.Identity.GetUserId();
 
-            var articleLike = _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == articleId).FirstOrDefault();
+            var article = await _unitOfWork.Articles.Get((int)articleId);
+
+            var articleLike = (await _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == articleId)).FirstOrDefault();
             _unitOfWork.ArticleLikes.Remove(articleLike);
             article.PostLikes--;
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return Json(article.PostLikes, JsonRequestBehavior.AllowGet);
         }

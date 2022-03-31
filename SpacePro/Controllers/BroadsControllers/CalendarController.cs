@@ -3,6 +3,7 @@ using Persistance_UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -23,17 +24,17 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpGet]
-        public ActionResult GetEvents()
+        public async Task<ActionResult> GetEvents()
         {
-           var events= _unitOfWork.Events.GetAll();
+            var events = await _unitOfWork.Events.GetAll();
             return Json(new { data = events },JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult GetAuthorOfTheMonth()
+        public async Task<ActionResult> GetAuthorOfTheMonth()
         {
-            var users = _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
-            var roles = _unitOfWork.UserRoles.GetAll();
+            var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
+            var roles = await _unitOfWork.UserRoles.GetAll();
             var winner = HelperClasses.ApplicationUserHelper.GetAuthorOfTheMonth(users, roles);
 
             if(winner != null)
@@ -41,17 +42,17 @@ namespace SpacePro.Controllers.BroadsControllers
                 var userToModify = users.Where(x => x.Id.Equals(winner.Id)).Single();
                 userToModify.IsAuthorOfTheMonth = true;
                 _unitOfWork.ApplicationUsers.ModifyEntity(userToModify);
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
                 return Json(new {data= winner }, JsonRequestBehavior.AllowGet);
             }
             return Json(new { data = "No Authors Found" }, JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
-        public ActionResult GetSubOfTheMonth()
+        public async Task<ActionResult> GetSubOfTheMonth()
         {
-            var users = _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
-            var roles = _unitOfWork.UserRoles.GetAll();
+            var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
+            var roles = await _unitOfWork.UserRoles.GetAll();
             var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
 
             if (winner != null)
@@ -59,7 +60,7 @@ namespace SpacePro.Controllers.BroadsControllers
                 var userToModify = users.Where(x => x.Id.Equals(winner.Id)).Single();
                 userToModify.IsWinnerSub = true;
                 _unitOfWork.ApplicationUsers.ModifyEntity(userToModify);
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
                 return Json(new { data = winner }, JsonRequestBehavior.AllowGet);
             }
 

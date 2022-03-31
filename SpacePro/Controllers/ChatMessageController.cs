@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Entities;
@@ -22,21 +23,21 @@ namespace SpacePro.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllChatMessages()
+        public async Task<ActionResult> GetAllChatMessages()
         {
-            var chatMessages = _unitOfWork.ChatMessages.GetAll();
+            var chatMessages = await _unitOfWork.ChatMessages.GetAll();
 
             return Json(chatMessages, JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        public ActionResult CreateChatMessage(string newMessage)
+        public async Task<ActionResult> CreateChatMessage(string newMessage)
         {
             ChatMessage chatMessage = new ChatMessage() { MessageBox = newMessage };
             if (ModelState.IsValid)
             {
                 _unitOfWork.ChatMessages.Add(chatMessage);
-                _unitOfWork.Complete();
+                await _unitOfWork.Complete();
             }
 
             return Json(new { chatMessage }, JsonRequestBehavior.AllowGet);

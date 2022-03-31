@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
@@ -23,16 +24,16 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
         }
 
         // GET: api/Planets
-        public IEnumerable<Planet> GetPlanets()
+        public async Task<IEnumerable<Planet>> GetPlanets()
         {
-            return _unitOfWork.Planets.GetAll();
+            return await _unitOfWork.Planets.GetAll();
         }
 
         // GET: api/Planets/5
         [ResponseType(typeof(Planet))]
-        public IHttpActionResult GetPlanet(int id)
+        public async Task<IHttpActionResult> GetPlanet(int id)
         {
-            Planet planet = _unitOfWork.Planets.Get(id);
+            Planet planet = await _unitOfWork.Planets.Get(id);
             if (planet == null)
             {
                 return NotFound();
@@ -63,14 +64,7 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PlanetExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -93,22 +87,18 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
 
         // DELETE: api/Planets/5
         [ResponseType(typeof(Planet))]
-        public IHttpActionResult DeletePlanet(int id)
+        public async Task<IHttpActionResult> DeletePlanet(int id)
         {
-            Planet planet = _unitOfWork.Planets.Get(id);
+            Planet planet = await _unitOfWork.Planets.Get(id);
             if (planet == null)
             {
                 return NotFound();
             }
 
             _unitOfWork.Planets.Remove(planet);
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return Ok(planet);
-        }
-        private bool PlanetExists(int id)
-        {
-            return _unitOfWork.Planets.GetAll().Count(e => e.PlanetId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)

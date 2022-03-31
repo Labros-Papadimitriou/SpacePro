@@ -35,22 +35,24 @@ namespace SpacePro.Controllers
         }
 
         [HttpPost]
-        public void CreateMoons(List<Moon> apiMoons)
+        public async void CreateMoons(List<Moon> apiMoons)
         {
-            var moons = apiMoons.Where(x => _unitOfWork.Planets.GetAll().Any(p => x.aroundPlanet.ToLower() == p.Name.ToLower()));
-            moons = moons.Select(x=>new Moon{ 
+            var allPlanets = await _unitOfWork.Planets.GetAll();
+            var moons = apiMoons.Where(x => allPlanets.Any(p => x.aroundPlanet.ToLower() == p.Name.ToLower()));
+            moons = (IEnumerable<Moon>)moons.Select(async x => new Moon
+            {
                 Name = x.Name,
-                MassValue=x.MassValue,
-                VolValue=x.VolValue,
+                MassValue = x.MassValue,
+                VolValue = x.VolValue,
                 DiscoveredBy = x.DiscoveredBy,
-                DiscoveryDate=x.DiscoveryDate,
-                PlanetId= _unitOfWork.Planets.GetAll().FirstOrDefault(p=>p.Name.ToLower()==x.aroundPlanet.ToLower()).PlanetId
+                DiscoveryDate = x.DiscoveryDate,
+                PlanetId = (await _unitOfWork.Planets.GetAll()).FirstOrDefault(p => p.Name.ToLower() == x.aroundPlanet.ToLower()).PlanetId
             });
             foreach (var moon in moons)
             {
                 _unitOfWork.Moons.Add(moon);
             }
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
         }
 
         [HttpPost]

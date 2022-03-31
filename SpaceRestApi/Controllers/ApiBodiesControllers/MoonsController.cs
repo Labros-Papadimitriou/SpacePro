@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Entities.Bodies;
@@ -23,16 +24,16 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
         }
 
         // GET: api/Moons
-        public IEnumerable<Moon> GetMoons()
+        public async Task<IEnumerable<Moon>> GetMoons()
         {
-            return _unitOfWork.Moons.GetAll();
+            return await _unitOfWork.Moons.GetAll();
         }
 
         // GET: api/Moons/5
         [ResponseType(typeof(Moon))]
-        public IHttpActionResult GetMoon(int id)
+        public async Task<IHttpActionResult> GetMoon(int id)
         {
-            Moon moon = _unitOfWork.Moons.Get(id);
+            Moon moon = await _unitOfWork.Moons.Get(id);
             if (moon == null)
             {
                 return NotFound();
@@ -63,14 +64,7 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MoonExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -93,22 +87,18 @@ namespace SpaceRestApi.Controllers.ApiBodiesControllers
 
         // DELETE: api/Moons/5
         [ResponseType(typeof(Moon))]
-        public IHttpActionResult DeleteMoon(int id)
+        public async Task<IHttpActionResult> DeleteMoon(int id)
         {
-            Moon moon = _unitOfWork.Moons.Get(id);
+            Moon moon = await _unitOfWork.Moons.Get(id);
             if (moon == null)
             {
                 return NotFound();
             }
 
             _unitOfWork.Moons.Remove(moon);
-            _unitOfWork.Complete();
+            await _unitOfWork.Complete();
 
             return Ok(moon);
-        }
-        private bool MoonExists(int id)
-        {
-            return _unitOfWork.Moons.GetAll().Count(e => e.MoonId == id) > 0;
         }
 
         protected override void Dispose(bool disposing)

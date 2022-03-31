@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SpacePro.Controllers.HelperClasses;
+using System.Threading.Tasks;
 
 namespace SpacePro.Controllers.BodiesControllers
 {
@@ -24,18 +25,18 @@ namespace SpacePro.Controllers.BodiesControllers
         }
 
         [HttpGet]
-        public ActionResult GetBodies()
+        public async Task<ActionResult> GetBodies()
         {
             List<object> bodies = new List<object>();
-            var moons = _unitOfWork.Moons.GetAll().TransformListOfMoonsToListOfObjects();
+            var moons = (await _unitOfWork.Moons.GetAll()).TransformListOfMoonsToListOfObjects();
             bodies.AddRange(moons);
-            var planets = _unitOfWork.Planets.GetAll().TransformListOfPlanetsToListOfObjects();
+            var planets = (await _unitOfWork.Planets.GetAll()).TransformListOfPlanetsToListOfObjects();
             bodies.AddRange(planets);
-            var asteroids = _unitOfWork.Asteroids.GetAll().TransformListOfAsteroidsToListOfObjects();
+            var asteroids = (await _unitOfWork.Asteroids.GetAll()).TransformListOfAsteroidsToListOfObjects();
             bodies.AddRange(asteroids);
-            var comets = _unitOfWork.Comets.GetAll().TransformListOfCometsToListOfObjects();
+            var comets = (await _unitOfWork.Comets.GetAll()).TransformListOfCometsToListOfObjects();
             bodies.AddRange(comets);
-            var stars = _unitOfWork.Stars.GetAll().TransformListOfStarsToListOfObjects();
+            var stars = (await _unitOfWork.Stars.GetAll()).TransformListOfStarsToListOfObjects();
             bodies.AddRange(stars);
             return Json(new { data = bodies }, JsonRequestBehavior.AllowGet);
         }

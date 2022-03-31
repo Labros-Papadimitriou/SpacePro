@@ -9,12 +9,12 @@ namespace Persistance_UnitOfWork.IRepositories
 {
     public interface IApplicationUserRepository : IRepository<ApplicationUser>
     {
-        IEnumerable<ApplicationUser> GetAllUsers();
-        IEnumerable<ApplicationUser> GetAllUsersWithRolesAndPosts();
-        object GetAllUsersWithImagesAndRoles();
+        Task<IEnumerable<ApplicationUser>> GetAllUsers();
+        Task<IEnumerable<ApplicationUser>> GetAllUsersWithRolesAndPosts();
+        Task<object> GetAllUsersWithImagesAndRoles();
         Task<ApplicationUser> GetUser(string id);
-        ApplicationUser GetUserWithPostsAndImages(string id);
+        Task<ApplicationUser> GetUserWithPostsAndImages(string id);
         Task<ApplicationUser> GetUserWithImages(string id);
-        ApplicationUser DeleteUserWithPostsAndImage(string id);
+        Task<ApplicationUser> DeleteUserWithPostsAndImage(string id);
     }
 }

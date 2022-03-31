@@ -15,16 +15,17 @@ namespace Persistance_UnitOfWork.Repositories
         public ArticleRepository(ApplicationDbContext context) : base(context) { }
         public ApplicationDbContext ApplicationDbContext => Context as ApplicationDbContext;
 
-        public IEnumerable<Article> GetArticlesWithImage()
+        public async Task<IEnumerable<Article>> GetArticlesWithImage()
         {
-            return ApplicationDbContext.Articles.Include(x => x.ArticleImage);
+            return await ApplicationDbContext.Articles.Include(x => x.ArticleImage).ToListAsync();
         }
-        public IEnumerable<Article> GetArticlesFullModel()
+        public async Task<IEnumerable<Article>> GetArticlesFullModel()
         {
-            return ApplicationDbContext.Articles
+            return await ApplicationDbContext.Articles
                 .Include(x => x.ArticleCategory)
                 .Include(x => x.ArticleImage)
-                .Include(x => x.ArticleLikes);
+                .Include(x => x.ArticleLikes)
+                .ToListAsync();
         }
     }
 }

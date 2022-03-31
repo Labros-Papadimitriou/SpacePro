@@ -60,7 +60,7 @@ namespace SpacePro.Controllers.PaymentControllers
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View("FailureView");
             }

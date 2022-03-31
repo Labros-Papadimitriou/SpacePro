@@ -177,7 +177,7 @@ namespace SpacePro.Controllers
         [Authorize(Roles ="Admin")]
         public async Task<ActionResult> AddUserRole(string userId, string roleName)
         {
-            await this.UserManager.AddToRoleAsync(userId, roleName);
+            await UserManager.AddToRoleAsync(userId, roleName);
             return RedirectToAction("ShowSocial","Social");
         }
 
