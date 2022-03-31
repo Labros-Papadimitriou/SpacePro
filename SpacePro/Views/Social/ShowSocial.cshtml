@@ -65,26 +65,26 @@
                         let postdate = moment.utc(date).format('DD-MM-YYYY');
 
                         let template = `
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="d-flex align-items-center">${imgEle}</div>
-                                                                </td>
-                                                                <td> <a style="color:inherit" href="/AppUser/AnyUserProfile/${users[i].Id}" class="ml-2">${users[i].UserName}</a></td>
-                                                                <td class="font-weight-bold">${postdate}</td>
-                                                                <td class="font-weight-bold">${users[i].Role == null ? "Not Set Yet" : roles.filter(x => x.Users != null).filter(x => x.Users.map(s => s.UserId).includes(users[i].Id))[0].Name}</td>
-                                                                <td><a id="setUser-btn" onclick="SetRoleActions(${i})" class="btn btn-outline-success" >Set Role</a>&emsp;<a id="delete-btn" onclick="ValidDelete(${i})" class="btn btn-danger">Delete User</a>
-                                                                    <div id="valid-delete${i}" style="display:inline-block">&nbsp;<input id="delete-input"  style="color:white; background-color:#000" type="text" placeholder="Type YES DELETE"/>&nbsp;<button onclick="DeleteUser(${i}, '${users[i].Id}')" class="btn btn-danger">Yes,Delete!</button></div>
-                                                                    <div id="setRoleList${i}" style="display:inline-block">&nbsp;
-                                                                        <select id="roleList${i}">
-                                                                             <option>Admin</option>
-                                                                             <option>Author</option>
-                                                                             <option>Subscriber</option>
-                                                                        </select>
-                                                                        <button onclick="FindRole(${i}, '${users[i].Id}')" class="btn btn-primary">Save Changes</button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            `;
+                                                                <tr>
+                                                                    <td>
+                                                                        <div class="d-flex align-items-center">${imgEle}</div>
+                                                                    </td>
+                                                                    <td> <a style="color:inherit" href="/AppUser/AnyUserProfile/${users[i].Id}" class="ml-2">${users[i].UserName}</a></td>
+                                                                    <td class="font-weight-bold">${postdate}</td>
+                                                                    <td class="font-weight-bold">${users[i].Role == null ? "Not Set Yet" : roles.filter(x => x.Users != null).filter(x => x.Users.map(s => s.UserId).includes(users[i].Id))[0].Name}</td>
+                                                                    <td><a id="setUser-btn" onclick="SetRoleActions(${i})" class="btn btn-outline-success" >Set Role</a>&emsp;<a id="delete-btn" onclick="ValidDelete(${i})" class="btn btn-danger">Delete User</a>
+                                                                        <div id="valid-delete${i}" style="display:inline-block">&nbsp;<input id="delete-input"  style="color:white; background-color:#000" type="text" placeholder="Type YES DELETE"/>&nbsp;<button onclick="DeleteUser(${i}, '${users[i].Id}')" class="btn btn-danger">Yes,Delete!</button></div>
+                                                                        <div id="setRoleList${i}" style="display:inline-block">&nbsp;
+                                                                            <select id="roleList${i}">
+                                                                                 <option>Admin</option>
+                                                                                 <option>Author</option>
+                                                                                 <option>Subscriber</option>
+                                                                            </select>
+                                                                            <button onclick="FindRole(${i}, '${users[i].Id}')" class="btn btn-primary">Save Changes</button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                `;
                         let row = $(template);
 
                         $("#social-table tbody").append(row);
@@ -125,34 +125,37 @@
     </script>
     <script type="text/javascript">
 
-       function SetRoleActions(row) {
-                $(`#setRoleList${row}`).toggle();
-            }
+        function SetRoleActions(row) {
+            $(`#setRoleList${row}`).toggle();
+        }
 
         function FindRole(row, userId) {
 
-                let role = $(`#roleList${row}`).find(":selected").text();
-                console.log(role);
-                SetRole(userId, role);
-            }
+            let role = $(`#roleList${row}`).find(":selected").text();
+            console.log(role);
+            SetRole(userId, role);
+        }
 
-       function SetRole(userId, role) {
-                var settings = {
-                    "url": "/Account/AddUserRole",
-                    "method": "PATCH",
-                    "timeout": 0,
-                    "headers": {
-                        "Content-Type": "application/json"
-                    },
-                    "data": JSON.stringify({
-                        "Userid": userId,
-                        "roleName": role
-                    }),
-                };
+        function SetRole(userId, role) {
+            var settings = {
+                "url": "/Account/AddUserRole",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "Userid": userId,
+                    "roleName": role
+                }),
+            };
 
-                $.ajax(settings).done(function (response) {
-                    console.log(response);
-                });
-            }
+            $.ajax(settings).done(function (response) {
+                $("#social-table tbody").empty();
+                FillUsersTable();
+            }).fail(function () {
+                console.log("error");
+            });
+        }
     </script>
 }
