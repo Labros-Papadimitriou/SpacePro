@@ -41,7 +41,7 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithImagesAndRoles();
             var roles = await _unitOfWork.UserRoles.GetAll();
-            if (users != null && roles!= null)
+            if (users != null)
             {
                 return Json(new { users, roles }, JsonRequestBehavior.AllowGet);
             }
