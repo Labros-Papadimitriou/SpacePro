@@ -75,7 +75,8 @@
                                                                     <td><a id="setUser-btn" onclick="SetRoleActions(${i})" class="btn btn-outline-success" >Set Role</a>&emsp;<a id="delete-btn" onclick="ValidDelete(${i})" class="btn btn-danger">Delete User</a>
                                                                         <div id="valid-delete${i}" style="display:inline-block">&nbsp;<input id="delete-input"  style="color:white; background-color:#000" type="text" placeholder="Type YES DELETE"/>&nbsp;<button onclick="DeleteUser(${i}, '${users[i].Id}')" class="btn btn-danger">Yes,Delete!</button></div>
                                                                         <div id="setRoleList${i}" style="display:inline-block">&nbsp;
-                                                                            <select id="roleList${i}">
+                                                                            <select multiple id="roleList${i}">
+                                                                                 <option disabled>Select Roles</option>
                                                                                  <option>Admin</option>
                                                                                  <option>Author</option>
                                                                                  <option>Subscriber</option>
@@ -131,12 +132,12 @@
 
         function FindRole(row, userId) {
 
-            let role = $(`#roleList${row}`).find(":selected").text();
-            console.log(role);
-            SetRole(userId, role);
+            let roles = $(`#roleList${row}`).find(":selected").text().split(/(?=[A-Z])/);
+            console.log(roles);
+            SetRole(userId, roles);
         }
 
-        function SetRole(userId, role) {
+        function SetRole(userId, roles) {
             var settings = {
                 "url": "/Account/AddUserRole",
                 "method": "POST",
@@ -146,7 +147,7 @@
                 },
                 "data": JSON.stringify({
                     "Userid": userId,
-                    "roleName": role
+                    "roleName": roles
                 }),
             };
 

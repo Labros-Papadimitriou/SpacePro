@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity;
 using MyDatabase;
 using Persistance_UnitOfWork;
+using SpacePro.Controllers.HelperClasses;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -24,10 +25,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         public async Task<ActionResult> GetPosts(string id)
         {
             var posts = (await _unitOfWork.UserPosts.GetPostWithLikes())
-                .Where(p => p.ApplicationUser_id == id)
-                .Select(x => new { x.UserPostId, x.PostDetails, x.PostLikesCount, x.ApplicationUser_id, PostLikes = x.PostLikes
-                .Select(a => new { a.LikedUser, a.UserPostId }) 
-                });
+                .Where(p => p.ApplicationUser_id == id).ObjectifyPosts();
 
             return Json(new { data = posts }, JsonRequestBehavior.AllowGet);
         }
@@ -66,7 +64,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
         [HttpPost]
         public async Task<ActionResult> CreatePost(string postDetails)
-        {
+        {            
             UserPost post = new UserPost();
 
             post.ApplicationUser_id = User.Identity.GetUserId();
