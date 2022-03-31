@@ -23,6 +23,15 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public ActionResult ShowSocial()
         {
+            if (User.IsInRole("Admin"))
+            {
+                return View();
+            }
+            return RedirectToAction("ShowSocialGeneralUser");
+        } 
+        [HttpGet]
+        public ActionResult ShowSocialGeneralUser()
+        {
             return View();
         }
 
