@@ -175,9 +175,26 @@ namespace SpacePro.Controllers
 
         [HttpPost]
         [Authorize(Roles ="Admin")]
-        public async Task<ActionResult> AddUserRole(string userId, string roleName)
+        public async Task<ActionResult> AddUserRole(string userId,string[] roleName)
         {
-            await UserManager.AddToRolesAsync(userId, roleName);
+            
+
+            await UserManager.RemoveFromRolesAsync(userId, new string[] {"Admin", "Author", "Subscriber"} );
+            
+            
+
+            if (roleName.Length == 1)
+            {
+                await UserManager.AddToRoleAsync(userId, roleName[0]);
+            }
+            else
+            {
+                await UserManager.AddToRolesAsync(userId, roleName);
+            }
+
+            
+
+
             return RedirectToAction("ShowSocial","Social");
         }
 

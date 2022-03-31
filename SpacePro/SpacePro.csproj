@@ -232,6 +232,7 @@
     <Compile Include="Controllers\ChatMessageController.cs" />
     <Compile Include="Controllers\HelperClasses\ApplicationUserHelper.cs" />
     <Compile Include="Controllers\HelperClasses\BodiesHelperCls.cs" />
+    <Compile Include="Controllers\HelperClasses\PostsHelperCls.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\BroadsControllers\PaymentControllers\PaypalController.cs" />
