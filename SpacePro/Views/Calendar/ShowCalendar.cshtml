@@ -6,12 +6,31 @@
     #sub-div {
         background: linear-gradient(to top,#233ac5,black) !important;
     }
+    .getAuthorBtn {
+        width: 250px;
+        height: 100px;
+    }
+    .getSubBtn {
+        width: 250px;
+        height: 100px;
+    }
+    .btn-container{
+        display:flex;
+        align-items:center;
+        padding:10px;
+        align-content:space-between;
+        width:inherit;
+        justify-content:center;
+        margin:10px;
+    }
 </style>
 
 
 
-<button class="getSubBtn btn-info-gradient">Get Sub Of The Month</button>
-<button class="getAuthorBtn btn-danger-gradient">Get Author Of The Month</button>
+<div class="btn-container"> 
+    <button class="getSubBtn btn-info-gradient">Get Sub Of The Month</button>
+    <button class="getAuthorBtn btn-danger-gradient">Get Author Of The Month</button>
+</div>
 
 <div id="author-div" class="card border p-0">
     <div class="card-header">
