@@ -29,7 +29,7 @@ namespace SpacePro.Controllers.BroadsControllers
             var events = await _unitOfWork.Events.GetAll();
             return Json(new { data = events },JsonRequestBehavior.AllowGet);
         }
-
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<ActionResult> GetAuthorOfTheMonth()
         {
@@ -47,14 +47,13 @@ namespace SpacePro.Controllers.BroadsControllers
             }
             return Json(new { data = "No Authors Found" }, JsonRequestBehavior.AllowGet);
         }
-
+        [Authorize(Roles ="Admin")]
         [HttpGet]
         public async Task<ActionResult> GetSubOfTheMonth()
         {
             var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
             var roles = await _unitOfWork.UserRoles.GetAll();
             var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
-
             if (winner != null)
             {
                 var userToModify = users.SingleOrDefault(x => x.Id.Equals(winner.Id));

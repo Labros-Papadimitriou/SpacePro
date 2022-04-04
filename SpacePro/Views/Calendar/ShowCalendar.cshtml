@@ -57,6 +57,7 @@
 </div>
 @section calendar{
     <script type="text/javascript">
+
         $("#sub-div").hide();
         $("#author-div").hide();
 
@@ -74,7 +75,6 @@
         })
 
 
-
         function GetAuthorOfTheMonth() {
             let settings = {
                 "url": "/Calendar/GetAuthorOfTheMonth",
@@ -89,7 +89,8 @@
                                      <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
                                      <p class="card-text">Author Of The Month</p>
                                     `;
-                response == "No Authors Found" ? $("#author").append(response) : $("#author").append(template);
+
+                     response == "No Authors Found" ? $("#author").append(`<h4>${response}</h4>`) : $("#author").append(template);
             });
         }
 
@@ -107,7 +108,8 @@
                                     <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
                                      <p class="card-text">Subscriber Of The Month</p>
                                     `;
-                response == "No Subscribers Found" ? $("#sub").append(response) : $("#sub").append(template);
+
+                    response == "No Subscribers Found" ? $("#sub").append(`<h4>${response}</h4>`) : $("#sub").append(template);
             });
         }
     </script>
