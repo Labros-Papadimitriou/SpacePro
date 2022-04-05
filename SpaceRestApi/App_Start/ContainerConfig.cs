@@ -1,12 +1,14 @@
 ﻿using Autofac;
-using Autofac.Integration.Mvc;
+using Autofac.Integration.WebApi;
 using MyDatabase;
 using Persistance_UnitOfWork;
 using SpacePro;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
+using System.Web.Http;
 using System.Web.Mvc;
 
 namespace SpaceRestApi.App_Start
@@ -16,11 +18,11 @@ namespace SpaceRestApi.App_Start
         public static void RegisterContainer()
         {
             var builder = new ContainerBuilder();
-            builder.RegisterControllers();
+            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
             builder.RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerRequest();
             builder.RegisterType<ApplicationDbContext>().InstancePerRequest();
             var container = builder.Build();
-            DependencyResolver.SetResolver(new AutofacDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new AutofacWebApiDependencyResolver(container);
         }
     }
 }
