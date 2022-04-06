@@ -12,16 +12,19 @@ using Entities.IdentityUsers;
 using Microsoft.AspNet.Identity;
 using System.Threading.Tasks;
 using System.Net;
+using AutoMapper;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
     public class ArticleController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public ArticleController(IUnitOfWork unitOfWork)
+        public ArticleController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -59,46 +62,23 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpPost]
         public async Task<ActionResult> CreateNewArticle(CreateArticleDto articleDto, HttpPostedFileBase image)
         {
-            if (image != null)
-            {
-                image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
-            }
-
-            if (articleDto is null)
-            {
-                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest,"Article wasn't in the right format");
-            }
+            if (image != null) image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
+            if (articleDto is null) return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest,"Article wasn't in the right format");
+            if (image is null) return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, "Article Image wasn't int the right format");
 
             ArticleImage articleImage = new ArticleImage();
             articleImage.Name = image.FileName;
             articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
             articleImage.AlternativeText = (image.FileName).Split('.')[0];
-            try
-            {
-                _unitOfWork.ArticleImages.Add(articleImage);
-            }
-            catch (Exception ex)
-            {
-                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, ex.Message);
-            }
+            articleDto.ArticleImage = articleImage;
 
-            Article article = new Article();
-            article.Title = articleDto.Title;
-            article.ShortDescription = articleDto.ShortDescription;
-            article.FullDescription = articleDto.FullDescription;
-            article.AuthorName = articleDto.AuthorName;
-            article.PostLikes = 0;
-            article.PostDate = DateTime.Now;
-            article.ArticleCategoryId = articleDto.ArticleCategoryId;
-            article.ArticleImage = articleImage;
-            try
-            {
-                _unitOfWork.Articles.Add(article);
-            }
-            catch (Exception ex)
-            {
-                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, ex.Message);
-            }
+            try{_unitOfWork.ArticleImages.Add(articleImage);}
+            catch (Exception ex){return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, ex.Message);}
+
+            var article = _mapper.Map<Article>(articleDto);
+
+            try{_unitOfWork.Articles.Add(article);}
+            catch (Exception ex){return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, ex.Message);}
 
             await _unitOfWork.Complete();
 
@@ -106,30 +86,25 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> EditArticle(int? articleId, CreateArticleDto articleDto, HttpPostedFileBase image)
+        public async Task<ActionResult> EditArticle(int? articleId, EditArticleDto editArticleDto, HttpPostedFileBase image)
         {
+            if (articleId is null) { return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest); }
             var article = (await _unitOfWork.Articles.GetArticlesWithImage()).FirstOrDefault(x => x.ArticleId == articleId);
 
-            if (image != null)
-            {
-                image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
+            if (image is null) {return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest, "Article Image wasn't int the right format");}
 
-                ArticleImage articleImage = new ArticleImage();
-                articleImage.Name = image.FileName;
-                articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
-                articleImage.AlternativeText = (image.FileName).Split('.')[0];
-                _unitOfWork.ArticleImages.Add(articleImage);
-                _unitOfWork.ArticleImages.Remove(article.ArticleImage);
+            image.SaveAs(Server.MapPath("/Content/ArticlesImages/" + image.FileName));
 
-                article.ArticleImage = articleImage;
-            }
+            ArticleImage articleImage = new ArticleImage();
+            articleImage.Name = image.FileName;
+            articleImage.Url = "/Content/ArticlesImages/" + image.FileName;
+            articleImage.AlternativeText = (image.FileName).Split('.')[0];
+            _unitOfWork.ArticleImages.Add(articleImage);
+            _unitOfWork.ArticleImages.Remove(article.ArticleImage);
 
-            article.Title = articleDto.Title;
-            article.ShortDescription = articleDto.ShortDescription;
-            article.FullDescription = articleDto.FullDescription;
-            article.AuthorName = articleDto.AuthorName;
-            article.PostDate = DateTime.Now;
-            article.ArticleCategoryId = articleDto.ArticleCategoryId;
+            editArticleDto.ArticleImage = articleImage;
+
+            _mapper.Map(editArticleDto, article);
 
             _unitOfWork.Articles.ModifyEntity(article);
             await _unitOfWork.Complete();
@@ -140,8 +115,12 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpDelete]
         public async Task<ActionResult> DeleteArticle(int? articleId, int? imageId)
         {
+            if (articleId is null){return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);}
             var article = await _unitOfWork.Articles.Get((int)articleId);
+
+            if (imageId is null) { return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest); }
             var articleImage = await _unitOfWork.ArticleImages.Get((int)imageId);
+
             var imageName = articleImage.Name;
 
             _unitOfWork.ArticleImages.Remove(articleImage);
@@ -167,15 +146,18 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpGet]
         public async Task<ActionResult> GetArticleDetails(int? id)
         {
-            var article = (await _unitOfWork.Articles.GetArticlesFullModel()).FirstOrDefault(x=>x.ArticleId==id);
+            if (id is null) { return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest); }
+
+            var article = (await _unitOfWork.Articles.GetArticlesFullModel()).FirstOrDefault(x=>x.ArticleId == id);
             return View(article);
         }
 
         [HttpGet]
-        public async Task<JsonResult> GiveLike(int? articleId)
+        public async Task<ActionResult> GiveLike(int? articleId)
         {
             var likedUserId = User.Identity.GetUserId();
 
+            if (articleId is null) { return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest); }
             var article = await _unitOfWork.Articles.Get((int)articleId);
 
             var userNotYetLikedThisArticle = (await _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == article.ArticleId)).Count() == 0;
@@ -194,10 +176,11 @@ namespace SpacePro.Controllers.BroadsControllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> RemoveLike(int? articleId)
+        public async Task<ActionResult> RemoveLike(int? articleId)
         {
             var likedUserId = User.Identity.GetUserId();
 
+            if (articleId is null) { return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest); }
             var article = await _unitOfWork.Articles.Get((int)articleId);
 
             var articleLike = (await _unitOfWork.ArticleLikes.Find(x => x.LikedUser == likedUserId && x.ArticleId == articleId)).FirstOrDefault();

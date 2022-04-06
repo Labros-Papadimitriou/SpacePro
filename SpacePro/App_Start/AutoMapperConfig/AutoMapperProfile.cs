@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Entities.BroadClasses;
 using Entities.IdentityUsers;
 using SpacePro.Models.Dtos;
 using System;
@@ -13,8 +14,10 @@ namespace SpacePro.AutoMapperConfig
     {
         public AutoMapperProfile()
         {
-            CreateMap<EditUserDto, ApplicationUser > ();
+            //source --> destination
+            CreateMap<EditUserDto, ApplicationUser> ();
+            CreateMap<CreateArticleDto, Article> ();
+            CreateMap<EditArticleDto, Article> ();
         }
-    
     }
 }

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SpacePro.Models.Dtos
 {
-    public class CreateArticleDto
+    public class EditArticleDto
     {
         public string Title { get; set; }
         public string ShortDescription { get; set; }
@@ -19,7 +19,7 @@ namespace SpacePro.Models.Dtos
 
         public DateTime PostDate { get; set; } = DateTime.Now;
 
-        public int PostLikes { get; set; } = 0;
+        public int PostLikes { get; set; }
 
         public ArticleImage ArticleImage { get; set; }
     }
