@@ -94,10 +94,13 @@
             <!-- PAGE-HEADER -->
             <div class="page-header">
                 <h1 class="page-title">Article Details</h1>
-                <div style="margin-left:350px">
-                    <button id="edit-offcanvas" class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#edit" aria-controls="offcanvasWithBothOptions">Edit</button>
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete">Delete</button>
-                </div>
+                @if (User.IsInRole("Admin"))
+                {
+                    <div style="margin-left:350px">
+                        <button id="edit-offcanvas" class="btn btn-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#edit" aria-controls="offcanvasWithBothOptions">Edit</button>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete">Delete</button>
+                    </div>
+                }
                 <div>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/Article/ShowArticles">All Articles</a></li>
