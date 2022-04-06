@@ -127,7 +127,7 @@
                     "Content-Type": "application/json"
                 },
                 "data": JSON.stringify({
-                    "newMessage": `<h4 style="color:red">New Winner Announcement: <small style="color:white">The ${base} that wins this month is ${response.data.Name}<small></h4>`
+                    "newMessage": `<h4 style="color:red">New Winner Announcement: <small style="color:white">The ${base} that wins this month is ${response.data.Name}<span class="bullet">&#8226;</span>${new Date().toUTCString().replace("GMT", "")}<small></h4><hr/>`
                 }),
             };
 
