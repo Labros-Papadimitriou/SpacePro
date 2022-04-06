@@ -85,13 +85,16 @@
 
             $.ajax(settings).done(function (response) {
                 let template = `
-                                      <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
-                                     <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
-                                     <p class="card-text">Author Of The Month</p>
-                                    `;
+                                          <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
+                                         <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
+                                         <p class="card-text">Author Of The Month</p>
+                                        `;
 
-                     response == "No Authors Found" ? $("#author").append(`<h4>${response}</h4>`) : $("#author").append(template);
-            });
+                response == "No Authors Found" ? $("#author").append(`<h4>${response}</h4>`) : $("#author").append(template);
+                if (response !== "No Authors Found") {
+                    SendWinnerMessage(response, "Author")
+                }
+            })
         }
 
         function GetSubOfTheMonth() {
@@ -104,12 +107,32 @@
 
             $.ajax(settings).done(function (response) {
                 let template = `
-                                       <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
-                                    <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
-                                     <p class="card-text">Subscriber Of The Month</p>
-                                    `;
+                                           <img class=" rounded w-10 h-10" src="${response.data.Photo}"/>
+                                        <h4 class="h4 mb-0 mt-3"><a href="/AppUser/AnyUserProfile/${response.data.Id}">${response.data.Name}</a></h4>
+                                         <p class="card-text">Subscriber Of The Month</p>
+                                        `;
 
-                    response == "No Subscribers Found" ? $("#sub").append(`<h4>${response}</h4>`) : $("#sub").append(template);
+                response == "No Subscribers Found" ? $("#sub").append(`<h4>${response}</h4>`) : $("#sub").append(template);
+                if (response !== "No Subscribers Found") {
+                    SendWinnerMessage(response, "Subscriber", "blue");
+                }
+            });
+        }
+        function SendWinnerMessage(response, base) {
+            let settings = {
+                "url": "/ChatMessage/CreateChatMessage",
+                "method": "POST",
+                "timeout": 0,
+                "headers": {
+                    "Content-Type": "application/json"
+                },
+                "data": JSON.stringify({
+                    "newMessage": `<h4 style="color:red">New Winner Announcement: <small style="color:white">The ${base} that wins this month is ${response.data.Name}<small></h4>`
+                }),
+            };
+
+            $.ajax(settings).done(function (response) {
+                console.log(response);
             });
         }
     </script>
