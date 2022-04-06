@@ -114,7 +114,7 @@
 
                 response == "No Subscribers Found" ? $("#sub").append(`<h4>${response}</h4>`) : $("#sub").append(template);
                 if (response !== "No Subscribers Found") {
-                    SendWinnerMessage(response, "Subscriber", "blue");
+                    SendWinnerMessage(response, "Subscriber");
                 }
             });
         }
