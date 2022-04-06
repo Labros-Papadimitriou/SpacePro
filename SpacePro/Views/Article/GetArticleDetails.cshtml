@@ -158,75 +158,9 @@
 <!--app-content closed-->
 
 @section article{
-    <script>
-        // like/unlike - button
-        $(document).ready(function () {
-            $("#like-btn").click(function () {
-
-                if ($("#like-btn").html() == "Like") {
-                    $("#like-btn").html('Unlike');
-                    $("#like-btn").attr('class', "btn btn-outline-danger");
-
-                    $.ajax({
-                        url: `/Article/GiveLike?articleId=@Model.ArticleId`,
-                    dataType: 'json',
-                    type: 'get',
-                    success: function (articleLikes) {
-                        $("#article-likes").html(articleLikes + " people like this article");
-                    }
-                });
-                }
-                else {
-                    $("#like-btn").html('Like');
-                    $("#like-btn").attr('class', "btn btn-outline-success");
-
-
-                    $.ajax({
-                        url: `/Article/RemoveLike?articleId=@Model.ArticleId`,
-                    dataType: 'json',
-                    type: 'get',
-                    success: function (articleLikes) {
-                        $("#article-likes").html(articleLikes + " people like this article");
-                    }
-                });
-                }
-
-            });
-        });
-    </script>
-
-    <script type="text/javascript">
-        // delete article
-        $("#delete-btn").click(function () {
-            $.ajax({
-                url: "/Article/DeleteArticle?articleId=@Model.ArticleId&imageId=@Model.ArticleImage.ArticleImageId",
-                type: "delete",
-                dataType: "json",
-                success: function (path) {
-                    window.location.href = path;
-                }
-            })
-        })
-
-    </script>
-
-    <script>
-        //edit form pre - fill category option
-        $(document).ready(function () {
-            $('#edit-category option[value=@Model.ArticleCategoryId]').attr('selected', '');
-        })
-    </script>
-
-    <script>
-        //clear edit form
-        $("#clear-btn").click(function () {
-            $("#edit-title").val("");
-            $("#edit-authorname").val("");
-            $("#edit-shortdesc").val("");
-            $("#edit-fulldesc").val("");
-            $("#edit-title").val("");
-            $('#edit-category option[value=7]').attr('selected', '');
-        })
-    </script>
-
+    <script id="LikeUnlikeArticle.js" type="text/javascript" src="~/Scripts/ArticleScripts/LikeUnlikeArticle.js" data-article-id="@Model.ArticleId"></script>
+    <script id="DeleteArticle.js" type="text/javascript" src="~/Scripts/ArticleScripts/DeleteArticle.js" 
+            data-article-image-id="@Model.ArticleImage.ArticleImageId"
+            data-article-id="@Model.ArticleId"></script>
+    <script src="~/Scripts/ArticleScripts/EditArticle.js"></script>
 }
