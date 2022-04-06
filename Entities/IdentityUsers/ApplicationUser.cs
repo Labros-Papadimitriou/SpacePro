@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Entities.Observer;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -37,12 +38,21 @@ namespace Entities.IdentityUsers
 
         public UserImage UserImage { get; set; }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager,IUserObserver userObserver)
         {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
+            await manager.AddToRoleAsync(userIdentity.GetUserId(), "User");
+            userObserver.AddToUsersList(this);
             return userIdentity;
         }
+       private async Task Update(UserManager<ApplicationUser> manager)
+        {
+            if (!IsWinnerSub)
+            {
+               await manager.AddToRoleAsync(Id, "Subscriber");
+            }
+        }
+        
+     
     }
 }

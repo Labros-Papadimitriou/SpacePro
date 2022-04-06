@@ -11,14 +11,18 @@ namespace SpacePro.Controllers.HelperClasses
     public static class ApplicationUserHelper
     {
         #region SubOfTheMonth
-        public static WinnersDto GetSubOfTheMonth(this IEnumerable<ApplicationUser> users, IEnumerable<IdentityRole> roles)
+        public static WinnersDto GetSubOfTheMonth(this IEnumerable<ApplicationUser> appUsers, IEnumerable<IdentityRole> roles)
         {
-            var subs = GetSubscribers(users,roles);
-            var count = subs.Count();
+            var users = GetUsers(appUsers,roles);
+            var count = users.Count();
             if ( !IsSubCountZero(count))
             {
                 var randomIndex = GetRandomIndex(count);
-                var winner = GetWinner(subs, randomIndex);
+                foreach (var user in users)
+                {
+                    user.IsWinnerSub = false;
+                }
+                var winner = GetWinner(users, randomIndex);
                 return new WinnersDto(winner.Id,winner.UserName,winner.UserImage != null ? winner.UserImage.Url : @"\Template\sash\assets\images\users\2.jpg");
             }
             return null;
@@ -36,9 +40,9 @@ namespace SpacePro.Controllers.HelperClasses
             return random.Next(count);
         }
         //this requires finding the roles name to string in order to work
-        public static IEnumerable<ApplicationUser> GetSubscribers(IEnumerable<ApplicationUser> users,IEnumerable<IdentityRole> roles)
+        public static IEnumerable<ApplicationUser> GetUsers(IEnumerable<ApplicationUser> users,IEnumerable<IdentityRole> roles)
         {
-            var subs = roles.Select(x => x.Name == "Subscriber"?x.Id:null).Where(x=>x!=null);
+            var subs = roles.Select(x => x.Name == "User"?x.Id:null).Where(x=>x!=null);
             return users.Where(x=>x.Roles.Any(s=>subs.Contains(s.RoleId)));
         }
         #endregion

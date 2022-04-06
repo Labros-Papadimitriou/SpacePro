@@ -61,7 +61,15 @@ namespace SpacePro
                 role.Name = "Subscriber";
                 roleManager.Create(role);
 
-            }
+            }  
+            if (!roleManager.RoleExists("User"))
+            {
+                var role = new IdentityRole();
+                role.Name = "User";
+                roleManager.Create(role);
+
+            } 
+         
         }
     }
 }

@@ -74,11 +74,12 @@
                                                                     <td class="font-weight-bold">${users[i].Role == null ? "Not Set Yet" : roles.filter(x => x.Users != null).filter(x => x.Users.map(s => s.UserId).includes(users[i].Id))[0].Name}</td>
                                                                     <td>
                                                                         <div id="setRoleList${i}" style="display:inline-block">&nbsp;
-                                                                            <select multiple id="roleList${i}" style="background-color:beige;">
+                                                                            <select rows="5" multiple id="roleList${i}" style="background-color:beige;">
                                                                                  <option disabled>Select Roles</option>
                                                                                  <option>Admin</option>
                                                                                  <option>Author</option>
                                                                                  <option>Subscriber</option>
+                                                                                 <option>User</option>
                                                                             </select>
                                                                             <button onclick="FindRole(${i}, '${users[i].Id}')" class="btn btn-blue">Save Changes</button>
                                                                         </div>

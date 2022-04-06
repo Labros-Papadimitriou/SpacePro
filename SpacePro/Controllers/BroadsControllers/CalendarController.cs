@@ -53,7 +53,7 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
             var roles = await _unitOfWork.UserRoles.GetAll();
-            var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
+            var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users,roles);
             if (winner != null)
             {
                 var userToModify = users.SingleOrDefault(x => x.Id.Equals(winner.Id));
