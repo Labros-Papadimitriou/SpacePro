@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Entities.Observer;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
@@ -39,10 +40,20 @@ namespace Entities.IdentityUsers
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
-            // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-            // Add custom user claims here
+            await manager.AddToRoleAsync(userIdentity.GetUserId(), "User");
             return userIdentity;
         }
+       public async Task Update(UserManager<ApplicationUser> manager)
+        {
+            if (IsWinnerSub)
+            {
+               await manager.AddToRoleAsync(this.Id, "Subscriber");
+                await manager.RemoveFromRoleAsync(Id, "User");
+            }
+            
+        }
+        
+     
     }
 }

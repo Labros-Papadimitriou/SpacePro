@@ -1,4 +1,6 @@
-﻿using MyDatabase;
+﻿using Entities.IdentityUsers;
+using Microsoft.AspNet.Identity.Owin;
+using MyDatabase;
 using Persistance_UnitOfWork;
 using System;
 using System.Collections.Generic;
@@ -11,7 +13,23 @@ namespace SpacePro.Controllers.BroadsControllers
 {
     public class CalendarController : Controller
     {
-       private readonly IUnitOfWork _unitOfWork;
+        private readonly IUnitOfWork _unitOfWork;
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                if (_userManager == null && HttpContext == null)
+                {
+                    return new ApplicationUserManager(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+                }
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         public CalendarController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
@@ -53,7 +71,7 @@ namespace SpacePro.Controllers.BroadsControllers
         {
             var users = await _unitOfWork.ApplicationUsers.GetAllUsersWithRolesAndPosts();
             var roles = await _unitOfWork.UserRoles.GetAll();
-            var winner = HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users, roles);
+            var winner = await HelperClasses.ApplicationUserHelper.GetSubOfTheMonth(users,roles,UserManager);
             if (winner != null)
             {
                 var userToModify = users.SingleOrDefault(x => x.Id.Equals(winner.Id));
