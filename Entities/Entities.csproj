@@ -66,13 +66,18 @@
     <Compile Include="BroadClasses\Article.cs" />
     <Compile Include="BroadClasses\ArticleCategory.cs" />
     <Compile Include="BroadClasses\ArticleImage.cs" />
+    <Compile Include="BroadClasses\Newsletter.cs" />
     <Compile Include="ChatMessage.cs" />
     <Compile Include="BroadClasses\Event.cs" />
     <Compile Include="IdentityUsers\ApplicationUser.cs" />
     <Compile Include="IdentityUsers\ArticleLike.cs" />
+    <Compile Include="IdentityUsers\NewsListener.cs" />
     <Compile Include="IdentityUsers\PostLike.cs" />
     <Compile Include="IdentityUsers\UserImage.cs" />
     <Compile Include="IdentityUsers\UserPost.cs" />
+    <Compile Include="Observer\INewsListener.cs" />
+    <Compile Include="Observer\News.cs" />
+    <Compile Include="Observer\NewsSubject.cs" />
     <Compile Include="Observer\UserObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
