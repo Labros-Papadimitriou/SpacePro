@@ -38,19 +38,20 @@ namespace Entities.IdentityUsers
 
         public UserImage UserImage { get; set; }
 
-        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager,IUserObserver userObserver)
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             await manager.AddToRoleAsync(userIdentity.GetUserId(), "User");
-            userObserver.AddToUsersList(this);
             return userIdentity;
         }
-       private async Task Update(UserManager<ApplicationUser> manager)
+       public async Task Update(UserManager<ApplicationUser> manager)
         {
-            if (!IsWinnerSub)
+            if (IsWinnerSub)
             {
-               await manager.AddToRoleAsync(Id, "Subscriber");
+               await manager.AddToRoleAsync(this.Id, "Subscriber");
+                await manager.RemoveFromRoleAsync(Id, "User");
             }
+            
         }
         
      

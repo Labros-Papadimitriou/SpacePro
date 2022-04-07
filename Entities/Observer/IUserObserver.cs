@@ -1,4 +1,5 @@
 ﻿using Entities.IdentityUsers;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace Entities.Observer
     {
         void AddToUsersList(ApplicationUser user);
         void RemoveFromUsersList(ApplicationUser user);
-        void Notify(IEnumerable<ApplicationUser> users);
+        Task Notify(IEnumerable<ApplicationUser> users,UserManager<ApplicationUser> manager);
     }
 }

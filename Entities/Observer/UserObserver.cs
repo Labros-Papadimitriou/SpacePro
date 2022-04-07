@@ -1,4 +1,5 @@
 ﻿using Entities.IdentityUsers;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,29 @@ namespace Entities.Observer
 {
     public class UserObserver : IUserObserver
     {
-        public IEnumerable<ApplicationUser> UsersList { get; set; }
-
+        public List<ApplicationUser> UsersList { get; set; }
+        public UserObserver()
+        {
+            UsersList = new List<ApplicationUser>();
+        }
         public void AddToUsersList(ApplicationUser user)
         {
             UsersList.Append(user);
         }
-        public void Notify(IEnumerable<ApplicationUser> users)
+        public async Task Notify(IEnumerable<ApplicationUser> users,UserManager<ApplicationUser> manager)
         {
-            throw new NotImplementedException();
+            List<Task> tasks = new List<Task>();
+            UsersList.AddRange(users);
+            foreach (var user in UsersList)
+            {
+               tasks.Add(user.Update(manager));
+            }
+            await Task.WhenAll(tasks);
         }
 
         public void RemoveFromUsersList(ApplicationUser user)
         {
-            throw new NotImplementedException();
+            UsersList.Remove(user);
         }
     }
 }
