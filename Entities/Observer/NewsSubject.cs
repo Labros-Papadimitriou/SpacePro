@@ -10,11 +10,21 @@ namespace Entities.Observer
 {
     public abstract class NewsSubject
     {
-        private readonly List<INewsListener> _newsListeners;
+        private List<NewsListener> _newsListeners;
 
-        public NewsSubject(List<INewsListener> newsListeners)
+        public NewsSubject(List<NewsListener> newsListeners)
         {
             _newsListeners = newsListeners;
+        }
+
+        public void AttachRangeListeners(List<NewsListener> listeners)
+        {
+            _newsListeners.AddRange(listeners);
+        }
+
+        public void DetachListener(NewsListener listener)
+        {
+            _newsListeners.Remove(listener);
         }
 
         private void Notify(Newsletter newsletter)
@@ -25,20 +35,9 @@ namespace Entities.Observer
             }
         }
 
-        public void AttachListener(INewsListener listener)
-        {
-            _newsListeners.Add(listener);
-        }
-        public void DetachListener(INewsListener listener)
-        {
-            _newsListeners.Remove(listener);
-        }
-
         public void AddNewsletter(Newsletter newsletter)
         {
             Notify(newsletter);
         }
-      
-
     }
 }

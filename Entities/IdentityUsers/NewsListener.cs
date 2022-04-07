@@ -15,7 +15,7 @@ namespace Entities.IdentityUsers
 
         public void Update(Newsletter newsletter)
         {
-            Console.WriteLine("go");
+            throw new NotImplementedException();
         }
     }
 }

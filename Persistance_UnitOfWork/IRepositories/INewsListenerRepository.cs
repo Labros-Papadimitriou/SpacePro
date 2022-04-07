@@ -5,12 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Entities.Observer
+namespace Persistance_UnitOfWork.IRepositories
 {
-    public class News : NewsSubject
+    public interface INewsListenerRepository : IRepository<NewsListener>
     {
-        public News(List<NewsListener> newsListeners) : base(newsListeners)
-        {
-        }
     }
 }

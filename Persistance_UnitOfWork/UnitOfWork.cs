@@ -32,6 +32,8 @@ namespace Persistance_UnitOfWork
             ArticleLikes = new ArticleLikeRepository(_context);
             UserRoles = new UserRolesRepository(_context);
             ChatMessages = new ChatMessageRepository(_context);
+            Newsletters = new NewsletterRepository(_context);
+            NewsListeners = new NewsListenerRepository(_context);
         }
 
         #region IUnitOfWork Members
@@ -52,6 +54,8 @@ namespace Persistance_UnitOfWork
         public IPostLikeRepository PostLikes { get; private set; }
         public IArticleLikeRepository ArticleLikes { get; private set; }
         public IChatMessageRepository ChatMessages { get; private set; }
+        public INewsletterRepository Newsletters { get; private set; }
+        public INewsListenerRepository NewsListeners { get; private set; }
         #endregion
 
         public async Task<int> Complete()

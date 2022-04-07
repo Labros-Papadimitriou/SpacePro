@@ -24,8 +24,6 @@ namespace SpacePro.Controllers.AppUsersContollers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        ApplicationDbContext db = new ApplicationDbContext();
-
         public AppUserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -58,17 +56,6 @@ namespace SpacePro.Controllers.AppUsersContollers
             return Json(new { data = filteredUsers }, JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult AddNewsletter(Newsletter newsletter)
-        {
-            db.Newsletters.Add(newsletter);
-            db.SaveChanges();
-            var listeners = db.NewsListeners.ToList();
-
-            News news = new News(listeners);
-            
-        }
-
-
         [HttpGet]
         public async Task<ActionResult> AnyUserProfile(string id)
         {
@@ -77,27 +64,49 @@ namespace SpacePro.Controllers.AppUsersContollers
             return View("UserProfile", user);
         }
 
-        [HttpGet]
-        public ActionResult AddListener(string addInNews)
+        [HttpPost]
+        public async Task<ActionResult> AddNewsletter(Newsletter newsletter)
         {
-           
+            _unitOfWork.Newsletters.Add(newsletter);
+            await _unitOfWork.Complete();
+
+            List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
+
+            News news = new News(listeners);
+            news.AttachRangeListeners(listeners);
+            news.AddNewsletter(newsletter);
+
+            return Json(newsletter, JsonRequestBehavior.AllowGet);    
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> AddListener(string addInNews)
+        {
+            var allListeners = await _unitOfWork.NewsListeners.GetAll();
+
             if (addInNews == "yes")
             {
                 NewsListener listener = new NewsListener();
                 listener.UserId = User.Identity.GetUserId();
 
-                db.Entry(listener).State = EntityState.Added;
-                db.SaveChanges();
+                _unitOfWork.NewsListeners.Add(listener);
+                await _unitOfWork.Complete();
 
                 return RedirectToAction("UserProfile");
             }
             else
             {
-                if (db.NewsListeners.Any(li => li.UserId == User.Identity.GetUserId()))
+                if (allListeners.Any(li => li.UserId == User.Identity.GetUserId()))
                 {
-                    var listener = db.NewsListeners.Where(li => li.UserId == User.Identity.GetUserId());
-                    db.Entry(listener).State = EntityState.Deleted;
-                    db.SaveChanges();
+                    var listener = allListeners.Where(li => li.UserId == User.Identity.GetUserId()).FirstOrDefault();
+
+                    List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
+                    News news = new News(listeners);
+                    news.DetachListener(listener);
+
+                    _unitOfWork.NewsListeners.Remove(listener);
+                    await _unitOfWork.Complete();
+
                     return RedirectToAction("UserProfile");
                 }
 

@@ -67,6 +67,8 @@
     <Compile Include="IRepositories\IChatMessageRepository.cs" />
     <Compile Include="IRepositories\ICometRepository.cs" />
     <Compile Include="IRepositories\IEventRepository.cs" />
+    <Compile Include="IRepositories\INewsletterRepository.cs" />
+    <Compile Include="IRepositories\INewsListenerRepository.cs" />
     <Compile Include="IRepositories\IPostLikeRepository.cs" />
     <Compile Include="IRepositories\IMoonRepository.cs" />
     <Compile Include="IRepositories\IPlanetRepository.cs" />
@@ -87,6 +89,8 @@
     <Compile Include="Repositories\ChatMessageRepository.cs" />
     <Compile Include="Repositories\CometRepository.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
+    <Compile Include="Repositories\NewsletterRepository.cs" />
+    <Compile Include="Repositories\NewsListenerRepository.cs" />
     <Compile Include="Repositories\PostLikeRepository.cs" />
     <Compile Include="Repositories\MoonRepository.cs" />
     <Compile Include="Repositories\PlanetRepository.cs" />

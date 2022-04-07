@@ -26,6 +26,8 @@ namespace Persistance_UnitOfWork
         IPostLikeRepository PostLikes { get; }
         IUserRolesRepository UserRoles { get; }
         IChatMessageRepository ChatMessages { get; }
+        INewsletterRepository Newsletters { get; }
+        INewsListenerRepository NewsListeners { get; }
         Task<int> Complete();
     }
 }
