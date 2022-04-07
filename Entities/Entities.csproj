@@ -73,7 +73,6 @@
     <Compile Include="IdentityUsers\PostLike.cs" />
     <Compile Include="IdentityUsers\UserImage.cs" />
     <Compile Include="IdentityUsers\UserPost.cs" />
-    <Compile Include="Observer\IUserObserver.cs" />
     <Compile Include="Observer\UserObserver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

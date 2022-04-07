@@ -51,9 +51,6 @@ namespace Entities.IdentityUsers
                await manager.AddToRoleAsync(this.Id, "Subscriber");
                 await manager.RemoveFromRoleAsync(Id, "User");
             }
-            
         }
-        
-     
     }
 }

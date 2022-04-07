@@ -8,31 +8,16 @@ using System.Threading.Tasks;
 
 namespace Entities.Observer
 {
-    public class UserObserver : IUserObserver
+    public class UserObserver
     {
-        public List<ApplicationUser> UsersList { get; set; }
-        public UserObserver()
-        {
-            UsersList = new List<ApplicationUser>();
-        }
-        public void AddToUsersList(ApplicationUser user)
-        {
-            UsersList.Append(user);
-        }
         public async Task Notify(IEnumerable<ApplicationUser> users,UserManager<ApplicationUser> manager)
         {
             List<Task> tasks = new List<Task>();
-            UsersList.AddRange(users);
-            foreach (var user in UsersList)
+            foreach (var user in users)
             {
                tasks.Add(user.Update(manager));
             }
             await Task.WhenAll(tasks);
-        }
-
-        public void RemoveFromUsersList(ApplicationUser user)
-        {
-            UsersList.Remove(user);
         }
     }
 }
