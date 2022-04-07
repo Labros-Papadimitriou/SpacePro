@@ -58,5 +58,7 @@ namespace MyDatabase
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<ArticleLike> ArticleLikes { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
+        public DbSet<Newsletter> Newsletters { get; set; }
+        public DbSet<NewsListener> NewsListeners { get; set; }
     }
 }

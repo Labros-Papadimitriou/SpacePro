@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Entities.BroadClasses;
 using Entities.IdentityUsers;
+using Entities.Observer;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using MyDatabase;
@@ -21,6 +23,8 @@ namespace SpacePro.Controllers.AppUsersContollers
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+
+        ApplicationDbContext db = new ApplicationDbContext();
 
         public AppUserController(IUnitOfWork unitOfWork, IMapper mapper)
         {
@@ -45,7 +49,7 @@ namespace SpacePro.Controllers.AppUsersContollers
             foreach (var id in idsArray)
             {
                 var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(id);
-                
+
                 users.Add(user);
             }
 
@@ -54,13 +58,52 @@ namespace SpacePro.Controllers.AppUsersContollers
             return Json(new { data = filteredUsers }, JsonRequestBehavior.AllowGet);
         }
 
+        public ActionResult AddNewsletter(Newsletter newsletter)
+        {
+            db.Newsletters.Add(newsletter);
+            db.SaveChanges();
+            var listeners = db.NewsListeners.ToList();
+
+            News news = new News(listeners);
+            
+        }
+
 
         [HttpGet]
         public async Task<ActionResult> AnyUserProfile(string id)
         {
             var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(id);
 
-            return View("UserProfile",user);
+            return View("UserProfile", user);
+        }
+
+        [HttpGet]
+        public ActionResult AddListener(string addInNews)
+        {
+           
+            if (addInNews == "yes")
+            {
+                NewsListener listener = new NewsListener();
+                listener.UserId = User.Identity.GetUserId();
+
+                db.Entry(listener).State = EntityState.Added;
+                db.SaveChanges();
+
+                return RedirectToAction("UserProfile");
+            }
+            else
+            {
+                if (db.NewsListeners.Any(li => li.UserId == User.Identity.GetUserId()))
+                {
+                    var listener = db.NewsListeners.Where(li => li.UserId == User.Identity.GetUserId());
+                    db.Entry(listener).State = EntityState.Deleted;
+                    db.SaveChanges();
+                    return RedirectToAction("UserProfile");
+                }
+
+                return RedirectToAction("UserProfile");
+            }
+            
         }
 
         [HttpPost]
@@ -129,7 +172,7 @@ namespace SpacePro.Controllers.AppUsersContollers
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
 
-            if ( (await _unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
+            if ((await _unitOfWork.ApplicationUsers.GetUserWithImages(userId)).UserImage == null)
             {
                 return Json(new { data = "" }, JsonRequestBehavior.AllowGet);
             }
@@ -139,12 +182,12 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             var userImg = (await _unitOfWork.UserImages
                 .Find(x => x.UserImageId == imgId))
-                .Select(x=> new {x.Url,x.AlternativeText})
+                .Select(x => new { x.Url, x.AlternativeText })
                 .FirstOrDefault();
 
-            return Json( new { data = userImg },JsonRequestBehavior.AllowGet);
+            return Json(new { data = userImg }, JsonRequestBehavior.AllowGet);
         }
-    
+
         private void DeleteImageFromFolder(string imageName)
         {
             var filePath = Server.MapPath("/Content/UserImages/" + imageName);
