@@ -70,6 +70,12 @@
             ::-webkit-scrollbar-thumb:hover {
                 background: #555;
             }
+
+    /*Nav Bar Style*/
+        .myNav a {
+            font-size: 1.1rem !important;
+            font-family: "Permanent Marker", cursive !important;
+        }
     </style>
 
 </head>
@@ -87,7 +93,7 @@
             <!-- app-Header -->
             <div class="app-header header sticky" style="background-color:black">
                 <div class="container main-container">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between myNav">
                         <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
                         <!-- sidebar-toggle-->
                         <a class="logo-horizontal " href="/Home/Index">
@@ -118,6 +124,9 @@
                             </div>
                             <div class="slide">
                                 <a class="side-menu__item" data-bs-toggle="slide" href="/News/AddNewsletter"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">NewsLetters</span></a>
+                            </div>
+                            <div class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="/Dashboard/UserRoles"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Dashboard</span></a>
                             </div>
                         }
                         <!--PAYMENT-->

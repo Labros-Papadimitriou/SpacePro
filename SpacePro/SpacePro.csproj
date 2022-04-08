@@ -236,6 +236,8 @@
     <Compile Include="Controllers\BroadsControllers\PaymentControllers\PaymentController.cs" />
     <Compile Include="Controllers\BroadsControllers\SocialController.cs" />
     <Compile Include="Controllers\ChatMessageController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HelperClasses\ApplicationUserHelper.cs" />
     <Compile Include="Controllers\HelperClasses\BodiesHelperCls.cs" />
     <Compile Include="Controllers\HelperClasses\PostsHelperCls.cs" />
@@ -1646,7 +1648,6 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
     <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
@@ -1908,7 +1909,6 @@
     <Content Include="Views\Shared\_LayoutSpace.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Home\Callendar.cshtml" />
     <Content Include="Views\SeedBodies\Index.cshtml" />
     <Content Include="Views\AppUser\UserProfile.cshtml" />
     <Content Include="Views\AppUser\EditProfile.cshtml" />
@@ -1929,6 +1929,9 @@
     <Content Include="Views\Paypal\SuccessView.cshtml" />
     <Content Include="Views\Paypal\FailureView.cshtml" />
     <Content Include="Views\News\AddNewsletter.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
+    <Content Include="Views\Dashboard\UserRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
