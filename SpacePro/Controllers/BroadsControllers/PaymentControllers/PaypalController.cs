@@ -1,8 +1,11 @@
-﻿using PayPal.Api;
+﻿using Entities.IdentityUsers;
+using PayPal.Api;
+using Persistance_UnitOfWork;
 using SpacePro.PaymentMethod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,6 +13,12 @@ namespace SpacePro.Controllers.PaymentControllers
 {
     public class PaypalController : Controller
     {
+        private readonly IUnitOfWork unitOfWork;
+        public PaypalController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+    
         public ActionResult PaymentWithPaypal(string Cancel = null)
         {
             //getting the apiContext  
@@ -82,6 +91,7 @@ namespace SpacePro.Controllers.PaymentControllers
         }
         public Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
+            var user = Task.Run(async ()=>await unitOfWork.ApplicationUsers.SingleOrDefault(x=>x.UserName==User.Identity.Name)).Result;
             //create itemlist and add item objects to it  
             var itemList = new ItemList()
             {
@@ -95,10 +105,16 @@ namespace SpacePro.Controllers.PaymentControllers
                 price = "5",
                 quantity = "1",
                 sku = "sku"
-            });
+            });   
             var payer = new Payer()
             {
-                payment_method = "paypal"
+                payment_method = "paypal",
+                payer_info = new PayerInfo() 
+                { 
+                    first_name=user.FirstName,
+                    last_name=user.LastName
+                }
+                
             };
             // Configure Redirect Urls here with RedirectUrls object  
             var redirUrls = new RedirectUrls()
@@ -125,7 +141,7 @@ namespace SpacePro.Controllers.PaymentControllers
             transactionList.Add(new Transaction()
             {
                 description = "SpacePro Subscription purchace",
-                invoice_number = new Random().Next(1000).ToString(), //Generate an Invoice No  
+                invoice_number = new Random().Next(10000).ToString(), //Generate an Invoice No  
                 amount = amount,
                 item_list = itemList
             });
