@@ -12,6 +12,11 @@ namespace Entities.Observer
     {
         private List<NewsListener> _newsListeners;
 
+        public NewsSubject(List<NewsListener> newsListeners)
+        {
+            _newsListeners = newsListeners;
+        }
+
         public void AttachRangeListeners(List<NewsListener> listeners)
         {
             _newsListeners.AddRange(listeners);

@@ -9,6 +9,8 @@ namespace Entities.Observer
 {
     public class News : NewsSubject
     {
-
+        public News(List<NewsListener> newsListeners) : base(newsListeners)
+        {
+        }
     }
 }
