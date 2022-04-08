@@ -1924,6 +1924,9 @@
     <Content Include="Views\Article\GetArticleDetails.cshtml" />
     <Content Include="Views\Home\Chat.cshtml" />
     <Content Include="Views\Social\ShowSocialGeneralUser.cshtml" />
+    <Content Include="Views\Paypal\PaymentWithPaypal.cshtml" />
+    <Content Include="Views\Paypal\SuccessView.cshtml" />
+    <Content Include="Views\Paypal\FailureView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1931,7 +1934,6 @@
     <Folder Include="Controllers\ApiControllers\ApiAppUsersControllers\" />
     <Folder Include="Controllers\ApiControllers\ApiBroadsControllers\" />
     <Folder Include="Views\ChatMessage\" />
-    <Folder Include="Views\Paypal\" />
     <Folder Include="Views\UserPost\" />
   </ItemGroup>
   <ItemGroup>

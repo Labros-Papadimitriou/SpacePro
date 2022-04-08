@@ -25,7 +25,7 @@ namespace SpacePro.Controllers.PaymentControllers
                     //it is returned by the create function call of the payment class  
                     // Creating a payment  
                     // baseURL is the url on which paypal sendsback the data.  
-                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Home/PaymentWithPayPal?";
+                    string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Paypal/PaymentWithPayPal?";
                     //here we are generating guid for storing the paymentID received in session  
                     //which will be used in the payment execution  
                     var guid = Convert.ToString((new Random()).Next(100000));
@@ -67,20 +67,20 @@ namespace SpacePro.Controllers.PaymentControllers
             //on successful payment, show success page to user.  
             return View("SuccessView");
         }
-        private Payment payment;
+        public Payment payment;
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution()
             {
                 payer_id = payerId
             };
-            this.payment = new Payment()
+            payment = new Payment()
             {
                 id = paymentId
             };
-            return this.payment.Execute(apiContext, paymentExecution);
+            return payment.Execute(apiContext, paymentExecution);
         }
-        private Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        public Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
             //create itemlist and add item objects to it  
             var itemList = new ItemList()
@@ -90,9 +90,9 @@ namespace SpacePro.Controllers.PaymentControllers
             //Adding Item Details like name, currency, price etc  
             itemList.items.Add(new Item()
             {
-                name = "Item Name comes here",
+                name = "SpacePro subscription",
                 currency = "USD",
-                price = "1",
+                price = "5",
                 quantity = "1",
                 sku = "sku"
             });
@@ -109,27 +109,27 @@ namespace SpacePro.Controllers.PaymentControllers
             // Adding Tax, shipping and Subtotal details  
             var details = new Details()
             {
-                tax = "1",
-                shipping = "1",
-                subtotal = "1"
+                tax = "0",
+                shipping = "0",
+                subtotal = "5"
             };
             //Final amount with details  
             var amount = new Amount()
             {
                 currency = "USD",
-                total = "3", // Total must be equal to sum of tax, shipping and subtotal.  
+                total = "5", // Total must be equal to sum of tax, shipping and subtotal.  
                 details = details
             };
             var transactionList = new List<Transaction>();
             // Adding description about the transaction  
             transactionList.Add(new Transaction()
             {
-                description = "Transaction description",
-                invoice_number = "your generated invoice number", //Generate an Invoice No  
+                description = "SpacePro Subscription purchace",
+                invoice_number = new Random().Next(1000).ToString(), //Generate an Invoice No  
                 amount = amount,
                 item_list = itemList
             });
-            this.payment = new Payment()
+            payment = new Payment()
             {
                 intent = "sale",
                 payer = payer,
@@ -137,7 +137,7 @@ namespace SpacePro.Controllers.PaymentControllers
                 redirect_urls = redirUrls
             };
             // Create a payment using a APIContext  
-            return this.payment.Create(apiContext);
+            return payment.Create(apiContext);
         }
     }
 }
