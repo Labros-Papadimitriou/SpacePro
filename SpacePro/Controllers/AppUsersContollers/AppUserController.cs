@@ -38,7 +38,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             var userId = User.Identity.GetUserId();
             var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(userId);
-
+            
             return View(user);
         }
 

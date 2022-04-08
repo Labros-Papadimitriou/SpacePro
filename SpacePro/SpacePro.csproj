@@ -1932,6 +1932,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\NotFound.cshtml" />
     <Content Include="Views\Dashboard\UserRoles.cshtml" />
+    <Content Include="Views\News\AddListener.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

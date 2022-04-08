@@ -56,8 +56,9 @@ namespace SpacePro.Controllers.AppUsersContollers
         public async Task<ActionResult> AddListener(string addInNews)
         {
             var allListeners = await _unitOfWork.NewsListeners.GetAll();
+            ViewBag.Result = "";
 
-            if (addInNews == "yes")
+            if (addInNews == "yes" && !allListeners.Any(li=>li.UserId == User.Identity.GetUserId()))
             {
                 NewsListener listener = new NewsListener();
                 listener.UserId = User.Identity.GetUserId();
@@ -65,9 +66,10 @@ namespace SpacePro.Controllers.AppUsersContollers
                 _unitOfWork.NewsListeners.Add(listener);
                 await _unitOfWork.Complete();
 
-                return RedirectToAction("UserProfile");
+                ViewBag.Result = "Success";
+                return View();
             }
-            else
+            else if(addInNews == "no")
             {
                 if (allListeners.Any(li => li.UserId == User.Identity.GetUserId()))
                 {
@@ -80,11 +82,14 @@ namespace SpacePro.Controllers.AppUsersContollers
                     _unitOfWork.NewsListeners.Remove(listener);
                     await _unitOfWork.Complete();
 
-                    return RedirectToAction("UserProfile");
+                    ViewBag.Result = "Deleted from Newsletter";
+                    return View();
                 }
 
-                return RedirectToAction("UserProfile");
+                
             }
+            ViewBag.Result = "You are already a Subscriber";
+            return View();
 
         }
 
