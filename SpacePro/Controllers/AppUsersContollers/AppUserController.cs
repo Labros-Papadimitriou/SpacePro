@@ -72,7 +72,7 @@ namespace SpacePro.Controllers.AppUsersContollers
 
             List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
 
-            News news = new News(listeners);
+            News news = new News();
             news.AttachRangeListeners(listeners);
             news.AddNewsletter(newsletter);
 
@@ -99,10 +99,6 @@ namespace SpacePro.Controllers.AppUsersContollers
                 if (allListeners.Any(li => li.UserId == User.Identity.GetUserId()))
                 {
                     var listener = allListeners.Where(li => li.UserId == User.Identity.GetUserId()).FirstOrDefault();
-
-                    List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
-                    News news = new News(listeners);
-                    news.DetachListener(listener);
 
                     _unitOfWork.NewsListeners.Remove(listener);
                     await _unitOfWork.Complete();
