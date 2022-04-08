@@ -1,8 +1,11 @@
-﻿using PayPal.Api;
+﻿using Entities.IdentityUsers;
+using PayPal.Api;
+using Persistance_UnitOfWork;
 using SpacePro.PaymentMethod;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -10,7 +13,13 @@ namespace SpacePro.Controllers.PaymentControllers
 {
     public class PaypalController : Controller
     {
-        public ActionResult PaymentWithPaypal(string Cancel = null)
+        private readonly IUnitOfWork unitOfWork;
+        public PaypalController(IUnitOfWork unitOfWork)
+        {
+            this.unitOfWork = unitOfWork;
+        }
+    
+        public ActionResult PaymentWithPaypal(string price, string Cancel = null)
         {
             //getting the apiContext  
             APIContext apiContext = PaypalConfiguration.GetAPIContext();
@@ -31,7 +40,7 @@ namespace SpacePro.Controllers.PaymentControllers
                     var guid = Convert.ToString((new Random()).Next(100000));
                     //CreatePayment function gives us the payment approval url  
                     //on which payer is redirected for paypal account payment  
-                    var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid);
+                    var createdPayment = this.CreatePayment(price,apiContext, baseURI + "guid=" + guid);
                     //get links returned from paypal in response to Create function call  
                     var links = createdPayment.links.GetEnumerator();
                     string paypalRedirectUrl = null;
@@ -80,8 +89,9 @@ namespace SpacePro.Controllers.PaymentControllers
             };
             return payment.Execute(apiContext, paymentExecution);
         }
-        public Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        public Payment CreatePayment(string price,APIContext apiContext, string redirectUrl)
         {
+            var user = Task.Run(async ()=>await unitOfWork.ApplicationUsers.SingleOrDefault(x=>x.UserName==User.Identity.Name)).Result;
             //create itemlist and add item objects to it  
             var itemList = new ItemList()
             {
@@ -92,13 +102,19 @@ namespace SpacePro.Controllers.PaymentControllers
             {
                 name = "SpacePro subscription",
                 currency = "USD",
-                price = "5",
+                price = price,
                 quantity = "1",
                 sku = "sku"
-            });
+            });   
             var payer = new Payer()
             {
-                payment_method = "paypal"
+                payment_method = "paypal",
+                payer_info = new PayerInfo() 
+                { 
+                    first_name=user.FirstName,
+                    last_name=user.LastName
+                }
+                
             };
             // Configure Redirect Urls here with RedirectUrls object  
             var redirUrls = new RedirectUrls()
@@ -111,13 +127,13 @@ namespace SpacePro.Controllers.PaymentControllers
             {
                 tax = "0",
                 shipping = "0",
-                subtotal = "5"
+                subtotal = price
             };
             //Final amount with details  
             var amount = new Amount()
             {
                 currency = "USD",
-                total = "5", // Total must be equal to sum of tax, shipping and subtotal.  
+                total = price, // Total must be equal to sum of tax, shipping and subtotal.  
                 details = details
             };
             var transactionList = new List<Transaction>();
@@ -125,7 +141,7 @@ namespace SpacePro.Controllers.PaymentControllers
             transactionList.Add(new Transaction()
             {
                 description = "SpacePro Subscription purchace",
-                invoice_number = new Random().Next(1000).ToString(), //Generate an Invoice No  
+                invoice_number = new Random().Next(100000).ToString(), //Generate an Invoice No  
                 amount = amount,
                 item_list = itemList
             });
