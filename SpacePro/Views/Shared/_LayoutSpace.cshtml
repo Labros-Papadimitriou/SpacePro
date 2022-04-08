@@ -111,9 +111,15 @@
                             <a class="side-menu__item" data-bs-toggle="slide" href="/Gallery/ShowGallery"><i class="side-menu__icon fe fe-image"></i><span class="side-menu__label">Gallery</span></a>
                         </div>
                         <!--EVENTS-->
-                        <div class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Events</span></a>
-                        </div>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Events</span></a>
+                            </div>
+                            <div class="slide">
+                                <a class="side-menu__item" data-bs-toggle="slide" href="/News/AddNewsletter"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">NewsLetters</span></a>
+                            </div>
+                        }
                         <!--PAYMENT-->
                         <div>
                             <a class="side-menu__item" data-bs-toggle="slide" href="/Payment/ShowPaymentMethods"><i class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Payment</span></a>

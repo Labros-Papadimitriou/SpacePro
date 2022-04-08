@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace SpacePro.Controllers.BroadsControllers
 {
+    [Authorize(Roles = "Admin")]
     public class CalendarController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -30,6 +31,7 @@ namespace SpacePro.Controllers.BroadsControllers
                 _userManager = value;
             }
         }
+
         public CalendarController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;

@@ -13,6 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -64,56 +67,90 @@ namespace SpacePro.Controllers.AppUsersContollers
             return View("UserProfile", user);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddNewsletter(Newsletter newsletter)
-        {
-            _unitOfWork.Newsletters.Add(newsletter);
-            await _unitOfWork.Complete();
+        //[HttpPost]
+        //public async Task<ActionResult> AddNewsletter(Newsletter newsletter)
+        //{
+        //    _unitOfWork.Newsletters.Add(newsletter);
+        //    await _unitOfWork.Complete();
 
-            List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
+        //    List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
 
-            News news = new News(listeners);
-            news.AttachRangeListeners(listeners);
-            news.AddNewsletter(newsletter);
+        //    News news = new News(listeners);
+        //    news.AttachRangeListeners(listeners);
+        //    news.AddNewsletter(newsletter);
 
-            return Json(newsletter, JsonRequestBehavior.AllowGet);    
-        }
+        //    foreach (var listener in listeners)
+        //    {
+        //        var user = (await _unitOfWork.ApplicationUsers.Find(x => x.Id == listener.UserId)).FirstOrDefault();
+        //        SendEmail(user.Email, newsletter.Title, newsletter.Details);
+        //    }
 
-        [HttpGet]
-        public async Task<ActionResult> AddListener(string addInNews)
-        {
-            var allListeners = await _unitOfWork.NewsListeners.GetAll();
+        //    return Json(newsletter, JsonRequestBehavior.AllowGet);    
+        //}
 
-            if (addInNews == "yes")
-            {
-                NewsListener listener = new NewsListener();
-                listener.UserId = User.Identity.GetUserId();
+        //public bool SendEmail(string toEmail, string subject, string emailBody)
+        //{
+        //    try
+        //    {
+        //        string senderEmail = System.Configuration.ConfigurationManager.AppSettings["SenderEmail"].ToString();
+        //        string senderPassword = System.Configuration.ConfigurationManager.AppSettings["SenderPassword"].ToString();
 
-                _unitOfWork.NewsListeners.Add(listener);
-                await _unitOfWork.Complete();
+        //        SmtpClient client = new SmtpClient("smtp.gmail.com",587);
+        //        client.EnableSsl = true;
+        //        client.Timeout = 100000;
+        //        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+        //        client.UseDefaultCredentials = false;
+        //        client.Credentials = new NetworkCredential(senderEmail, senderPassword);
 
-                return RedirectToAction("UserProfile");
-            }
-            else
-            {
-                if (allListeners.Any(li => li.UserId == User.Identity.GetUserId()))
-                {
-                    var listener = allListeners.Where(li => li.UserId == User.Identity.GetUserId()).FirstOrDefault();
+        //        MailMessage mailMessage = new MailMessage(senderEmail, toEmail, subject, emailBody);
+        //        mailMessage.IsBodyHtml = true;
+        //        mailMessage.BodyEncoding = Encoding.UTF8;
 
-                    List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
-                    News news = new News(listeners);
-                    news.DetachListener(listener);
+        //        client.Send(mailMessage);
 
-                    _unitOfWork.NewsListeners.Remove(listener);
-                    await _unitOfWork.Complete();
+        //        return true;
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return false;
+        //    }
+        //}
 
-                    return RedirectToAction("UserProfile");
-                }
+        //[HttpGet]
+        //public async Task<ActionResult> AddListener(string addInNews)
+        //{
+        //    var allListeners = await _unitOfWork.NewsListeners.GetAll();
 
-                return RedirectToAction("UserProfile");
-            }
+        //    if (addInNews == "yes")
+        //    {
+        //        NewsListener listener = new NewsListener();
+        //        listener.UserId = User.Identity.GetUserId();
+
+        //        _unitOfWork.NewsListeners.Add(listener);
+        //        await _unitOfWork.Complete();
+
+        //        return RedirectToAction("UserProfile");
+        //    }
+        //    else
+        //    {
+        //        if (allListeners.Any(li => li.UserId == User.Identity.GetUserId()))
+        //        {
+        //            var listener = allListeners.Where(li => li.UserId == User.Identity.GetUserId()).FirstOrDefault();
+
+        //            List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
+        //            News news = new News(listeners);
+        //            news.DetachListener(listener);
+
+        //            _unitOfWork.NewsListeners.Remove(listener);
+        //            await _unitOfWork.Complete();
+
+        //            return RedirectToAction("UserProfile");
+        //        }
+
+        //        return RedirectToAction("UserProfile");
+        //    }
             
-        }
+        //}
 
         [HttpPost]
         public async Task<ActionResult> AddUserImage(HttpPostedFileBase image)
