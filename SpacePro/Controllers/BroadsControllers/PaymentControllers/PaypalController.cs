@@ -14,10 +14,15 @@ namespace SpacePro.Controllers.PaymentControllers
     public class PaypalController : Controller
     {
         private readonly IUnitOfWork unitOfWork;
+        public Payment payment;
         public PaypalController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
+
+
+
+
     
         public ActionResult PaymentWithPaypal(string price, string Cancel = null)
         {
@@ -76,7 +81,7 @@ namespace SpacePro.Controllers.PaymentControllers
             //on successful payment, show success page to user.  
             return View("SuccessView");
         }
-        public Payment payment;
+
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
         {
             var paymentExecution = new PaymentExecution()
@@ -89,6 +94,7 @@ namespace SpacePro.Controllers.PaymentControllers
             };
             return payment.Execute(apiContext, paymentExecution);
         }
+
         public Payment CreatePayment(string price,APIContext apiContext, string redirectUrl)
         {
             var user = Task.Run(async ()=>await unitOfWork.ApplicationUsers.SingleOrDefault(x=>x.UserName==User.Identity.Name)).Result;
