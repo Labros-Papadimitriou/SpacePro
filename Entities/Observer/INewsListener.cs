@@ -9,6 +9,6 @@ namespace Entities.Observer
 {
     public interface INewsListener
     {
-        void Update(Newsletter newsletter);
+        void Update();
     }
 }

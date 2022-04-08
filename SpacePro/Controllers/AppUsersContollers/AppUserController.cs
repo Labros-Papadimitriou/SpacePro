@@ -13,6 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -62,53 +65,6 @@ namespace SpacePro.Controllers.AppUsersContollers
             var user = await _unitOfWork.ApplicationUsers.GetUserWithImages(id);
 
             return View("UserProfile", user);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> AddNewsletter(Newsletter newsletter)
-        {
-            _unitOfWork.Newsletters.Add(newsletter);
-            await _unitOfWork.Complete();
-
-            List<NewsListener> listeners = (List<NewsListener>)await _unitOfWork.NewsListeners.GetAll();
-
-            News news = new News();
-            news.AttachRangeListeners(listeners);
-            news.AddNewsletter(newsletter);
-
-            return Json(newsletter, JsonRequestBehavior.AllowGet);    
-        }
-
-        [HttpGet]
-        public async Task<ActionResult> AddListener(string addInNews)
-        {
-            var allListeners = await _unitOfWork.NewsListeners.GetAll();
-
-            if (addInNews == "yes")
-            {
-                NewsListener listener = new NewsListener();
-                listener.UserId = User.Identity.GetUserId();
-
-                _unitOfWork.NewsListeners.Add(listener);
-                await _unitOfWork.Complete();
-
-                return RedirectToAction("UserProfile");
-            }
-            else
-            {
-                if (allListeners.Any(li => li.UserId == User.Identity.GetUserId()))
-                {
-                    var listener = allListeners.Where(li => li.UserId == User.Identity.GetUserId()).FirstOrDefault();
-
-                    _unitOfWork.NewsListeners.Remove(listener);
-                    await _unitOfWork.Complete();
-
-                    return RedirectToAction("UserProfile");
-                }
-
-                return RedirectToAction("UserProfile");
-            }
-            
         }
 
         [HttpPost]

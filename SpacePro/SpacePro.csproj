@@ -227,6 +227,7 @@
     <Compile Include="ChatHub.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AppUsersContollers\AppUserController.cs" />
+    <Compile Include="Controllers\AppUsersContollers\NewsController.cs" />
     <Compile Include="Controllers\AppUsersContollers\UserPostController.cs" />
     <Compile Include="Controllers\BodiesControllers\BodiesController.cs" />
     <Compile Include="Controllers\BroadsControllers\ArticleController.cs" />
@@ -1927,6 +1928,7 @@
     <Content Include="Views\Paypal\PaymentWithPaypal.cshtml" />
     <Content Include="Views\Paypal\SuccessView.cshtml" />
     <Content Include="Views\Paypal\FailureView.cshtml" />
+    <Content Include="Views\News\AddNewsletter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

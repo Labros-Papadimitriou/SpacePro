@@ -24,15 +24,12 @@ namespace Entities.Observer
 
         private void Notify(Newsletter newsletter)
         {
-            foreach (var newslistener in _newsListeners)
-            {
-                newslistener.Update(newsletter);
-            }
+            throw new NotImplementedException();
         }
 
         public void AddNewsletter(Newsletter newsletter)
         {
-            Notify(newsletter);
+            throw new NotImplementedException();
         }
     }
 }

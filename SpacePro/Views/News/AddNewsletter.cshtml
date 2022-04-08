@@ -1,0 +1,36 @@
+﻿<style>
+    .card {
+        background-color: #58585824 !important;
+        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        width:50%;
+        margin:100px auto;
+    }
+    h2{
+        text-align:center;
+        color:#b7caff
+    }
+    form .btn{
+        float:right;
+        margin-bottom:15px;
+    }
+    span {
+        font-size: 17px;
+        font-weight: bold;
+        color: #b7caff;
+    }
+</style>
+
+
+<div class="card">
+    <h2>Create Newsletter</h2>
+    <form action="/News/AddNewsletter" method="post">
+        <div class="container">
+            <span class="form-control-static">Title: </span>
+            <input class="form-control" type="text" name="Title" /> <br />
+            <span class="form-control-static">Details: </span>
+            <textarea class="form-control" type="text" name="Details"></textarea> <br />
+            <input class="btn btn-success" type="submit" value="Send Email" />
+        </div>
+    </form>
+</div>

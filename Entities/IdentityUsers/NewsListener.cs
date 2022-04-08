@@ -13,7 +13,7 @@ namespace Entities.IdentityUsers
         public int NewsListenerId { get; set; }
         public string UserId { get; set; }
 
-        public void Update(Newsletter newsletter)
+        public void Update()
         {
             throw new NotImplementedException();
         }
