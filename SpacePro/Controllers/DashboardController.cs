@@ -64,7 +64,7 @@ namespace SpacePro.Controllers
             var posts = (await _unitOfWork.UserPosts.GetTenBestPosts()).ToList();
             dynamic model = new ExpandoObject();
             model.PostsLikes = posts.Select(x => x.PostLikes.Count);
-            model.UserName = posts.Select( x => _unitOfWork.ApplicationUsers.GetUserName(x.ApplicationUser_id));
+            model.UserName = posts.Select(x => _unitOfWork.ApplicationUsers.GetUserName(x.ApplicationUser_id));
 
             return View(model);
         }
