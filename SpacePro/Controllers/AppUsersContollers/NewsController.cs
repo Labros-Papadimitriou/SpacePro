@@ -52,11 +52,11 @@ namespace SpacePro.Controllers.AppUsersContollers
             return RedirectToAction("Index","Home");
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult> AddListener(string addInNews)
         {
             var allListeners = await _unitOfWork.NewsListeners.GetAll();
-            ViewBag.Result = "";
 
             if (addInNews == "yes" && !allListeners.Any(li=>li.UserId == User.Identity.GetUserId()))
             {

@@ -33,10 +33,10 @@ namespace SpacePro.Controllers
                 {
                     switch (role.RoleId)
                     {
-                        case "2c2fd5f0-347b-4bc1-9a91-fdc247dee378":adminsCount++;break;
-                        case "54f378e1-3bcb-4240-99bb-8be0200c53d7": authorsCount++;break;
-                        case "cebc6810-ee45-4da6-aac6-17a4a3368faf": subscribersCount++;break;
-                        case "f72c1f5a-6f04-4005-b8d1-5663aa0fbdbe": usersCount++;break;
+                        case "705cd783-df38-4248-925c-4f2c974ad248": adminsCount++;break;
+                        case "2b9ceb6b-8a65-494c-92aa-c87e7697dd47": authorsCount++;break;
+                        case "7c97b82d-97c4-4209-999f-fe114cb5ee08": subscribersCount++;break;
+                        case "2698f5de-f918-4abb-8fb0-54d438f970d2": usersCount++;break;
                         default:break;
                     }
                 }
