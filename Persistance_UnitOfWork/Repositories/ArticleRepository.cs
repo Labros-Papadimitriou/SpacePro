@@ -27,5 +27,13 @@ namespace Persistance_UnitOfWork.Repositories
                 .Include(x => x.ArticleLikes)
                 .ToListAsync();
         }
+
+        public async Task<IEnumerable<Article>> GetTenBestArticles()
+        {
+            return await ApplicationDbContext.Articles
+                .OrderByDescending(x => x.PostLikes)
+                .Take(10)
+                .ToListAsync();
+        }
     }
 }

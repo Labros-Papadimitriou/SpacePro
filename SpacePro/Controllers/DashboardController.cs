@@ -51,14 +51,12 @@ namespace SpacePro.Controllers
             return View(model);
         }
 
-        //public async Task<ActionResult> ArticlesLikes()
-        //{
-        //    var articles = await _unitOfWork.Articles.GetAll();
+        public  ActionResult ArticlesLikes()
+        {
+            
 
-        //    foreach (var article in articles)
-        //    {
-                
-        //    }
-        //}
+
+            return View();
+        }
     }
 }
