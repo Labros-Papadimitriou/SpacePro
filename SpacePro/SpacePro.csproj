@@ -743,6 +743,7 @@
     <Content Include="Template\sash\assets\images\media\8.jpg" />
     <Content Include="Template\sash\assets\images\media\9.jpg" />
     <Content Include="Template\sash\assets\images\media\about.jpg" />
+    <Content Include="Template\sash\assets\images\media\bg-img-index.jpg" />
     <Content Include="Template\sash\assets\images\media\bg-img1.jpg" />
     <Content Include="Template\sash\assets\images\media\bg-img2.jpg" />
     <Content Include="Template\sash\assets\images\media\bg-img3.jpg" />

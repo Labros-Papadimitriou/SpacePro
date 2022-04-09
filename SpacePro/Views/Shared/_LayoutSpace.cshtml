@@ -74,7 +74,7 @@
     /*Nav Bar Style*/
         .myNav a {
             font-size: 1.1rem !important;
-            font-family: "Permanent Marker", cursive !important;
+            font-family: sans-serif !important;
         }
     </style>
 
@@ -91,7 +91,7 @@
     <div class="page">
         <div class="page-main">
             <!-- app-Header -->
-            <div class="app-header header sticky" style="background-color:black">
+            <div class="app-header header sticky" style="background-color: black;">
                 <div class="container main-container">
                     <div class="d-flex justify-content-between myNav">
                         <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
@@ -102,40 +102,40 @@
 
                         <!--HOME-->
                         <div>
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Home/Index"><i class="side-menu__icon fe fe-home"></i><span class="side-menu__label">Home</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/Home/Index"><span class="side-menu__label">Home</span></a>
                         </div>
                         <!--BODIES-->
                         <div class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Bodies/BodiesTable"><i class="side-menu__icon fe fe-circle"></i><span class="side-menu__label">Bodies</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/Bodies/BodiesTable"><span class="side-menu__label">Celestial Bodies</span></a>
                         </div>
                         <!--ARTICLES-->
                         <div class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Article/ShowArticles"><i class="side-menu__icon fe fe-folder"></i><span class="side-menu__label">Articles</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/Article/ShowArticles"><span class="side-menu__label">Articles</span></a>
                         </div>
                         <!--GALLERY-->
                         <div class="slide">
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Gallery/ShowGallery"><i class="side-menu__icon fe fe-image"></i><span class="side-menu__label">Gallery</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/Gallery/ShowGallery"><span class="side-menu__label">Gallery</span></a>
                         </div>
                         <!--EVENTS-->
                         @if (User.IsInRole("Admin"))
                         {
                             <div class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Events</span></a>
+                                <a class="side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><span class="side-menu__label">Events</span></a>
                             </div>
                             <div class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="/News/AddNewsletter"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">NewsLetters</span></a>
+                                <a class="side-menu__item" data-bs-toggle="slide" href="/News/AddNewsletter"><span class="side-menu__label">NewsLetters</span></a>
                             </div>
                             <div class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="/Dashboard/UserRoles"><i class="side-menu__icon fe fe-calendar"></i><span class="side-menu__label">Dashboard</span></a>
+                                <a class="side-menu__item" data-bs-toggle="slide" href="/Dashboard/UserRoles"><span class="side-menu__label">Dashboard</span></a>
                             </div>
                         }
                         <!--PAYMENT-->
                         <div>
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Payment/ShowPaymentMethods"><i class="side-menu__icon fe fe-dollar-sign"></i><span class="side-menu__label">Payment</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/Payment/ShowPaymentMethods"><span class="side-menu__label">Payment</span></a>
                         </div>
                         <!--SOCIAL-->
                         <div>
-                            <a class="side-menu__item" data-bs-toggle="slide" href="/Social/ShowSocial"><i class="side-menu__icon fe bi-file-earmark-person"></i><span class="side-menu__label">Social</span></a>
+                            <a class="side-menu__item" data-bs-toggle="slide" href="/Social/ShowSocial"><span class="side-menu__label">Social</span></a>
                         </div>
                         <div>
                             @Html.Partial("_ProfilPartial")
