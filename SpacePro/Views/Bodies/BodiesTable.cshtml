@@ -1,5 +1,38 @@
-﻿<table id="bodiesTable" class="table table-borderless table-hover" style="width: 100%; background: linear-gradient(to top, #0d1d40, black) ">
-    <thead>
+﻿<style>
+    #bodiesTable {
+        width: 100%;
+        background-color: #014F86;
+        color:white;
+        border-radius: 4px;
+    }
+        #bodiesTable thead {
+            background-color: #012A4A;
+            padding: 20px;
+        }
+
+            #bodiesTable thead th {
+                padding: 20px;
+                color: #A9D6E5;
+                font-weight:bold;
+            }
+    #bodiesTable tfoot input {
+        padding: 10px;
+        background-color: #013A63 !important;
+        border: none !important;
+        border-radius:4px;
+    }
+        #bodiesTable tfoot input::placeholder {
+            color: #A9D6E5;
+        }
+      #bodiesTable tbody td{
+          padding-left:1.4rem;
+      }
+</style>
+
+
+
+<table id="bodiesTable" class="table table-borderless table-hover">
+    <thead class="table-thead">
         <tr>
             <th>Body Type</th>
             <th>Name</th>

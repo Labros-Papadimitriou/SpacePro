@@ -62,6 +62,6 @@
     });
     $('#bodiesTable tfoot th').each(function () {
         var title = $(this).text();
-        $(this).html('<input class="text-dark bg-gray-darker border-dark" type="text" placeholder="Search ' + title + '" />');
+        $(this).html('<input type="text" class="bodiesTable-input" placeholder="Search ' + title + '" />');
     });
 });
