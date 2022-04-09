@@ -26,8 +26,8 @@ namespace Persistance_UnitOfWork.Repositories
         public async Task<IEnumerable<UserPost>> GetTenBestPosts()
         {
             return await ApplicationDbContext.UserPosts
-                .OrderByDescending(x => x.PostLikes)
-                .Take(10)
+                .Include(x => x.PostLikes)
+                .OrderByDescending(x => x.PostLikes.Count)
                 .ToListAsync();
         }
     }

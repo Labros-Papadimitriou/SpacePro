@@ -82,13 +82,13 @@ namespace SpacePro.Controllers.AppUsersContollers
                     _unitOfWork.NewsListeners.Remove(listener);
                     await _unitOfWork.Complete();
 
-                    ViewBag.Result = "Deleted from Newsletter";
+                    ViewBag.Result = "Deleted from Newsletter ";
                     return View();
                 }
 
                 
             }
-            ViewBag.Result = "You are already a Subscriber";
+            ViewBag.Result = "You have already subscribed to our Newsletter !";
             return View();
 
         }

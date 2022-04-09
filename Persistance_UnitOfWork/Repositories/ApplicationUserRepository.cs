@@ -48,6 +48,13 @@ namespace Persistance_UnitOfWork.Repositories
 
             return user;
         }
+        public string GetUserName(string id)
+        {
+            var userName =  ApplicationDbContext.Users.Where(x => x.Id == id)
+                .FirstOrDefault().UserName;
+
+            return userName;
+        }
         public async Task<ApplicationUser> GetUserWithImages(string id)
         {
             var user = await ApplicationDbContext.Users.Where(x => x.Id == id)
