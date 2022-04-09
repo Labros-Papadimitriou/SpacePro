@@ -1,4 +1,4 @@
-﻿@model List<Entities.IdentityUsers.UserPost>
+﻿@model dynamic
 <style>
     .myBtns {
         background-color: #58585824 !important;
@@ -11,8 +11,8 @@
 
 <div class="myBtns">
     <a class="btn btn-dark" href="/Dashboard/UserRoles">User Roles</a>
-    <a class="btn btn-dark" href="#">Articles Likes</a>
-    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="/Dashboard/ArticlesLikes">Articles Likes</a>
+    <a class="btn btn-dark" href="#">Posts Likes</a>
     <a class="btn btn-dark" href="#">Allo</a>
     <a class="btn btn-dark" href="#">Allo</a>
     <a class="btn btn-dark" href="#">Allo</a>
@@ -29,22 +29,29 @@
 
 
 
-    let articles = [];
+    let users = [];
+    let likes = [];
 
-    @*@for (int i = 0; i < Model.Count; i++)
+    @foreach (var userName in Model.UserName)
     {
-        @: articles.push({ title: "@Model[i].Title", likes: "@Model[i].PostLikes" });
-    }*@
+         @: users.push("@userName");
+    }
+
+
+    @foreach (var likes in Model.PostsLikes)
+    {
+        @: likes.push("@likes")
+    }
 
 
     const data = {
-        labels: articles.map(x=>x.title),
+        labels: users,
 
         datasets: [{
 
-            label: 'My First Dataset',
+            label: 'Likes',
 
-            data: articles.map(x=>x.likes),
+            data: likes,
 
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
