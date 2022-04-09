@@ -11,5 +11,6 @@ namespace Persistance_UnitOfWork.IRepositories
     {
         Task<IEnumerable<Article>> GetArticlesWithImage();
         Task<IEnumerable<Article>> GetArticlesFullModel();
+        Task<IEnumerable<Article>> GetTenBestArticles();
     }
 }

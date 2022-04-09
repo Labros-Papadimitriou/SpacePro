@@ -10,5 +10,6 @@ namespace Persistance_UnitOfWork.IRepositories
     public interface IUserPostRepository:IRepository<UserPost>
     {
         Task<IEnumerable<UserPost>> GetPostWithLikes();
+        Task<IEnumerable<UserPost>> GetTenBestPosts();
     }
 }

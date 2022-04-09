@@ -51,12 +51,19 @@ namespace SpacePro.Controllers
             return View(model);
         }
 
-        public  ActionResult ArticlesLikes()
+        public async  Task<ActionResult> ArticlesLikes()
         {
+            var articles = (await _unitOfWork.Articles.GetTenBestArticles()).ToList();
             
-
-
-            return View();
+            return View(articles);
         }
+
+        public async Task<ActionResult> PostLikes()
+        {
+            var posts = (await _unitOfWork.UserPosts.GetTenBestPosts()).ToList();
+
+            return View(posts);
+        }
+
     }
 }

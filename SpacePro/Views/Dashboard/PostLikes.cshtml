@@ -1,4 +1,4 @@
-﻿@model List<Entities.BroadClasses.Article>
+﻿@model List<Entities.IdentityUsers.UserPost>
 <style>
     .myBtns {
         background-color: #58585824 !important;
@@ -31,10 +31,10 @@
 
     let articles = [];
 
-    @for (int i = 0; i < Model.Count; i++)
+    @*@for (int i = 0; i < Model.Count; i++)
     {
         @: articles.push({ title: "@Model[i].Title", likes: "@Model[i].PostLikes" });
-    }
+    }*@
 
 
     const data = {
