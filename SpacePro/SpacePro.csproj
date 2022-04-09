@@ -1935,6 +1935,7 @@
     <Content Include="Views\Dashboard\UserRoles.cshtml" />
     <Content Include="Views\News\AddListener.cshtml" />
     <Content Include="Views\Dashboard\ArticlesLikes.cshtml" />
+    <Content Include="Views\Dashboard\PostLikes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
