@@ -1936,6 +1936,9 @@
     <Content Include="Views\News\AddListener.cshtml" />
     <Content Include="Views\Dashboard\ArticlesLikes.cshtml" />
     <Content Include="Views\Dashboard\PostLikes.cshtml" />
+    <Content Include="Views\Dashboard\PlanetsStats.cshtml" />
+    <Content Include="Views\Dashboard\MoonsStats.cshtml" />
+    <Content Include="Views\Dashboard\AsteroidsStats.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

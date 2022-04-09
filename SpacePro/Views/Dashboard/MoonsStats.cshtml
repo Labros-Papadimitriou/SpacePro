@@ -1,0 +1,71 @@
+﻿@model List<Entities.Bodies.Moon>
+
+<style>
+    .myBtns {
+        background-color: #58585824 !important;
+        margin: 10px 0 30px 0;
+        padding: 5px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+</style>
+
+<div class="myBtns">
+    <a class="btn btn-dark" href="/Dashboard/UserRoles">User Roles</a>
+    <a class="btn btn-dark" href="#">Articles Likes</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+</div>
+
+<div class="chart-container" style="position: absolute; left:15%; height:40vh; width:75vw">
+    <canvas id="myChart"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    let moons = [];
+
+    @foreach (var moon in Model)
+    {
+        @: moons.push({ name: "@moon.Name", mass: "@moon.MassValue", discovered: "@moon.DiscoveryDate.ToString().Split('/',' ')[2]" });
+    }
+
+    const labels = moons.map(x => x.name);
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Mass value',
+                data: moons.map(x => x.mass),
+                fill: false,
+                borderColor: 'rgb(45, 62, 179)',
+                tension: 0.1
+            },
+            {
+                label: 'Discovered Date',
+                data: moons.map(x => x.discovered),
+                fill: false,
+                borderColor: 'rgb(30, 138, 48)',
+                tension: 0.1
+            }
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+    };
+
+</script>
+<script>
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>

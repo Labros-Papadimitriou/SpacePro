@@ -1,0 +1,71 @@
+﻿@model List<Entities.Bodies.Planet>
+
+<style>
+    .myBtns {
+        background-color: #58585824 !important;
+        margin: 10px 0 30px 0;
+        padding: 5px;
+        display: flex;
+        justify-content: space-evenly;
+    }
+</style>
+
+<div class="myBtns">
+    <a class="btn btn-dark" href="/Dashboard/UserRoles">User Roles</a>
+    <a class="btn btn-dark" href="#">Articles Likes</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+    <a class="btn btn-dark" href="#">Allo</a>
+</div>
+
+<div class="chart-container" style="position: absolute; left:15%; height:40vh; width:75vw">
+    <canvas id="myChart"></canvas>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+
+    let planets = [];
+
+    @foreach (var planet in Model)
+    {
+          @: planets.push({ name: "@planet.Name", volume: "@planet.VolValue", mass: "@planet.MassValue" });
+    }
+
+    const labels = planets.map(x => x.name);
+
+    const data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'Volume Value',
+                data: planets.map(x => x.volume),
+                fill: false,
+                borderColor: 'rgb(145, 45, 179)',
+                tension: 0.1
+            },
+            {
+                label: 'Mass value',
+                data: planets.map(x => x.mass),
+                fill: false,
+                borderColor: 'rgb(45, 62, 179)',
+                tension: 0.1
+            }
+        ]
+    };
+
+    const config = {
+        type: 'line',
+        data: data,
+    };
+
+</script>
+<script>
+    const myChart = new Chart(
+        document.getElementById('myChart'),
+        config
+    );
+</script>
