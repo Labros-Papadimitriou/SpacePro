@@ -62,8 +62,11 @@ namespace SpacePro.Controllers
         public async Task<ActionResult> PostLikes()
         {
             var posts = (await _unitOfWork.UserPosts.GetTenBestPosts()).ToList();
+            dynamic model = new ExpandoObject();
+            model.PostsLikes = posts.Select(x => x.PostLikes.Count);
+            model.UserName = posts.Select( x => _unitOfWork.ApplicationUsers.GetUserName(x.ApplicationUser_id));
 
-            return View(posts);
+            return View(model);
         }
 
         public async Task<ActionResult> PlanetsStats()
