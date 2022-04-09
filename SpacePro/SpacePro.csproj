@@ -1935,6 +1935,9 @@
     <Content Include="Views\Dashboard\UserRoles.cshtml" />
     <Content Include="Views\Dashboard\ArticlesLikes.cshtml" />
     <Content Include="Views\Dashboard\PostLikes.cshtml" />
+    <Content Include="Views\Dashboard\PlanetsStats.cshtml" />
+    <Content Include="Views\Dashboard\MoonsStats.cshtml" />
+    <Content Include="Views\Dashboard\AsteroidsStats.cshtml" />
     <Content Include="Views\News\AddListener.cshtml" />
   </ItemGroup>
   <ItemGroup>
