@@ -59,6 +59,7 @@ namespace SpacePro.Controllers.BroadsControllers
             var user = (await _unitOfWork.ApplicationUsers.GetAll()).SingleOrDefault(x=>x.Id==id);
             if (user != null)
             {
+                await _unitOfWork.NewsListeners.DeleteNewsListener(id);
                 var userDeleted = await _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
                 return Json(userDeleted, JsonRequestBehavior.AllowGet);
             }

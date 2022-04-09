@@ -9,5 +9,6 @@ namespace Persistance_UnitOfWork.IRepositories
 {
     public interface INewsListenerRepository : IRepository<NewsListener>
     {
+        Task DeleteNewsListener(string id);
     }
 }

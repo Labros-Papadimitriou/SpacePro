@@ -162,6 +162,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         [HttpPost]
         public async Task<ActionResult> DeleteUser(string id)
         {
+            await _unitOfWork.NewsListeners.DeleteNewsListener(id);
             await _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
 
             return RedirectToAction("Index", "Home");
