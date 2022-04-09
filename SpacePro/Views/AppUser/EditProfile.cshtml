@@ -19,6 +19,14 @@
         background: linear-gradient(to right,black 90%,#b0aeae) !important;
         border-left: none !important;
     }
+
+    .news form label {
+        margin: 10px 10px;
+    }
+
+    .news h3 {
+        margin:10px 10px;
+    } 
 </style>
 
 <!--app-content open-->
@@ -191,7 +199,7 @@
                             <button data-bs-toggle="modal" data-bs-target="#deleteAccountModal" class="btn btn-danger my-1">Delete Account</button>
                         </div>
                     </div>
-                    <div class="card">
+                    <div class="card news">
                         <h3>Subscribe in our Newsletter</h3>
                         <form action="/News/AddListener" method="get">
                             <label class="radio-inline" for="addInNewsYes">Yes <input id="addInNewsYes" type="radio" name="addInNews" value="yes" /></label>
