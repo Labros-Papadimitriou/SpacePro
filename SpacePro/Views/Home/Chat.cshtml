@@ -4,25 +4,38 @@
 
     .chat-header {
         font-size: 20px;
+        background-color: transparent;
     }
 
+        .chat-header h2 {
+            padding-top: 0.6rem;
+            padding-bottom: 0.2rem;
+            color: #A9D6E5;
+        }
+
     textarea {
-        background-color: #808080;
+        background-color: #014F86;
         border-radius: 5px;
-        height: 50px;
+        height: 70px;
         resize: none;
         border: none;
         outline: none;
         font-size: 18px;
         font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
         cursor: pointer;
+        color: #A9D6E5;
+        padding:0.5rem;
     }
-
+        textarea::placeholder {
+            color: #2C7DA0;
+        }
     .chat-box {
-        background-color: #242424;
+        background-color: #468FAF;
         border-radius: 5px;
         -webkit-box-shadow: 1px 1px 1px 1px rgba(143,143,143,0.62);
         box-shadow: 1px 1px 1px 1px rgba(143,143,143,0.62);
+        color: black;
+        font-weight: bold;
     }
 
     img {
@@ -35,6 +48,20 @@
         margin: 0px 3px;
         color: #808080;
     }
+    #sendmessage {
+        background-color: #012A4A;
+        color: #89C2D9;
+        border: 1px solid #89C2D9;
+        padding: 0.5rem;
+        border-radius: 4px;
+        font-size: 1rem;
+        font-weight: bold;
+    }
+        #sendmessage:hover,
+        #sendmessage:active {
+            background-color: #89C2D9;
+            color: #012A4A;
+        }
 </style>
 
 <div style="margin:50px auto; width:50%">
@@ -43,7 +70,7 @@
             <h2 class="fa fa-comment">&ensp; Discourse</h2>
         </div>
         <div class="row chat-input">
-            <textarea id="message"></textarea>
+            <textarea id="message" placeholder="Write your message here..."></textarea>
             <input type="button" id="sendmessage" value="Send" class="btn btn-github" style="border-radius:5px" />
             <input type="hidden" id="displayname" />
         </div>
@@ -84,7 +111,7 @@
                                     <span class="time"></span><br />
                                     <div class="discussion" style="margin-left:55px; padding-right:50px; display:inline-block" class="col">
                                     </div>
-                                    <hr />
+                                    <hr/>
                                 </div>
                             `;
 
