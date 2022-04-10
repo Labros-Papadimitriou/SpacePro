@@ -60,11 +60,11 @@ namespace SpacePro
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "1030754322652-k21h1bju4uvhma6e3fvlpsin90q0m4oo.apps.googleusercontent.com",
+                ClientSecret = "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"
+            });
         }
     }
 }

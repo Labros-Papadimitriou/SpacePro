@@ -17,9 +17,12 @@ namespace Persistance_UnitOfWork.Repositories
 
         public async Task DeleteNewsListener(string id)
         {
-            var listener = await ApplicationDbContext.NewsListeners.Where(x => x.UserId == id).FirstOrDefaultAsync();
+            if (IsTheUserListener(id))
+            {
+                var listener = await ApplicationDbContext.NewsListeners.Where(x => x.UserId == id).FirstOrDefaultAsync();
 
-            ApplicationDbContext.Entry(listener).State = EntityState.Deleted;
+                ApplicationDbContext.Entry(listener).State = EntityState.Deleted;
+            }
         }
         public bool IsTheUserListener(string id)
         {
