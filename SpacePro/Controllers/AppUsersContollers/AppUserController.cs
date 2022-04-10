@@ -108,6 +108,15 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             var user = await _unitOfWork.ApplicationUsers.GetUser(User.Identity.GetUserId());
 
+            if (_unitOfWork.NewsListeners.IsTheUserListener(user.Id))
+            {
+                ViewBag.IsTheUserListener = true;
+            }
+            else
+            {
+                ViewBag.IsTheUserListener = false;
+            }
+
             return View(user);
         }
 

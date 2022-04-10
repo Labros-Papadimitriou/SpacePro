@@ -52,10 +52,6 @@ namespace SpacePro.Controllers.BroadsControllers
         [HttpDelete]
         public async Task<ActionResult> DeleteUser(string id)
         {
-            if (!User.IsInRole("Admin"))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.Unauthorized,"Only Administrators can perform such tasks.");
-            }
             var user = (await _unitOfWork.ApplicationUsers.GetAll()).SingleOrDefault(x=>x.Id==id);
             if (user != null)
             {

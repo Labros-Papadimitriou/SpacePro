@@ -21,5 +21,9 @@ namespace Persistance_UnitOfWork.Repositories
 
             ApplicationDbContext.Entry(listener).State = EntityState.Deleted;
         }
+        public bool IsTheUserListener(string id)
+        {
+            return ApplicationDbContext.NewsListeners.Any(x => x.UserId.Equals(id));
+        }
     }
 }

@@ -199,14 +199,39 @@
                             <button data-bs-toggle="modal" data-bs-target="#deleteAccountModal" class="btn btn-danger my-1">Delete Account</button>
                         </div>
                     </div>
-                    <div class="card news">
-                        <h3>Subscribe in our Newsletter</h3>
-                        <form action="/News/AddListener" method="get">
-                            <label class="radio-inline" for="addInNewsYes">Yes <input id="addInNewsYes" type="radio" name="addInNews" value="yes" /></label>
-                            <label class="radio-inline" for="addInNewsNo">No <input id="addInNewsNo" type="radio" name="addInNews" value="no" /></label>
-                            <input style="float:right" class="btn btn-outline-success" type="submit" value="Submit" />
-                        </form>
-                    </div>
+                    @if (ViewBag.IsTheUserListener)
+                    {
+                        <div class="card news">
+                            <h3>Unsubscribe from our Newsletter</h3>
+                            <form action="/News/AddListener" method="get">
+
+                                <label for="addInNews">Unsubscribe</label>
+
+                                <input type="checkbox" name="addInNews" value="no" />
+
+                                <input style="float:right" class="btn btn-outline-success" type="submit" value="Submit" />
+                            </form>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="card news">
+                            <h3>Subscribe to our Newsletter</h3>
+                            <form action="/News/AddListener" method="get">
+
+                                <label class="radio-inline" for="addInNewsYes">Yes</label>
+
+                                <input id="addInNewsYes" type="radio" name="addInNews" value="yes" />
+
+                                <label class="radio-inline" for="addInNewsNo">No</label>
+
+                                <input id="addInNewsNo" type="radio" name="addInNews" value="no" />
+
+                                <input style="float:right" class="btn btn-outline-success" type="submit" value="Submit" />
+                            </form>
+                        </div>
+                    }
+
 
                 </div>
 

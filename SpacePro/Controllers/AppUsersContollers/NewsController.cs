@@ -66,7 +66,7 @@ namespace SpacePro.Controllers.AppUsersContollers
                 _unitOfWork.NewsListeners.Add(listener);
                 await _unitOfWork.Complete();
 
-                ViewBag.Result = "Success";
+                ViewBag.Result = "You have successfully subscribed to our Newsletter!";
                 return View();
             }
             else if(addInNews == "no")
@@ -85,10 +85,8 @@ namespace SpacePro.Controllers.AppUsersContollers
                     ViewBag.Result = "Deleted from Newsletter ";
                     return View();
                 }
-
-                
             }
-            ViewBag.Result = "You have already subscribed to our Newsletter !";
+
             return View();
 
         }
