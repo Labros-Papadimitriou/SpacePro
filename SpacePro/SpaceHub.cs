@@ -19,11 +19,10 @@ namespace SpacePro
 
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            ShowPeopleInSpace();
             ShowISSLocation();
         }
 
-        private void ShowPeopleInSpace()
+        public void ShowPeopleInSpace()
         {
             Clients.All.getPeopleInSpace();
         }
