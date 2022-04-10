@@ -61,6 +61,7 @@ namespace SpacePro.Controllers.BroadsControllers
             {
                 await _unitOfWork.NewsListeners.DeleteNewsListener(id);
                 var userDeleted = await _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
+                await _unitOfWork.Complete();
                 return Json(userDeleted, JsonRequestBehavior.AllowGet);
             }
             return  new HttpStatusCodeResult(HttpStatusCode.BadRequest, "The user that you are trying to delete does not exist.");

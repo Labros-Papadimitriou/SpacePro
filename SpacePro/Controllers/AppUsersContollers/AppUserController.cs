@@ -164,6 +164,7 @@ namespace SpacePro.Controllers.AppUsersContollers
         {
             await _unitOfWork.NewsListeners.DeleteNewsListener(id);
             await _unitOfWork.ApplicationUsers.DeleteUserWithPostsAndImage(id);
+            await _unitOfWork.Complete();
 
             return RedirectToAction("Index", "Home");
         }

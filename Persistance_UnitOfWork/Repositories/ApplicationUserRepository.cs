@@ -91,7 +91,6 @@ namespace Persistance_UnitOfWork.Repositories
             foreach (var post in user.UserPosts)
             {
                 ApplicationDbContext.Entry(post).State = EntityState.Deleted;
-                await ApplicationDbContext.SaveChangesAsync();
             }
             
             if (UserLikes != null)
@@ -99,7 +98,6 @@ namespace Persistance_UnitOfWork.Repositories
                 foreach (var like in UserLikes)
                 {
                     ApplicationDbContext.Entry(like).State = EntityState.Deleted;
-                    await ApplicationDbContext.SaveChangesAsync();
                 }
             }
             if (ArticleLikes != null)
@@ -107,12 +105,10 @@ namespace Persistance_UnitOfWork.Repositories
                 foreach (var like in ArticleLikes)
                 {
                     ApplicationDbContext.Entry(like).State = EntityState.Deleted;
-                    await ApplicationDbContext.SaveChangesAsync();
                 }
             }
 
             ApplicationDbContext.Entry(user).State = EntityState.Deleted;
-            await ApplicationDbContext.SaveChangesAsync();
 
             return user;
         }
