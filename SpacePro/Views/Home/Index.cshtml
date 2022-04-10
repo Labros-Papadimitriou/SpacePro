@@ -3,7 +3,7 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
-<style>
+@*<style>
         body {
             -webkit-font-smoothing: antialiased;
         }
@@ -134,23 +134,41 @@
                 <img src="https://cssanimation.rocks/images/random/moon.png">
             </div>
         </div>
-    </article>
-@*<style>
-    #map {
-        height: 180px;
+    </article>*@
+
+<style>
+    .spaceInfo{
+        font-size:17px;
     }
 </style>
 
-<div id="map"></div>
+
+<div>
+    <div class="spaceInfo" >
+        <div class="people">
+        </div>
+        <br />
+        <br />
+        <div class="ships">
+        </div>
+    </div>
+
+
+    <div class="map-container" style="height: 350px; overflow: hidden;">
+        <div id="iss-pos-wrapper">
+            <iframe src="https://isstracker.spaceflight.esa.int/" style="border: 0 none transparent; " id="iss-pos" width="625" height="575" frameborder="0" scrolling="no" allowfullscreen="" title="ESU ISS tracking map">ESA ISS tracking map</iframe>
+        </div>
+    </div>
+</div>
 
 @section scripts {
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script>
-     
+
         let space = $.connection.spaceHub;
 
-        space.client.getPeopleInSpace = function () {
+        space.client.issLocation = function () {
             var settings = {
                 "url": "http://api.open-notify.org/iss-now.json",
                 "method": "GET",
@@ -158,11 +176,11 @@
             };
 
             $.ajax(settings).done(function (response) {
-                console.log(response);
+                $('.ships').html(new Date(response.timestamp * 1000) + "<br>" + "Latitude: " + response.iss_position.latitude + "<br>" + "Longtitude: " + response.iss_position.longitude)
             });
         }
 
-        space.client.issLocation = function () {
+        space.client.getPeopleInSpace = function () {
             var settings = {
                 "url": "http://api.open-notify.org/astros.json",
                 "method": "GET",
@@ -170,13 +188,17 @@
             };
 
             $.ajax(settings).done(function (response) {
-                console.log(response);
+                $('.people').html(response.number + " People In Space Right Now <br><br>" + response.people.map(x => "Craft: " + x.craft + " --- "  + "Name: " + x.name + "<br>").join(""))
             });
         }
+
+        $.connection.hub.start().done(function () {
+            space.server.showPeopleInSpace();
+        });
 
 
         $.connection.hub.start().done(function () {
 
         });
     </script>
-}*@
+}
