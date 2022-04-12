@@ -1,17 +1,28 @@
 ﻿@model IEnumerable<Entities.Bodies.BodyImage>
  <!-- PAGE-HEADER -->
 <style>
+    .row{
+      display:flex;
+      flex-wrap:wrap;
+     padding: 0 4px;
+    }
+    .column {
+        flex: 25%;
+        max-width: 25%;
+        padding: 0 4px;
+    }
     div.polaroid {
-        width: 80%;
+        margin-top: 8px;
+        width: 100%;
         background-color: #89C2D9;
-        box-shadow: 0 4px 6px 0 #89C2D9, 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        margin-bottom: 25px;
         border-radius: 4px;
+        vertical-align: middle;
+        position: relative;
     }
 
     div.text-container {
         text-align: center;
-        padding: 10px 20px;
+        padding: 5px 10px;
         font-size: 1rem;
         font-weight: bold;
         color: black;
@@ -19,6 +30,42 @@
     div.text-container p{
         margin-top:14px;
     }
+    .polaroid img {
+        display: block;
+        filter: brightness(70%);
+    }
+        .polaroid img:hover {
+            filter: brightness(100%);
+        }
+    .polaroid:hover .overlay {
+        opacity: 1;
+    }
+    .overlay {
+        position: absolute;
+        bottom: 0;
+        background: rgb(0, 0, 0);
+        background: rgba(0, 0, 0, 0.5); /* Black see-through */
+        color: #f1f1f1;
+        width: 100%;
+        transition: .5s ease;
+        opacity: 0;
+        color: white;
+        font-size: 20px;
+        padding: 20px;
+        text-align: center;
+    }
+    @@media screen and (max-width: 800px) {
+  .column {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+@@media screen and (max-width: 600px) {
+  .column {
+    flex: 100%;
+    max-width: 100%;
+  }
+}
 </style>
 
 <div class="page-header">
@@ -35,10 +82,10 @@
 <div class="masonry row">
     @foreach (var bi in Model)
     {
-    <div class="col-xl-3 col-lg-4 col-sm-6">
+    <div class="column">
         <div class="polaroid">
             <img src="@bi.Url" alt="@bi.AlternativeText" style="width:100%">
-            <div class="text-container">
+            <div class="overlay">
                 <p>@bi.AlternativeText</p>
             </div>
         </div>
