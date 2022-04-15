@@ -1,4 +1,9 @@
 ﻿@using Microsoft.AspNet.Identity
+<style>
+    .btn-dark{
+        padding:2px 10px;
+    }
+</style>
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -10,9 +15,9 @@
 else
 {
     <ul class="nav navbar-nav navbar-right">
-        <li><a id="registerLink" href="/Account/Register" style="margin-top:15px" class="btn btn-dark">Register</a></li>
-        <li style="width:120px"></li>
+        <li><a id="registerLink" href="/Account/Register" style="margin-top:1.3rem" class="btn btn-dark">Register</a></li>
+        <li style="width:100px"></li>
         @*<li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>*@
-        <li><a id="loginLink" href="/Account/Login" style="margin-top:15px" class="btn btn-dark">Log in</a></li>
+        <li><a id="loginLink" href="/Account/Login" style="margin-top:1.3rem" class="btn btn-dark">Log in</a></li>
     </ul>
 }
