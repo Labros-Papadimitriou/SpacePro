@@ -15,7 +15,7 @@
         font-size: 14px;
     }
 
-        .btn:nth-child(3) {
+        .btn:nth-child(4) {
             background-color: whitesmoke;
             color: black;
         }
@@ -31,8 +31,8 @@
 <div class="myBtns">
     <a class="btn btn-dark" href="/Dashboard/UserRoles">User Roles</a>
     <a class="btn btn-dark" href="/Dashboard/ArticlesLikes">Articles Likes</a>
-    <a class="btn btn-dark" href="#">Posts Likes</a>
-    <a class="btn btn-dark" href="/Dashboard/UserLikes">User Likes</a>
+    <a class="btn btn-dark" href="/Dashboard/PostLikes">Post Likes</a>
+    <a class="btn btn-dark" href="#">User Likes</a>
     <a class="btn btn-dark" href="/Dashboard/PlanetsStats">Planets Stats</a>
     <a class="btn btn-dark" href="/Dashboard/MoonsStats">Moons Stats</a>
     <a class="btn btn-dark" href="/Dashboard/AsteroidsStats">Asteroids Stats</a>
@@ -51,6 +51,9 @@
     let users = [];
     let likes = [];
 
+    let distUsers = [];
+    let distLikes = [];
+
     @foreach (var userName in Model.UserName)
     {
          @: users.push("@userName");
@@ -62,14 +65,28 @@
         @: likes.push(@likes)
     }
 
+
+    for (var i = 0; i < users.length; i++) {
+
+        if (!distUsers.includes(users[i])) {
+            distUsers.push(users[i]);
+            distLikes.push(likes[i]);
+        }
+        else {
+            distLikes[distUsers.indexOf(users[i])] += likes[i];
+        }
+    }
+
+
+
     const data = {
-        labels: users,
+        labels: distUsers,
 
         datasets: [
             {
-            label: 'Post Likes',
+            label: 'User Likes',
 
-            data: likes,
+                data: distLikes,
 
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',

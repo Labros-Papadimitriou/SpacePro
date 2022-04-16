@@ -1939,7 +1939,7 @@
     <Content Include="Views\Dashboard\MoonsStats.cshtml" />
     <Content Include="Views\Dashboard\AsteroidsStats.cshtml" />
     <Content Include="Views\News\AddListener.cshtml" />
-    <Content Include="Views\Home\SSI_position.cshtml" />
+    <Content Include="Views\Dashboard\UserLikes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
