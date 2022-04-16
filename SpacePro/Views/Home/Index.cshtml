@@ -353,7 +353,7 @@
                 "timeout": 0,
             };
             $.ajax(settings).done(function (response) {
-                $('.ships').html(new Date(response.timestamp * 1000).toUTCString() + "<br>" + "Latitude: " + response.iss_position.latitude + "<br>" + "Longtitude: " + response.iss_position.longitude + `<br> Altitude: ${alt} <br> Speed: ${speed} km/h`)
+                $('.ships').html(new Date(response.timestamp * 1000).toUTCString() + "<br>" + "Latitude: " + response.iss_position.latitude + "<br>" + "Longtitude: " + response.iss_position.longitude + `<br> Altitude: ${alt} km <br> Speed: ${speed} km/h`)
             });
         }
         space.client.getPeopleInSpace = function () {
