@@ -7,7 +7,7 @@
 <!--Modal Delete-->
 <div class="modal fade" id="delete" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog alert-danger bg-danger">
-        <div class="modal-content">
+        <div class="modal-content" >
             <div class="modal-header">
                 <h5 class="modal-title">Delete Article</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
@@ -93,19 +93,15 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Article Details</h1>
                 @if (User.IsInRole("Admin"))
                 {
-                    <div style="margin-left:350px">
-                        <button id="edit-offcanvas" class="btn btn-outline-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#edit" aria-controls="offcanvasWithBothOptions">Edit</button>
+                    <div style="float:left">
+                        <button style="margin-right:10px" id="edit-offcanvas" class="btn btn-outline-warning" type="button" data-bs-toggle="offcanvas" data-bs-target="#edit" aria-controls="offcanvasWithBothOptions">Edit</button>
                         <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#delete">Delete</button>
                     </div>
                 }
                 <div>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/Article/ShowArticles">All Articles</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Article Details</li>
-                    </ol>
+                    
                 </div>
             </div>
             <!-- PAGE-HEADER END -->
@@ -144,10 +140,10 @@
                             </div>
                         </div>
                         <div class="card-body" style="border:solid 1px #0d1d40">
-                            <h3><a id="article-title" href="#">@Model.Title</a></h3>
+                            <h3 style="text-align:center">@Model.Title</h3>
                             <p id="article-description" class="card-text"></p>
                         </div>
-                        <div style="border:solid 1px #0d1d40" id="article-description" class="text-muted">@Model.FullDescription</div>
+                        <div style="border:solid 1px #0d1d40; padding:25px" id="article-description" class="text-muted">@Model.FullDescription</div>
                     </div>
                 </div>
             </div>
