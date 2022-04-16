@@ -16,10 +16,10 @@
                                                 <div class="card">
                                                     <a style="border:solid 1px #0d1d40;" href="/Article/GetArticleDetails?id=${article[i].ArticleId}"><img id="article-image-${article[i].ArticleId}" class="card-img-top" src="${article[i].Url}" alt="${article[i].AlternativeText}"></a>
                                                     <div style="border:solid 1px #0d1d40; background: linear-gradient(to top, #0d1d40, black)" class="card-body d-flex flex-column">
-                                                        <h3><a id="article-title-${article[i].ArticleId}" href="/Article/GetArticleDetails?id=${article[i].ArticleId}">${article[i].Title}</a></h3>
+                                                        <h3><a style="pointer-events: none;" id="article-title-${article[i].ArticleId}">${article[i].Title}</a></h3>
                                                         <div id="article-description-${article[i].ArticleId}" class="text-muted">${article[i].ShortDescription}</div>
                                                         <div class="d-flex align-items-center pt-5 mt-auto">
-                                                            <div class="avatar brround avatar-md me-3 cover-image" data-bs-image-src="~/Template/sash/assets/images/users/18.jpg"></div>
+                                                            <div class="me-3"></div>
                                                             <div>
                                                                 <a href="javascript:void(0)" class="text-default">By: ${article[i].AuthorName}</a>
                                                                 <small id="article-postdate-${article[i].ArticleId}" class="d-block text-muted">${"Post Date: " + postdate}</small>

@@ -10,8 +10,9 @@
     }
 
     .card {
-        background: linear-gradient(to left, #0c092ef2, black 80%);
-        box-shadow: rgb(55, 55, 55) 3px 3px 4px 3px;
+        background-color: #58585824 !important;
+        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
     }
 
     input.form-control.date {
@@ -92,7 +93,7 @@
                         <div class="modal-body">
                             <p class="header" id="postDetailsModal"></p>
                             <br />
-                            <button id="delBtn" data-bs-dismiss="modal" class="btn btn-danger">Delete Post</button>
+                            <button id="delBtn" data-bs-dismiss="modal" class="btn btn-outline-danger">Delete Post</button>
                             <button data-bs-dismiss="modal" class="btn btn-primary">Cancel</button>
                         </div>
                     </div>
@@ -105,7 +106,7 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">Edit Post</h5>
-                            <button type="button" class="close btn btn-danger" data-bs-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close btn btn-outline-danger" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
@@ -113,7 +114,7 @@
                             <div class="header" id="postDetailsEditModal"></div>
                             <br />
                             <button id="saveEditBtn" data-bs-dismiss="modal" class="btn btn-danger">Edit Post</button>
-                            <button data-bs-dismiss="modal" class="btn btn-primary">Cancel</button>
+                            <button data-bs-dismiss="modal" class="btn btn-outline-primary">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -121,13 +122,6 @@
             <!--Edit Modal Ends -->
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title">Edit Profile</h1>
-                <div>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/AppUser/UserProfile">View Profile</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Profile</li>
-                    </ol>
-                </div>
             </div>
             <!-- PAGE-HEADER END -->
             <!-- ROW-1 OPEN EDIT PROFILE/EDIT PASSWORD-->
@@ -137,7 +131,7 @@
                     {
                         <div class="card">
                             <div class="card-header">
-                                <div class="card-title">Edit Password</div>
+                                <div style="margin:0 auto; font-size:21px" class="card-title">Edit Password</div>
                             </div>
                             @Html.ValidationSummary("", new { @class = "text-danger" })
                             <div class="card-body">
@@ -182,26 +176,20 @@
                                 </div>
                             </div>
                             <div class="card-footer text-end">
-                                <button id="updPass" class="btn btn-success" type="submit" value="Change Password">Update Password</button>
-                                <a href="#" class="btn btn-danger">Cancel</a>
+                                <button style="margin-right:10px" id="updPass" class="btn btn-outline-success" type="submit" value="Change Password">Update Password</button>
+                                <a href="#" class="btn btn-outline-danger">Cancel</a>
                             </div>
                         </div>
                     }
                     <div class="card">
-
-                        <div class="card-header">
-                            <div class="card-title">Manage Account</div>
-                        </div>
                         <div class="card-footer text-start">
-                            <a href="/Manage/Index" class="btn btn-secondary my-1">Manage Account</a>
-                        </div>
-                        <div class="card-footer text-start">
-                            <button data-bs-toggle="modal" data-bs-target="#deleteAccountModal" class="btn btn-danger my-1">Delete Account</button>
+                            <span style="margin-right:35px; margin-left:15px; font-size:17px; color:snow">Delete Your Account!</span>
+                            <button data-bs-toggle="modal" data-bs-target="#deleteAccountModal" class="btn btn-outline-danger my-1">Delete Account</button>
                         </div>
                     </div>
                     @if (ViewBag.IsTheUserListener)
                     {
-                        <div class="card news">
+                        <div class="card news" style="padding:10px">
                             <h3>Unsubscribe from our Newsletter</h3>
                             <form action="/News/AddListener" method="get">
 
@@ -238,7 +226,7 @@
                 <div class="col-xl-8">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Edit Profile</h3>
+                            <h3 style="margin:0 auto; font-size:21px" class="card-title">Edit Profile</h3>
                         </div>
                         @using (Html.BeginForm("EditProfile", "AppUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
@@ -291,8 +279,8 @@
                                 </div>
                             </div>
                             <div class="card-footer text-end">
-                                <button type="submit" class="btn btn-success my-1">Save</button>
-                                <a href="#" class="btn btn-danger my-1">Cancel</a>
+                                <button style="margin-right:10px" type="submit" class="btn btn-outline-success my-1">Save</button>
+                                <a href="#" class="btn btn-outline-danger my-1">Cancel</a>
                             </div>
                         }
                     </div>
@@ -348,9 +336,9 @@
                         data: "UserPostId", render: function (UserPostId) {
 
                             let template = `
-                                                      <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#editPostModal" onclick="MyEdit(${UserPostId})" >Edit</button>
-                                                      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal" onclick="MyDelete(${UserPostId})">Delete</button>
-                                                   `;
+                                                <button style="margin-right:10px" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editPostModal" onclick="MyEdit(${UserPostId})" >Edit</button>
+                                                <button class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deletePostModal" onclick="MyDelete(${UserPostId})">Delete</button>
+                                            `;
 
                             return template;
                         }

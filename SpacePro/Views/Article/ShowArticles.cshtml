@@ -1,19 +1,12 @@
-﻿<style>
-    .card {
-        background-color: #58585824 !important;
-        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
-        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
-    }
-</style>
-
+﻿
 @if (User.IsInRole("Admin"))
 {
     <div class="row">
         <div class="col-xl-2">
             <div class="card">
                 <div class="card-body">
-                    <div style="text-align:center">
-                        <a href="/Article/CreateArticles" class="btn btn-dark">Create New Article</a>
+                    <div>
+                        <a style="padding: 8px" href="/Article/CreateArticles" class="btn btn-dark">Create New Article</a>
                     </div>
                 </div>
             </div>
