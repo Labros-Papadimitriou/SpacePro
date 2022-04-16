@@ -1,4 +1,9 @@
-﻿@if (Request.IsAuthenticated)
+﻿<style>
+    .chat:hover{
+        color: white !important;
+    }
+</style>
+@if (Request.IsAuthenticated)
 { 
 <div class="d-flex order-lg-2 ms-auto header-right-icons">
     <!-- MESSAGE BOX -->
@@ -10,7 +15,7 @@
             <div class="d-flex order-lg-2">
                 <div class="dropdown  d-flex message">
                     <a class="nav-link icon text-center" href="/Home/Chat">
-                        <i class="fe fe-message-square"></i>@*<span class="pulse-danger"></span>*@
+                        <span class="chat" style="color: #d4d4d4 !important; margin-top:5px;">Chat</span>
                     </a>
                     @*<div class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                         <div class="drop-heading border-bottom">

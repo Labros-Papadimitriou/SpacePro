@@ -3,7 +3,14 @@
 <html lang="en" dir="ltr">
 
 <head>
-
+    @if (User.IsInRole("Admin"))
+    {
+        <!-- DROPDOWN -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    }
     <!-- META DATA -->
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
@@ -51,13 +58,41 @@
 
     <!--Scroll Bar-->
     <style>
-        
 
-    /*Nav Bar Style*/
+
+        /*Nav Bar Style*/
+        .myNav {
+            display: flex;
+            align-items: center !important;
+            justify-content: space-between;
+            height: 40px;
+        }
         .myNav a {
             font-size: 1.1rem !important;
             font-family: sans-serif !important;
         }
+
+        .dropdown {
+            font-size: 1.1rem !important;
+            font-family: sans-serif !important;
+        }
+
+
+        .ddi:hover {
+            background-color: #a0a0a0 !important;
+        }
+
+        .adminBtn {
+            color: #d4d4d4 !important;
+            border: none;
+            background-color: transparent !important;
+            font-size: 1.1rem !important;
+            font-family: sans-serif !important;
+        }
+
+            .adminBtn:hover {
+                color: white !important;
+            }
     </style>
 
 </head>
@@ -75,7 +110,7 @@
             <!-- app-Header -->
             <div class="app-header header sticky" style="background-color: black;">
                 <div class="container main-container">
-                    <div class="d-flex justify-content-between myNav">
+                    <div class="myNav">
                         <a aria-label="Hide Sidebar" class="app-sidebar__toggle" data-bs-toggle="sidebar" href="#"></a>
                         <!-- sidebar-toggle-->
                         <a class="logo-horizontal " href="/Home/Index">
@@ -98,19 +133,6 @@
                         <div class="slide">
                             <a class="side-menu__item" data-bs-toggle="slide" href="/Gallery/ShowGallery"><span class="side-menu__label">Gallery</span></a>
                         </div>
-                        <!--EVENTS-->
-                        @if (User.IsInRole("Admin"))
-                        {
-                            <div class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><span class="side-menu__label">Events</span></a>
-                            </div>
-                            <div class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="/News/AddNewsletter"><span class="side-menu__label">NewsLetters</span></a>
-                            </div>
-                            <div class="slide">
-                                <a class="side-menu__item" data-bs-toggle="slide" href="/Dashboard/UserRoles"><span class="side-menu__label">Dashboard</span></a>
-                            </div>
-                        }
                         <!--PAYMENT-->
                         <div>
                             <a class="side-menu__item" data-bs-toggle="slide" href="/Payment/ShowPaymentMethods"><span class="side-menu__label">Payment</span></a>
@@ -119,7 +141,25 @@
                         <div>
                             <a class="side-menu__item" data-bs-toggle="slide" href="/Social/ShowSocial"><span class="side-menu__label">Social</span></a>
                         </div>
-                        <div>
+                        <!--ADMIN ACTIONS-->
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="d-flex justify-content-center">
+                                <div class="dropdown">
+                                    <div class="side-menu__item">
+                                        <button class="dropdown-toggle side-menu__item adminBtn" type="button" data-toggle="dropdown">
+                                            Admin Actions
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="ddi side-menu__item" data-bs-toggle="slide" href="/Calendar/ShowCalendar"><span class="side-menu__label">Events</span></a></li>
+                                            <li><a class="ddi side-menu__item" data-bs-toggle="slide" href="/News/AddNewsletter"><span class="side-menu__label">Newsletter</span></a></li>
+                                            <li><a class="ddi side-menu__item" data-bs-toggle="slide" href="/Dashboard/UserRoles"><span class="side-menu__label">Dashboard</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div style="margin-top:20px;">
                             @Html.Partial("_ProfilPartial")
                         </div>
                         <div>
@@ -131,23 +171,8 @@
             <!-- /app-Header
             <!--APP-SIDEBAR-->
             <div class="sticky">
-                <div class="app-sidebar__overlay" data-bs-toggle="sidebar"></div>
-                <div class="app-sidebar">
-                    <div class="side-header">
-                        <a class="header-brand1" href="index.html">
-                            <img src="~/Template/sash/assets/images/brand/logo.png" class="header-brand-img desktop-logo" alt="logo">
-                        </a>
-                    </div>
-                    <div class="main-sidemenu">
-                        <div class="slide-left disabled" id="slide-left"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M13.293 6.293 7.586 12l5.707 5.707 1.414-1.414L10.414 12l4.293-4.293z" /></svg></div>
-                        <div style="margin-left:50px">
-                        </div>
-                        <div class="slide-right" id="slide-right"><svg xmlns="http://www.w3.org/2000/svg" fill="#7b8191" width="24" height="24" viewBox="0 0 24 24"><path d="M10.707 17.707 16.414 12l-5.707-5.707-1.414 1.414L13.586 12l-4.293 4.293z" /></svg></div>
-                    </div>
-                </div>
-                <!--/APP-SIDEBAR-->
                 <!--app-content open-->
-                <div class="main-content app-content mt-0"  >
+                <div class="main-content app-content mt-0">
                     <div class="side-app">
                         <!-- CONTAINER -->
                         <div class="main-container container-fluid">
