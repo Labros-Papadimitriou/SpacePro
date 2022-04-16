@@ -1,21 +1,33 @@
 ﻿@model SpacePro.Models.RegisterViewModel
 @{
-    ViewBag.Title = "Register";
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 <style>
     .card {
-        background: linear-gradient(to left, #0c092ef2, black 80%);
-        box-shadow: rgb(55, 55, 55) 3px 3px 4px 3px;
+        width:50%;
+        margin-top:70px;
+        padding:20px;
+        background-color: #58585824 !important;
+        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+    }
+    .col-md-10{
+        margin:0 auto;
+        float:none;
+    }
+    .col-md-2{
+        max-width:none;
+    }
+    .form-group{
+        font-size:17px;
     }
 </style>
-<h2>@ViewBag.Title.</h2>
 
-<div class="card">
+<div class="card text-center" style="margin:100px auto; float:none;">
     @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
     {
         @Html.AntiForgeryToken()
-        <h4>Create a new account.</h4>
+        <h4 style="text-align:center; font-size:25px">Create a new account</h4>
         <hr />
         @Html.ValidationSummary("", new { @class = "text-danger" })
 
@@ -50,9 +62,9 @@
                 @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" style="margin:auto">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" class="btn btn-dark" value="Register" />
+                <input type="submit" class="btn btn-lg btn-dark" value="Register" />
             </div>
         </div>
     }
