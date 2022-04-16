@@ -12,7 +12,7 @@ namespace SpacePro
         private readonly Timer timer;
         public SpaceHub()
         {
-            timer = new Timer(10000);
+            timer = new Timer(500);
             timer.Start();
             timer.Elapsed += Timer_Elapsed;
         }
