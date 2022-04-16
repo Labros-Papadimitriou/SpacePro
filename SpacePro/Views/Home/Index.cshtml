@@ -3,202 +3,303 @@
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
 
-@*<style>
-        body {
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .earth-demo {
-            background: #000;
-            position: absolute;
-            top: 70px;
-            right: 0;
-            bottom: 0;
-            left: 0;
-            overflow: hidden;
-        }
-
-            .earth-demo:before {
-                background: src('~/Template/sash/assets/images/media/bg-img-index.jpg') center repeat;
-                background-size: cover;
-                content: "";
-                opacity: 0.5;
-                position: absolute;
-                left: 0;
-                right: 0;
-                top: 0;
-                bottom: 0;
-            }
-
-        .earth {
-            position: absolute;
-            top: calc(50% - 100px);
-            left: calc(50% - 100px);
-        }
-
-            .earth img {
-                height: 200px;
-                width: 200px;
-                position: absolute;
-                top: 0;
-                left: 0;
-            }
-
-            .earth .more-info {
-                background-image: linear-gradient(to bottom, rgba(10, 10, 10, 1), black);
-                border-radius: 1em;
-                color: #fff;
-                opacity: 0;
-                padding: 1em;
-                transform: scale(0.8);
-                transform-origin: 0 0;
-                width: 400px;
-            }
-
-                .earth .more-info h1 {
-                    margin: 0 0 1em;
-                    text-align: right;
-                }
-
-                .earth .more-info h1, .earth .more-info li {
-                    font-family: 'Space Mono', monospace;
-                    opacity: 0;
-                }
-
-        .moon-container {
-            position: absolute;
-            top: calc(50% - 25px);
-            left: calc(50% - 25px);
-        }
-
-        .moon {
-            animation: spin 20s linear infinite;
-            background: none;
-            width: 50px;
-            height: 50px;
-            pointer-events: none;
-            transform-origin: 25px;
-        }
-
-            .moon img {
-                transform: translateX(-160px) translateY(-160px);
-                width: 50px;
-            }
-
-            .earth img, .moon img {
-                border-radius: 50%;
-                box-shadow: 0 0 12em 1em rgba(110, 140, 200, .6);
-            }
-
-        .earth:hover img, .earth.active img {
-            transform: translateX(-75px) translateY(-75px) scale(0.5);
-        }
-
-        .earth:hover ~ .moon-container, .earth.active ~ .moon-container {
-            transform: translateX(-75px) translateY(-75px) scale(0.4);
-        }
-
-            .earth:hover ~ .moon-container img, .earth.active ~ .moon-container img {
-                transform: translateX(-140px) translateY(-140px);
-            }
-
-        .earth:hover .more-info, .earth.active .more-info {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-            .earth:hover .more-info h1, .earth.active .more-info h1, .earth:hover .more-info li, .earth.active .more-info li {
-                opacity: 1;
-            }
-
-        * {
-            transition: all 4s cubic-bezier(0, 1.5, 0.3, 1);
-        }
-    </style>
-
-    <article class="earth-demo">
-        <div class="earth">
-            <div class="more-info">
-                <h1>Earth</h1>
-                <ul>
-                    <li>Third planet from the Sun</li>
-                    <li>Atmosphere: 21% oxygen</li>
-                    <li>Liquid water on surface</li>
-                    <li>Only planet that has life (that we know of)</li>
-                </ul>
-            </div>
-            <img src="https://cssanimation.rocks/images/random/earth.png">
-        </div>
-        <div class="moon-container">
-            <div class="moon">
-                <img src="https://cssanimation.rocks/images/random/moon.png">
-            </div>
-        </div>
-    </article>*@
-
 <style>
-    .spaceInfo{
-        font-size:17px;
+    .spaceInfo {
+        font-size: 17px;
     }
 </style>
 
-
-<div>
-    <div class="spaceInfo" >
-        <div class="people">
+<div style="display:flex; margin-top:50px;">
+    <h4 style="color:aqua; margin-top:8px;">10 People In Space Right Now</h4>
+    <button style="margin:0 0 25px 15px;" class="btn btn-outline-info" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        People Info
+    </button>
+</div>
+<div class="collapse" id="collapseExample">
+    <div class="row row-cols-4">
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        156
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/SpaceX_Crew-3_Mission_Specialist_Kayla_Barron.jpg/220px-SpaceX_Crew-3_Mission_Specialist_Kayla_Barron.jpg"/>
+                    <h4 class="h4 mb-0 mt-3">Kayla Jane Sax</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            In June 2017, Barron was selected as a member of NASA Astronaut Group 22, and began her two-year training. She was the fifth female Naval Academy graduate selected as an astronaut candidate.
+                            She trained for the SpaceX Crew-3 mission, during which she will work aboard the International Space Station as a mission specialist. She launched on board the SpaceX Crew Dragon capsule Endurance on November 10, 2021 and is currently in space as part of the Expedition 66 long duration mission.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <br />
-        <br />
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        156
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/SpaceX_Crew-3_Mission_Specialist_Matthias_Maurer.jpg/220px-SpaceX_Crew-3_Mission_Specialist_Matthias_Maurer.jpg"/>
+                    <h4 class="h4 mb-0 mt-3">Matthias Maurer</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">Astronaut  career</h5>
+                            Maurer applied to the European Space Agency as an astronaut in 2008 with almost 8500 other candidates and was one of ten to pass the selection procedure, but was not initially appointed to the European Astronaut Corps. In 2010 he started working for the European Space Agency as a crew support engineer and eurocom for the Columbus flight control team at the European Astronaut Centre (EAC) in Cologne, Germany. Before he formally joined the European Astronaut Corps in July 2015, Maurer took a lead role in ESA Astronaut Centre projects to prepare for future spaceflight and lunar operations with new international partners and extend the Agency's human exploration expertise beyond the International Space Station.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        156
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/32/SpaceX_Crew-3_Pilot_Thomas_Marshburn.jpg/220px-SpaceX_Crew-3_Pilot_Thomas_Marshburn.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Thomas Marshburn</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            Marshburn joined NASA in November 1994, serving as a flight surgeon at Johnson Space Center in Houston, Texas. He was assigned to Space Shuttle Medical Operations and to the joint US/Russian Space Program. From February 1996 to May 1997 he served as a flight surgeon for NASA personnel deployed to the Yuri Gagarin Cosmonauts Training Center, Star City, Russia, followed by work in the Center for Flight Control in Korolyov, Russia, in support of the NASA Expedition 4 to the Mir Space Station. From July 1997 to August 1998 he was co-chair of Medical Operations for the Shuttle–Mir Program. From 1998 to 2000, he was deputy Flight Surgeon for Neuronal (STS-98) and lead Flight Surgeon for the STS-101 mission to the International Space Station (ISS).
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        156
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/SpaceX_Crew-3_Commander_Raja_Chari.jpg/220px-SpaceX_Crew-3_Commander_Raja_Chari.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Raja Chari</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            n June 2017, Chari was selected for NASA Astronaut Group 22, and reported for duty in August to begin two years of training as an astronaut.
+                            In December 2020, Chari was selected to be a part of the Artemis Team, a group of astronauts "to help pave the way for the next lunar missions including sending the first woman and next man to walk on the lunar surface in 2024." The same month, he became the first astronaut from Group 22 to be selected for a space mission, of which he is currently in command, SpaceX Crew-3. Chari is the first NASA rookie to command a spaceflight since Gerald Carr, who commanded the Skylab 4 mission in 1973.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-4">
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        393
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/73/Expedition_39_crew_portrait2.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Oleg Artemyev</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            After his graduation, Artemyev served in the Soviet Army in Vilnius, Lithuania, until 1991. He has worked at RKKE since 1998.[1] At RKKE he was involving in developing testing procedures for Extra-vehicular Activity (EVA) equipment in neutral buoyancy at the hydrodynamics laboratory, Yuri Gagarin Cosmonaut Training Center. Artemyev was a member of the pre-launch processing team of the Zvezda Service Module working on the EVA and teleoperation control system. In 2000, he received medical clearance to begin special training related to space flight operation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        393
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/Denis_Matveev_in_2021_%28b%29.jpg/220px-Denis_Matveev_in_2021_%28b%29.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Denis Matveev</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            Matveev received his degree in computing and networks from the Bauman Moscow State Technical University in 2006. After graduation, Matveev began working at the Yuri Gagarin Cosmonaut Training Center in Star City, Russia as a junior research assistant. He was promoted to engineer in 2009.
+                            Matveev was selected as a cosmonaut in 2010. He was appointed to begin training on October 12, 2010 and was named a test cosmonaut on July 31, 2012.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        393
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Sergey_Korsakov_in_2021.jpg/640px-Sergey_Korsakov_in_2021.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Sergey Korsakov</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            Maurer applied to the European Space Agency as an astronaut in 2008 with almost 8500 other candidates and was one of ten to pass the selection procedure, but was not initially appointed to the European Astronaut Corps. In 2010 he started working for the European Space Agency as a crew support engineer and eurocom for the Columbus.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        182
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Ye_Guangfu_in_2021.jpg/220px-Ye_Guangfu_in_2021.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Ye Guangfu</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            As a People's Liberation Army Air Force pilot, Ye spent four years as an instructor and four years as a jet fighter pilot and amassed a total of 1,100 hours of flight time. He was selected to join the second batch of Chinese astronauts in 2010 and qualified in 2014.
+                            Ye made his first public appearance after participating in the ESA CAVES mission of 2016 organised by the ESA, making him the first Chinese participant of such an event.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-4">
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        182
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Wang_Yaping_in_2021.jpg/220px-Wang_Yaping_in_2021.jpg" />
+                    <h4 class="h4 mb-0 mt-3">Wang Yaping</h4>
+                    <p class="card-text">Flight Engineer</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            In March 2018, Wang was elected for a five-year-term as a deputy to the National People's Congress.
+                            In October 2021, it was announced that Wang was selected as one of the three crew members to fly on Shenzhou 13 to the Tiangong space station, marking her second spaceflight and the first time a Chinese woman would travel to space twice. She was to be the first female astronaut to board the Tiangong space station and to perform an extravehicular activity.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-3 col-sm-12">
+            <div class="card border p-0">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        182
+                        DAYS IN SPACE
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Zhai_Zhigang.JPG/220px-Zhai_Zhigang.JPG" />
+                    <h4 class="h4 mb-0 mt-3">Zhai Zhigang</h4>
+                    <p class="card-text">Commander</p>
+                </div>
+                <div class="card-footer text-center">
+                    <div class="row user-social-detail">
+                        <p>
+                            <h5 style="color:white;">NASA career</h5>
+                            In 1996, Zhai was selected to trial for the taikonaut program and was selected to be the first group of fourteen in 1998. He was one of three members of the final group to train for the Shenzhou 5 flight. Yang Liwei was picked for the flight, with Zhai Zhigang ranked second ahead of Nie Haisheng. Zhai was one of the six taikonauts in the final training for Shenzhou 6. The Ta Kung Pao newspaper had reported that Zhai Zhigang and Nie Haisheng were the leading pair, after having been in the final group of three for Shenzhou 5. However, Zhai had been paired with Wu Jie during training. Fei Junlong and Nie Haisheng flew the flight.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="spaceInfo">
         <div class="ships">
         </div>
     </div>
-
-
+    <br />
+    <br />
     <div class="map-container" style="height: 350px; overflow: hidden;">
         <div id="iss-pos-wrapper">
             <iframe src="https://isstracker.spaceflight.esa.int/" style="border: 0 none transparent; " id="iss-pos" width="625" height="575" frameborder="0" scrolling="no" allowfullscreen="" title="ESU ISS tracking map">ESA ISS tracking map</iframe>
         </div>
     </div>
 </div>
-
 @section scripts {
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script>
-
         let space = $.connection.spaceHub;
-
         space.client.issLocation = function () {
             var settings = {
                 "url": "http://api.open-notify.org/iss-now.json",
                 "method": "GET",
                 "timeout": 0,
             };
-
             $.ajax(settings).done(function (response) {
                 $('.ships').html(new Date(response.timestamp * 1000) + "<br>" + "Latitude: " + response.iss_position.latitude + "<br>" + "Longtitude: " + response.iss_position.longitude)
             });
         }
-
         space.client.getPeopleInSpace = function () {
             var settings = {
                 "url": "http://api.open-notify.org/astros.json",
                 "method": "GET",
                 "timeout": 0,
             };
-
             $.ajax(settings).done(function (response) {
-                $('.people').html(response.number + " People In Space Right Now <br><br>" + response.people.map(x => "Craft: " + x.craft + " --- "  + "Name: " + x.name + "<br>").join(""))
+                $('.people').html(response.number + " People In Space Right Now <br><br>" + response.people.map(x => "Craft: " + x.craft + " --- " + "Name: " + x.name + "<br>").join(""))
             });
         }
-
         $.connection.hub.start().done(function () {
             space.server.showPeopleInSpace();
         });
-
-
         $.connection.hub.start().done(function () {
-
         });
     </script>
 }
