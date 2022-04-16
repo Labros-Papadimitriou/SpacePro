@@ -13,7 +13,7 @@ namespace Persistance_UnitOfWork.IRepositories
         Task<IEnumerable<ApplicationUser>> GetAllUsersWithRolesAndPosts();
         Task<object> GetAllUsersWithImagesAndRoles();
         Task<ApplicationUser> GetUser(string id);
-        Task<string> GetUserName(string id);
+        string GetUserName(string id);
         Task<ApplicationUser> GetUserWithPostsAndImages(string id);
         Task<ApplicationUser> GetUserWithImages(string id);
         Task<ApplicationUser> DeleteUserWithPostsAndImage(string id);

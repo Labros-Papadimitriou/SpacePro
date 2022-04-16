@@ -48,10 +48,10 @@ namespace Persistance_UnitOfWork.Repositories
 
             return user;
         }
-        public async Task<string> GetUserName(string id)
+        public string GetUserName(string id)
         {
-            var userName = (await ApplicationDbContext.Users.Where(x => x.Id == id)
-                .FirstOrDefaultAsync()).UserName;
+            var userName =  ApplicationDbContext.Users.Where(x => x.Id == id)
+                .FirstOrDefault().UserName;
 
             return userName;
         }
