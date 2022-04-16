@@ -2,19 +2,76 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
-
 <style>
     .spaceInfo {
         font-size: 17px;
+        background-color: #58585824 !important;
+        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        height: 140px;
+        padding: 10px;
+        text-align:center;
+    }
+
+    .map-container {
+        background-color: #58585824 !important;
+        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+    }
+
+    #iss-pos-wrapper {
+        height: 295px;
+        overflow: hidden;
+    }
+
+    .ships {
+        font-size: 17px;
+        font-weight: bold;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+    }
+
+    .index-hero {
+        position: relative;
+        height: 820px;
+    }
+
+    .hero-text {
+        color: ghostwhite;
+        position: absolute;
+        top: 47%;
+        left: 39%;
+    }
+
+        .hero-text h1 {
+            font-size: 5rem;
+            font-weight: bold;
+            text-align: center
+        }
+
+        .hero-text h4 {
+            font-size: 3rem;
+            font-weight: bolder;
+            color: ghostwhite;
+        }
+
+    .btn-outline-info {
+        position: relative;
+        width: 96%
     }
 </style>
 
-<div style="display:flex; margin-top:50px;">
-    <h4 style="color:aqua; margin-top:8px;">10 People In Space Right Now</h4>
-    <button style="margin:0 0 25px 15px;" class="btn btn-outline-info" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-        People Info
-    </button>
+<div style="position:relative">
+    <img class="index-hero" src="https://i.pinimg.com/originals/2d/fd/7e/2dfd7e86dd416253c18765977a87cc3f.jpg">
+    <div class="hero-text">
+        <h1>10</h1>
+        <h4>People in Space</h4>
+    </div>
 </div>
+
+<button class="btn btn-outline-info" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    People Info
+</button>
+
 <div class="collapse" id="collapseExample">
     <div class="row row-cols-4">
         <div class="col-xl-3 col-sm-12">
@@ -26,7 +83,7 @@
                     </h3>
                 </div>
                 <div class="card-body text-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/SpaceX_Crew-3_Mission_Specialist_Kayla_Barron.jpg/220px-SpaceX_Crew-3_Mission_Specialist_Kayla_Barron.jpg"/>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/SpaceX_Crew-3_Mission_Specialist_Kayla_Barron.jpg/220px-SpaceX_Crew-3_Mission_Specialist_Kayla_Barron.jpg" />
                     <h4 class="h4 mb-0 mt-3">Kayla Jane Sax</h4>
                     <p class="card-text">Flight Engineer</p>
                 </div>
@@ -50,7 +107,7 @@
                     </h3>
                 </div>
                 <div class="card-body text-center">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/SpaceX_Crew-3_Mission_Specialist_Matthias_Maurer.jpg/220px-SpaceX_Crew-3_Mission_Specialist_Matthias_Maurer.jpg"/>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/SpaceX_Crew-3_Mission_Specialist_Matthias_Maurer.jpg/220px-SpaceX_Crew-3_Mission_Specialist_Matthias_Maurer.jpg" />
                     <h4 class="h4 mb-0 mt-3">Matthias Maurer</h4>
                     <p class="card-text">Flight Engineer</p>
                 </div>
@@ -258,24 +315,37 @@
         </div>
     </div>
 </div>
-<div>
-    <div class="spaceInfo">
-        <div class="ships">
-        </div>
-    </div>
-    <br />
-    <br />
-    <div class="map-container" style="height: 350px; overflow: hidden;">
+
+<div style="width:620px; margin:30px auto">
+    <div class="map-container">
         <div id="iss-pos-wrapper">
             <iframe src="https://isstracker.spaceflight.esa.int/" style="border: 0 none transparent; " id="iss-pos" width="625" height="575" frameborder="0" scrolling="no" allowfullscreen="" title="ESU ISS tracking map">ESA ISS tracking map</iframe>
         </div>
     </div>
+    <div class="spaceInfo">
+        <div class="ships text-info">
+        </div>
+    </div>
 </div>
+
 @section scripts {
     <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
     <script src="~/signalr/hubs"></script>
     <script>
         let space = $.connection.spaceHub;
+
+        let speed = 27546;
+        let alt = 433;
+
+        function Speed() {
+            Math.floor(Math.random() * 10) % 2 == 0 ? speed++ : speed--
+        }
+        function Alt() {
+            Math.floor(Math.random() * 10) % 2 == 0 ? alt++ : alt--
+        }
+        setInterval(Speed, 2000)
+        setInterval(Alt, 5000)
+
         space.client.issLocation = function () {
             var settings = {
                 "url": "http://api.open-notify.org/iss-now.json",
@@ -283,7 +353,7 @@
                 "timeout": 0,
             };
             $.ajax(settings).done(function (response) {
-                $('.ships').html(new Date(response.timestamp * 1000) + "<br>" + "Latitude: " + response.iss_position.latitude + "<br>" + "Longtitude: " + response.iss_position.longitude)
+                $('.ships').html(new Date(response.timestamp * 1000).toUTCString() + "<br>" + "Latitude: " + response.iss_position.latitude + "<br>" + "Longtitude: " + response.iss_position.longitude + `<br> Altitude: ${alt} <br> Speed: ${speed} km/h`)
             });
         }
         space.client.getPeopleInSpace = function () {
