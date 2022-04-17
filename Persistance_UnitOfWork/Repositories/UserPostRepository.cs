@@ -28,6 +28,7 @@ namespace Persistance_UnitOfWork.Repositories
             return await ApplicationDbContext.UserPosts
                 .Include(x => x.PostLikes)
                 .OrderByDescending(x => x.PostLikes.Count)
+                .Take(10)
                 .ToListAsync();
         }
     }
