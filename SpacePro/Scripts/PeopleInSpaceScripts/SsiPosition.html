@@ -1,0 +1,345 @@
+﻿<head>
+    <title>ISS Tracker</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?i=1" />
+    <script type="text/javascript">
+        var isst_xmlhttp = null;
+        var isst_ld_steps = 0;
+        var isst_ld_progress = 0;
+        var isst_ready = false;
+        var lastUpdate = 0;
+        var nextUpdateStep = 60000.0 * 1440.0;
+        var SGP4 = {
+            CanPropagate: false,
+            kUnits: 1.0,
+            EpochTLE: 0, // in days
+            EpochNow: 0,
+            IFLAG: 0,
+            // COMMON/E1/
+            XMO: 0,
+            XNODEO: 0,
+            OMEGAO: 0,
+            EO: 0,
+            XINCL: 0,
+            XNO: 0,
+            XNDT2O: 0,
+            XNDD6O: 0,
+            BSTAR: 0,
+            // COMMON/C1/
+            DE2RA: Math.PI / 180.0,
+            PIO2: Math.PI / 2.0,
+            X3PIO2: Math.PI * 1.5,
+            TWOPI: Math.PI * 2.0,
+            E6A: 1.0E-6,
+            TOTHRD: 2.0 / 3.0,
+            XJ3: -0.253881e-5,
+            XKMPER: 6378.135,
+            XMNPDA: 1440.0,
+            AE: 1.0,
+            CK2: 5.413080E-4,
+            CK4: 0.62098875E-6,
+            S: 1.0122292801892716,
+            QOMS2T: 1.8802791590152709e-9,
+            XKE: 0.074366916133173408,
+            TIMCON: 3600 * 24 * 1000,
+            SECDAY: 86400.0,
+            OMEGAE: 1.00273790934,
+            // VARS
+            X: 0,
+            Y: 0,
+            Z: 0,
+            XDOT: 0,
+            YDOT: 0,
+            ZDOT: 0,
+            Latitude: 0,
+            Longitude: 0,
+            Altitude: 0,
+            Speed: 0,
+            LatitudeLabel: "",
+            LongitudeLabel: "",
+            AltitudeLabel: "",
+            SpeedLabel: "",
+            TimeLabel: "",
+            A1: 0,
+            COSIO: 0,
+            THETA2: 0,
+            X3THM1: 0,
+            EOSQ: 0,
+            BETAO2: 0,
+            BETAO: 0,
+            DEL1: 0,
+            AO: 0,
+            DELO: 0,
+            XNODP: 0,
+            AODP: 0,
+            ISIMP: 0,
+            S4: 0,
+            QOMS24: 0,
+            PERIGE: 0,
+            PINVSQ: 0,
+            TSI: 0,
+            ETA: 0,
+            EETA: 0,
+            ETASQ: 0,
+            COEF: 0,
+            COEF1: 0,
+            PSISQ: 0,
+            C1: 0,
+            C2: 0,
+            C3: 0,
+            SINIO: 0,
+            A3OVK2: 0,
+            C4: 0,
+            C5: 0,
+            X1MTH2: 0,
+            THETA4: 0,
+            TEMP1: 0,
+            TEMP2: 0,
+            TEMP3: 0,
+            XMDOT: 0,
+            X1M5TH: 0,
+            OMGDOT: 0,
+            XHDOT1: 0,
+            OMGCOF: 0,
+            XMCOF: 0,
+            XNODOT: 0,
+            XNODCF: 0,
+            T2COF: 0,
+            XLCOF: 0,
+            AYCOF: 0,
+            DELMO: 0,
+            SINMO: 0,
+            X7THM1: 0,
+            C1SQ: 0,
+            D2: 0,
+            TEMP: 0,
+            D3: 0,
+            D4: 0,
+            T3COF: 0,
+            T4COF: 0,
+            T5COF: 0,
+        }
+        function printData() {
+            var sep = "&nbsp;&nbsp;&nbsp;";
+            document.getElementById('isst_lat').innerHTML = SGP4.LatitudeLabel;
+            document.getElementById('isst_lon').innerHTML = SGP4.LongitudeLabel;
+            document.getElementById('isst_alt').innerHTML = SGP4.AltitudeLabel;
+            document.getElementById('isst_spd').innerHTML = SGP4.SpeedLabel;
+            document.getElementById('isst_tim').innerHTML = SGP4.TimeLabel;
+            var b = isDocumentInFullScreenMode();
+            document.getElementById('btn_fs').style.display = (b) ? 'none' : 'block';
+            document.getElementById('waitmsg').style.display = "none";
+            var l = 0;
+            if (SGP4.kUnits != 1.0) l = isst_map_h * 0.04;
+            document.getElementById('btn_metric2').style.left = l + "px";
+        }
+        function getDayOfYear(hmera) {
+            var d = new Date();
+            d.setTime(hmera * 3600 * 24 * 1000);
+            var y = d.getUTCFullYear();
+            var d2 = new Date(Date.UTC(y, 0, 1));
+            return ((d.getTime() - d2.getTime()) / (1000 * 3600 * 24));
+        }
+        function calculateSunPosition(thesh_hliou) {
+            var MAR21 = (31 + 28.25 + 21) * 1.0;
+            var Days = getDayOfYear(SGP4.EpochNow);
+            var DayPart = thesh_hliou - Math.floor(Days);
+            SunLon = Math.PI * (1 - 2 * DayPart);
+            SunLat = (23.5 * Math.PI / 180) * Math.sin(Math.PI * 2 / 365.25 * (Days - MAR21));
+            SunLonDeg = SunLon * 180.0 / Math.PI;
+            SunLatDeg = SunLat * 180.0 / Math.PI;
+        }
+        function isDocumentInFullScreenMode() {
+            return (
+                (document.fullScreenElement && document.fullScreenElement !== null) ||
+                document.mozFullScreen ||
+                document.webkitIsFullscreen ||
+                window.innerHeight == screen.height
+            );
+        }
+        function DrawOrbit() {
+            var steps = 60;
+            var iss_x = LonRadToX(SGP4.Longitude * Math.PI / 180.0);
+            var iss_y = LatRadToY(SGP4.Latitude * Math.PI / 180.0);
+            var epoch;
+            var dt = 92 / 1440.0 / steps;
+            ctx.save();
+            ox = iss_x;
+            oy = iss_y;
+            var pxf = [];
+            var pyf = [];
+            var ox;
+            var oy;
+            epoch = SGP4.EpochNow;
+            for (var i = 0; i < steps; i++) {
+                SGP4._propagate(epoch);
+                pxf.push(LonRadToX(SGP4.Longitude * Math.PI / 180.0));
+                pyf.push(LatRadToY(SGP4.Latitude * Math.PI / 180.0));
+                epoch += dt;
+            }
+            ctx.strokeStyle = "rgba(255,255,255,0.8)";
+            ctx.lineWidth = Math.max(1.5, isst_map_w * 0.0015);
+            ctx.beginPath();
+            for (var i = 0; i < steps; i++) {
+                if (i == 0) {
+                    ctx.moveTo(ox = pxf[0], oy = pyf[0]);
+                    continue;
+                }
+                if (pxf[i] < ox) {
+                    ctx.lineTo(pxf[i] + isst_map_w, pyf[i]);
+                    ctx.moveTo(ox - isst_map_w, oy);
+                }
+                ctx.lineTo(ox = pxf[i], oy = pyf[i]);
+            }
+            ctx.stroke();
+            var pxb = [];
+            var pyb = [];
+            epoch = SGP4.EpochNow - 92 / 1440 + dt;
+            for (var i = 0; i < steps; i++) {
+                SGP4._propagate(epoch);
+                pxb.push(LonRadToX(SGP4.Longitude * Math.PI / 180.0));
+                pyb.push(LatRadToY(SGP4.Latitude * Math.PI / 180.0));
+                epoch += dt;
+            }
+            ctx.strokeStyle = "rgba(255,255,0,0.8)";
+            ctx.beginPath();
+            for (var i = 0; i < steps; i++) {
+                if (i == 0) {
+                    ctx.moveTo(ox = pxb[0], oy = pyb[0]);
+                    continue;
+                }
+                if (pxb[i] < ox) {
+                    ctx.lineTo(pxb[i] + isst_map_w, pyb[i]);
+                    ctx.moveTo(ox - isst_map_w, oy);
+                }
+                ctx.lineTo(ox = pxb[i], oy = pyb[i]);
+            }
+            ctx.stroke();
+            ctx.restore();
+            SGP4.propagate();
+            var angles = {
+                iss: 0,
+                head: 0,
+                tail: 0
+            }
+            var a = 1;
+            var b = steps - 2;
+            var x2 = pxf[a];
+            var x1 = pxb[b];
+            if (x2 < x1) x2 += isst_map_w;
+            angles.iss = Math.atan2(
+                pyf[a] - pyb[b],
+                x2 - x1
+            ) + Math.PI * 0.5;
+            a = steps - 1;
+            b = steps - 2;
+            x2 = pxf[a];
+            x1 = pxf[b];
+            if (x2 < x1) x2 += isst_map_w;
+            angles.head = Math.atan2(
+                pyf[a] - pyf[b],
+                x2 - x1
+            );
+            a = 1;
+            b = 0;
+            x2 = pxb[a];
+            x1 = pxb[b];
+            if (x2 < x1) x2 += isst_map_w;
+            angles.tail = Math.atan2(
+                pyb[a] - pyb[b],
+                x2 - x1
+            );
+            var iw = isst_imgs.orbitFwd.width;
+            var ih = isst_imgs.orbitFwd.height;
+            var ar = iw / ih;
+            iw = isst_map_w * 0.05;
+            ih = iw / ar;
+            ctx.save();
+            a = steps - 1;
+            ctx.translate(pxf[a], pyf[a]);
+            ctx.rotate(angles.head);
+            ctx.drawImage(isst_imgs.orbitFwd, -iw * 0.9, -ih * 0.79, iw, ih);
+            ctx.restore();
+            iw = isst_imgs.orbitBwd.width;
+            ih = isst_imgs.orbitBwd.height;
+            ar = iw / ih;
+            iw = isst_map_w * 0.05;
+            ih = iw / ar;
+            ctx.save();
+            a = 0;
+            ctx.translate(pxb[a], pyb[a]);
+            ctx.rotate(angles.tail);
+            ctx.drawImage(isst_imgs.orbitBwd, -iw * 0.1, -ih * 0.21, iw, ih);
+            ctx.restore();
+            return angles.iss;
+        }
+    </script>
+</head>
+<center>
+    <div id="cover">
+        <div id="errmsg"></div>
+    </div>
+    <div id="isst">
+        <div id="isstwp">
+            <div id="isstgap">&nbsp;</div>
+            <div id="isst_ls" style="background-color:#222222;">
+            </div>
+            <div id="isst_dt" style="background-color:#00549F;">
+                <table height="100%" cellspacing="0" cellpadding="0" border="0">
+                    <tr>
+                        <td>
+                            <div class="isst_cl">Latitude</div>
+                            <div id="isst_lat" class="isst_cd"></div>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <div class="isst_cl">Longitude</div>
+                            <div id="isst_lon" class="isst_cd"></div>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <div class="isst_cl">Altitude</div>
+                            <div id="isst_alt" class="isst_cd"></div>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <div class="isst_cl">Speed</div>
+                            <div id="isst_spd" class="isst_cd"></div>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <div class="isst_cl">Time (GMT)</div>
+                            <div id="isst_tim" class="isst_cd"></div>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <table cellspacing="0" cellpadding="0" border="0">
+                                <tr>
+                                    <td>
+                                        Metric / Imperial&nbsp;&nbsp;
+                                    </td>
+                                    <td>
+                                        <div id="btn_metric" onclick="javascript:changeMetric();">
+                                            <div id="btn_metric2"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td>
+                            <div onclick="javascript:manageFullScreen();"><img id="btn_fs" src="imgs/fullscreen.png" /></div>
+                        </td>
+                    </tr>
+                </table>
+                <div id="waitmsg"><div><br />Please wait...</div></div>
+            </div>
+            <div id="isstgap2">&nbsp;</div>
+        </div>
+    </div>
+</center>
