@@ -49,10 +49,10 @@
                     for (let i = 0; i < users.length; i++) {
 
                         if (users[i].UserImage != null) {
-                            imgEle = `<img class="rounded-circle" src="${users[i].UserImage.Url}" alt="${users[i].UserImage.AlternativeText}" width="30">`;
+                            imgEle = `<img class="avatar  profile-user brround cover-image" src="${users[i].UserImage.Url}" alt="${users[i].UserImage.AlternativeText}" >`;
                         }
                         else {
-                            imgEle = `<img src="/Template/sash/assets/images/users/7.jpg" alt="No Image" width="30" class="rounded-circle">`;
+                            imgEle = `<img src="/Template/sash/assets/images/users/7.jpg" alt="No Image" width="30" class="avatar  profile-user brround cover-image">`;
                         }
 
                         let date = users[i].DateOfBirth;

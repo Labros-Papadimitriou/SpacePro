@@ -3,6 +3,13 @@
     ViewBag.Title = "BlogPost";
     Layout = "~/Views/Shared/_LayoutSpace.cshtml";
 }
+<style>
+    .card-body, .card {
+        background-color: #58585824 !important;
+        -webkit-box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+        box-shadow: 2px 1px 3px 1px rgba(143,143,143,0.62);
+    }
+</style>
 <!--app-content open-->
 <div class="main-content app-content mt-0">
     <div class="side-app">
@@ -12,25 +19,19 @@
 
             <!-- PAGE-HEADER -->
             <div class="page-header">
-                <h1 class="page-title"></h1>
-                <div>
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="/Article/ShowArticles">Articles</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Create New Article</li>
-                    </ol>
-                </div>
+                
             </div>
             <!-- PAGE-HEADER END -->
 
-            <div class="row">
-                <div class="col-xl-8">
+            <div class="row" >
+                <div style="margin:0 auto" class="col-xl-8">
                     <div class="card">
-                        <div class="card-header">
-                            <div class="card-title">Create New Article</div>
+                        <div class="card-header" >
+                            <h3 style="margin-left:310px;">Create New Article</h3>
                         </div>
                         @using (Html.BeginForm("CreateNewArticle", "Article", FormMethod.Post, new { enctype = "multipart/form-data" }))
                         {
-                    <div class="card-body" style="border: solid 1px #0d1d40; background:linear-gradient(to bottom, #0d1d40, black)">
+                    <div class="card-body">
                         <div class="row mb-4">
                             <label class="col-md-3 form-label">Article Title :</label>
                             <div class="">
@@ -76,8 +77,8 @@
                         </div>
                     </div>
                             <div class="card-footer">
-                                <input type="submit" class="btn btn-success" value="Create"/>
-                                <button type="reset" class="btn btn-warning float-end">Clear</button>
+                                <input type="submit" class="btn btn-outline-success" value="Create"/>
+                                <button type="reset" class="btn btn-outline-warning float-end">Clear</button>
                             </div>
                         }
                     </div>
