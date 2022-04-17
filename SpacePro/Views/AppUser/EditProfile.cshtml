@@ -21,13 +21,23 @@
         border-left: none !important;
     }
 
-    .news form label {
-        margin: 10px 10px;
+    .news {
+        display: flex;
+        align-items: center;
+        justify-content: center !important;
     }
-
-    .news h3 {
-        margin:10px 10px;
-    } 
+    
+    .news h3{
+        margin:10px;
+    }
+        .news form {
+            margin: 10px;
+            display: flex;
+            align-items: center !important;
+        }
+        .news form input{
+            margin: 10px;
+        }
 </style>
 
 <!--app-content open-->
@@ -61,20 +71,6 @@
                                 </div>
                             }
 
-                            @*@if (Request.IsAuthenticated)
-                                {
-                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="card-header">
-                                            <div class="card-title">Delete Account</div>
-                                        </div>
-                                        <div class="card-footer text-start">
-                                            <input hidden type="text" name="id" value="@Model.Id" />
-                                            <input type="submit" value="Delete Account" class="btn btn-danger my-1" />
-                                        </div>
-                                    }
-                                }*@
                         </div>
                     </div>
                 </div>
@@ -195,9 +191,9 @@
 
                                 <label for="addInNews">Unsubscribe</label>
 
-                                <input type="checkbox" name="addInNews" value="no" />
+                                <input style="margin-right:200px; margin-bottom:17px" type="checkbox" name="addInNews" value="no" />
 
-                                <input style="float:right" class="btn btn-outline-success" type="submit" value="Submit" />
+                                <input  class="btn btn-outline-success" type="submit" value="Submit" />
                             </form>
                         </div>
                     }
@@ -206,16 +202,11 @@
                         <div class="card news">
                             <h3>Subscribe to our Newsletter</h3>
                             <form action="/News/AddListener" method="get">
+                                <label for="addInNews">Subscribe</label>
 
-                                <label class="radio-inline" for="addInNewsYes">Yes</label>
+                                <input style="margin-right:200px; margin-bottom:17px" type="checkbox" name="addInNews" value="yes" />
 
-                                <input id="addInNewsYes" type="radio" name="addInNews" value="yes" />
-
-                                <label class="radio-inline" for="addInNewsNo">No</label>
-
-                                <input id="addInNewsNo" type="radio" name="addInNews" value="no" />
-
-                                <input style="float:right" class="btn btn-outline-success" type="submit" value="Submit" />
+                                <input class="btn btn-outline-success" type="submit" value="Submit" />
                             </form>
                         </div>
                     }
@@ -235,19 +226,23 @@
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputname">First Name</label>
-                                            <input name="FirstName" type="text" class="form-control" id="exampleInputname" placeholder="First Name" value="@Model.FirstName">
+                                            <input maxlength="15" required name="FirstName" type="text" class="form-control" id="exampleInputname" placeholder="First Name | Max 15 letters" value="@Model.FirstName">
                                         </div>
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="form-group">
                                             <label for="exampleInputname1">Last Name</label>
-                                            <input name="LastName" type="text" class="form-control" id="exampleInputname1" placeholder="Enter Last Name" value="@Model.LastName">
+                                            <input maxlength="25" required name="LastName" type="text" class="form-control" id="exampleInputname1" placeholder="Enter Last Name | Max 25 letters" value="@Model.LastName">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputUserName">User Name</label>
+                                    <input maxlength="45" name="UserName" type="text" class="form-control" id="exampleInputUserName" placeholder="Give your UserName | Max 45 letters" value="@Model.UserName">
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Email address</label>
-                                    <input name="Email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email address" value="@Model.Email">
+                                    <input required name="Email" type="email" class="form-control" id="exampleInputEmail1" placeholder="Email address" value="@Model.Email">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputnumber">Contact Number</label>
@@ -255,15 +250,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">About Me</label>
-                                    <textarea name="AboutMe" class="form-control" rows="6">@Model.AboutMe</textarea>
+                                    <textarea maxlength="200" name="AboutMe" class="form-control" rows="6" placeholder="Write something about you | max 200 letters">@Model.AboutMe</textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Work</label>
-                                    <input name="Work" class="form-control" rows="6" value="@Model.Work">
+                                    <input maxlength="50" placeholder="max 50 letters" name="Work" class="form-control" rows="6" value="@Model.Work">
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Education</label>
-                                    <input name="Education" class="form-control" rows="6" value="@Model.Education">
+                                    <input maxlength="50" placeholder="max 50 letters" name="Education" class="form-control" rows="6" value="@Model.Education">
                                 </div>
                                 <div class="form-group date">
                                     <label>Date Of Birth</label>

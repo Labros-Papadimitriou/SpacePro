@@ -54,16 +54,17 @@ namespace SpacePro.Controllers
 
         public async Task<ActionResult> ArticlesLikes()
         {
-            var articles = (await _unitOfWork.Articles.GetTenBestArticles()).ToList();
+            var articles = (await _unitOfWork.Articles.GetTenBestArticles()).Where(a => a.PostLikes > 0).ToList();
 
             return View(articles);
         }
 
         public async Task<ActionResult> PostLikes()
         {
-            var posts = (await _unitOfWork.UserPosts.GetTenBestPosts()).ToList();
+            var posts = (await _unitOfWork.UserPosts.GetTenBestPosts()).ToList().Where(a => a.PostLikes.Count > 0);
             dynamic model = new ExpandoObject();
             model.PostsLikes = posts.Select(x => x.PostLikes.Count);
+            model.PostDetails = posts.Select(x => x.PostDetails);
             model.UserName = posts.Select(x =>  _unitOfWork.ApplicationUsers.GetUserName(x.ApplicationUser_id));
 
             return View(model);
