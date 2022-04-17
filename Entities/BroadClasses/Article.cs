@@ -10,6 +10,10 @@ namespace Entities.BroadClasses
 {
     public class Article
     {
+        public Article()
+        {
+            ArticleLikes = new HashSet<ArticleLike>();
+        }
         public int ArticleId { get; set; }
 
         [Required]

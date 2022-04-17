@@ -14,6 +14,7 @@ namespace SpacePro.Models.Dtos
         [Required]
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
+        public string UserName { get; set; }
         public string AboutMe { get; set; }
         public string Work { get; set; }
         public string Education { get; set; }

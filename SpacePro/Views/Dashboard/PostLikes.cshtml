@@ -49,6 +49,8 @@
 
     let users = [];
     let likes = [];
+    let details = [];
+
 
     @foreach (var userName in Model.UserName)
     {
@@ -61,8 +63,15 @@
         @: likes.push(@likes)
     }
 
+    @foreach (var details in Model.PostDetails)
+    {
+         @: details.push("@details");
+    }
+
+    
+
     const data = {
-        labels: users,
+        labels: users.map((a, x) => `${a} : ${details[x]}`),
 
         datasets: [
             {
