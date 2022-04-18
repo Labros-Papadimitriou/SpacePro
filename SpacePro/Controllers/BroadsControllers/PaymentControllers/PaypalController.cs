@@ -1,4 +1,7 @@
 ﻿using Entities.IdentityUsers;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using MyDatabase;
 using PayPal.Api;
 using Persistance_UnitOfWork;
 using SpacePro.PaymentMethod;
@@ -15,6 +18,22 @@ namespace SpacePro.Controllers.PaymentControllers
     {
         private readonly IUnitOfWork unitOfWork;
         public Payment payment;
+        private ApplicationUserManager _userManager;
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                if (_userManager == null && HttpContext == null)
+                {
+                    return new ApplicationUserManager(new Microsoft.AspNet.Identity.EntityFramework.UserStore<ApplicationUser>(new ApplicationDbContext()));
+                }
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
         public PaypalController(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
@@ -78,8 +97,12 @@ namespace SpacePro.Controllers.PaymentControllers
             {
                 return View("FailureView");
             }
+            //setting user role to Subscriber on successful payment result
+            var userId = User.Identity.GetUserId();
+            var result =  Task.Run(async () => await UserManager.AddToRoleAsync(userId, "Subscriber")).Result;
+
             //on successful payment, show success page to user.  
-            return View("SuccessView");
+            return View("SuccessView",result);
         }
 
         private Payment ExecutePayment(APIContext apiContext, string payerId, string paymentId)
