@@ -93,9 +93,11 @@ namespace SpacePro.Controllers.PaymentControllers
             {
                 return View("FailureView");
             }
+
             //setting user role to subscriber on successful payment
             var userId = User.Identity.GetUserId();
             var result = Task.Run(async () => await UserManager.AddToRoleAsync(userId, "Subscriber")).Result;
+
             //on successful payment, show success page to user.  
             return View("SuccessView");
         }
